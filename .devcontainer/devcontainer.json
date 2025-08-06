@@ -1,0 +1,19 @@
+{
+	"name": "PF dev-feat DEV",
+	"dockerFile": "Dockerfile",
+	"containerEnv": {
+		"GOMODCACHE": "${containerWorkspaceFolder}/.go_cache"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/go:1.3.2": {
+			"version": "1.24.5"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"roemer.gotaskr-vscode"
+			]
+		}
+	}
+}
