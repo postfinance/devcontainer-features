@@ -1,0 +1,41 @@
+{
+    "id": "go",
+    "version": "1.0.0",
+    "name": "Go",
+    "description": "A package which installs Go.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.24",
+                "1.21.8"
+            ],
+            "default": "latest",
+            "description": "The version of Go to install."
+        },
+        "downloadRegistryBase": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/dl-google-generic-remote"
+            ],
+            "description": "The download registry to use for Go binaries."
+        },
+        "downloadRegistryPath": {
+            "type": "string",
+            "default": "",
+            "description": "The download registry path to use for Go binaries."
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.Go"
+            ]
+        }
+    },
+    "containerEnv": {
+        "PATH": "/usr/local/go/bin:${PATH}"
+    }
+}
