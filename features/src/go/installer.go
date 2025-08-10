@@ -20,7 +20,7 @@ import (
 const versionsIndexUrl = "https://go.dev/dl/?mode=json&include=all"
 const latestVersionUrl = "https://go.dev/VERSION?m=text"
 
-var versionRegexp *regexp.Regexp = regexp.MustCompile(`(?m:)^go(?P<d1>\d+)(?:\.(?P<d2>\d+))?(?:\.(?P<d3>\d+))?(?:(?P<s4>[a-z]+)(?P<d5>\d+)?)?$`)
+var versionRegexp *regexp.Regexp = regexp.MustCompile(`(?m:)^go(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:([a-z]+)(\d+)?)?$`)
 
 //////////
 // Main
@@ -36,29 +36,27 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "The version of Go to install.")
+	isExactVersion := flag.Bool("isExactVersion", false, "Whether to install the exact version specified.")
 	downloadRegistryBase := flag.String("downloadRegistryBase", "", "The download registry to use for Go binaries.")
 	downloadRegistryPath := flag.String("downloadRegistryPath", "", "The download registry path to use for Go binaries.")
 	flag.Parse()
 
-	fill(downloadRegistryBase, "https://dl.google.com", "")
-	fill(downloadRegistryPath, "/go", "")
+	// Load settings from an external file
+	if err := installer.LoadOverrides(); err != nil {
+		return err
+	}
+
+	installer.HandleOverride(downloadRegistryBase, "https://dl.google.com", "go-download-registry-base")
+	installer.HandleOverride(downloadRegistryPath, "/go", "go-download-registry-path")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Go", true,
 		&goComponent{
-			ComponentBase:        installer.NewComponentBase("Go", *version),
+			ComponentBase:        installer.NewComponentBase("Go", *version, *isExactVersion),
 			DownloadRegistryBase: *downloadRegistryBase,
 			DownloadRegistryPath: *downloadRegistryPath,
 		})
 	return feature.Process()
-}
-
-func fill(passedValue *string, defaultValue string, key string) {
-	if *passedValue == "" {
-		// TODO: Get value from env?file?
-		// Otherwise set to default value
-		*passedValue = defaultValue
-	}
 }
 
 func buildUrl(base string, parts ...string) (string, error) {

@@ -1,0 +1,64 @@
+package installer
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+// Loads the feature overrides from a specified location.
+func LoadOverrides() error {
+	var fileContent []byte
+	var err error
+	if overrideLocation := os.Getenv("DEV_FEATURE_OVERRIDE_LOCATION"); overrideLocation != "" {
+		// Load the overrides from the specified location
+		if strings.HasPrefix(overrideLocation, "http://") || strings.HasPrefix(overrideLocation, "https://") {
+			// Load from URL
+			fileContent, err = Tools.Download.AsBytes(overrideLocation)
+			if err != nil {
+				return fmt.Errorf("error downloading override file: %v", err)
+			}
+		} else {
+			// Load from file
+			fileContent, err = os.ReadFile(overrideLocation)
+			if err != nil {
+				return fmt.Errorf("error reading override file: %v", err)
+			}
+		}
+		if len(fileContent) > 0 {
+			lines := strings.SplitSeq(strings.ReplaceAll(strings.TrimSpace(string(fileContent)), "\r\n", "\n"), "\n")
+			for line := range lines {
+				if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {
+					continue
+				}
+				parts := strings.SplitN(line, "=", 2)
+				if len(parts) == 2 {
+					key := strings.TrimSpace(parts[0])
+					value := strings.TrimSpace(parts[1])
+					if !strings.HasPrefix(key, "DEV_FEATURE_OVERRIDE_") {
+						key = fmt.Sprintf("DEV_FEATURE_OVERRIDE_%s", key)
+					}
+					// Only set if not already defined
+					if os.Getenv(key) == "" {
+						os.Setenv(key, value)
+					}
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func HandleOverride(passedValue *string, defaultValue string, key string) {
+	if *passedValue == "" {
+		// Convert the key to a compatible format
+		key = strings.ToUpper(strings.ReplaceAll(key, "-", "_"))
+		// Try get the value from an environment variable
+		if envValue := os.Getenv(fmt.Sprintf("DEV_FEATURE_OVERRIDE_%s", key)); envValue != "" {
+			*passedValue = envValue
+			return
+		}
+		// Otherwise set to default value
+		*passedValue = defaultValue
+	}
+}

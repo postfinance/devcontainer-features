@@ -1,0 +1,34 @@
+{
+    "install-exact": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./go": {
+                "version": "1.23.1",
+                "isExactVersion": true
+            }
+        }
+    },
+    "install-non-exact": {
+        "test-images": [
+            "mcr.microsoft.com/devcontainers/base:debian-11",
+            "mcr.microsoft.com/devcontainers/base:debian-12"
+        ],
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./go": {
+                "version": "1.23",
+                "isExactVersion": false
+            }
+        }
+    }
+}

@@ -14,6 +14,11 @@
             "default": "latest",
             "description": "The version of Go to install."
         },
+        "isExactVersion": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to install the exact version specified."
+        },
         "downloadRegistryBase": {
             "type": "string",
             "default": "",

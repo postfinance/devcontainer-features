@@ -1,1 +1,8 @@
+# Cache for go modules in dev container
 .go_cache/
+
+# Packaged features
+output/
+
+# Cache for tests
+.scenario-test/

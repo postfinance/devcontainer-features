@@ -36,6 +36,7 @@ func (f *Feature) Process() error {
 	for _, component := range f.components {
 		fmt.Printf("Processing component '%s'\n", component.GetName())
 		requestedVersionString := component.GetRequestedVersion()
+		isExactVersion := component.IsExactVersion()
 
 		// Skip if "none" version was requested
 		if requestedVersionString == VERSION_NONE {
@@ -60,6 +61,7 @@ func (f *Feature) Process() error {
 
 		// Calculate the version to install
 		var versionToInstall *gover.Version
+		// Handle non-numeric (latest/lts)
 		if requestedVersionString == VERSION_LATEST || requestedVersionString == VERSION_LTS {
 			// Try get the latest version
 			version, err := component.GetLatestVersion()
@@ -78,14 +80,20 @@ func (f *Feature) Process() error {
 				versionToInstall = gover.FindMax(allVersions, gover.EmptyVersion, true)
 			}
 		} else {
-			// Get all versions
-			allVersions, err := component.GetAllVersions()
-			if err != nil {
-				return err
-			}
-			// Get the max according to the reference version
+			// Parse the reference version
 			referenceVersion := gover.ParseSimple(strings.Split(strings.ReplaceAll(requestedVersionString, "-", "."), "."))
-			versionToInstall = gover.FindMax(allVersions, referenceVersion, false)
+			if isExactVersion {
+				// The exact version was passed, so directly use it
+				versionToInstall = referenceVersion
+			} else {
+				// Get all versions
+				allVersions, err := component.GetAllVersions()
+				if err != nil {
+					return err
+				}
+				// Get the max according to the reference version
+				versionToInstall = gover.FindMax(allVersions, referenceVersion, false)
+			}
 		}
 
 		// No version found
@@ -116,6 +124,8 @@ type IComponent interface {
 	GetName() string
 	// Gets the requestedVersion of the component.
 	GetRequestedVersion() string
+	// Returns whether the requested version is an exact version.
+	IsExactVersion() bool
 	// Returns a list of all available versions.
 	GetAllVersions() ([]*gover.Version, error)
 	// Returns the latest version. Defaults to nil which then uses the max of GetAllVersions.
@@ -125,10 +135,11 @@ type IComponent interface {
 }
 
 // Constructor for a base component.
-func NewComponentBase(name string, requestedVersion string) *ComponentBase {
+func NewComponentBase(name string, requestedVersion string, isExactVersion bool) *ComponentBase {
 	return &ComponentBase{
 		name:             name,
 		requestedVersion: requestedVersion,
+		isExactVersion:   isExactVersion,
 	}
 }
 
@@ -136,6 +147,7 @@ func NewComponentBase(name string, requestedVersion string) *ComponentBase {
 type ComponentBase struct {
 	name             string
 	requestedVersion string
+	isExactVersion   bool
 }
 
 // Gets the name of the component.
@@ -146,6 +158,10 @@ func (c *ComponentBase) GetName() string {
 // Gets the requestedVersion of the component.
 func (c *ComponentBase) GetRequestedVersion() string {
 	return c.requestedVersion
+}
+
+func (c *ComponentBase) IsExactVersion() bool {
+	return c.isExactVersion
 }
 
 // Gets all possible version. Returns nil if no implementation is provided.

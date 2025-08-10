@@ -1,0 +1,35 @@
+# {{ .Name }} ({{ .Id }})
+
+{{ .Description }}
+
+## Example Usage
+
+```json
+"features": {
+    "ghcr.io/postfinance/devcontainer-features/{{ .Id }}:{{ .Version }}": {
+{{- range $i, $e := .Options }}
+    {{- if $i }},{{ end }}
+        "{{ $e.Name }}": {{ $e.Default }}
+{{- end }}
+    }
+}
+```
+
+{{ if .Options -}}
+## Options
+
+| Option | Description | Type | Default Value | Proposals |
+|-----|-----|-----|-----|-----|
+{{- range .Options }}
+| {{ .Name }} | {{ .Description }} | {{ .Type }} | {{ .DefaultNoQuotes }} | {{ .Proposals }} |
+{{- end -}}
+{{- end }}
+
+{{ if .Customizations.VsCodeExtensions -}}
+## Customizations
+
+### VS Code Extensions
+{{ range .Customizations.VsCodeExtensions }}
+- `{{ . }}`
+{{- end -}}
+{{- end }}
