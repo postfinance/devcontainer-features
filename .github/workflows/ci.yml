@@ -12,6 +12,9 @@ env:
 jobs:
   # Build Job
   build:
+    strategy:
+      matrix:
+        feature: ["go"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,5 +25,13 @@ jobs:
         with:
           go-version: "${{ vars.GO_VERSION }}"
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup DevContainer-CLI
+        run: npm install -g @devcontainers/cli
+
       - name: Build
-        run: go run ./build/build.go --target "Build"
+        run: go run ./build --target "Feature:${{ matrix.feature }}:Package"
