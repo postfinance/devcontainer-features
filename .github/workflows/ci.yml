@@ -35,3 +35,6 @@ jobs:
 
       - name: Build
         run: go run ./build --target "Feature:${{ matrix.feature }}:Package"
+
+      - name: Test
+        run: go run ./build --target "Feature:${{ matrix.feature }}:Test"
