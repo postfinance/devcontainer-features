@@ -14,10 +14,6 @@
         }
     },
     "install-non-exact": {
-        "test-images": [
-            "mcr.microsoft.com/devcontainers/base:debian-11",
-            "mcr.microsoft.com/devcontainers/base:debian-12"
-        ],
         "build": {
             "dockerfile": "Dockerfile",
             "options": [
