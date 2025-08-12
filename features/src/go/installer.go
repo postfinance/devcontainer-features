@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"runtime"
 	"strings"
 
 	"github.com/roemer/gover"
@@ -114,7 +115,16 @@ func (c *goComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *goComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
-	fileName := fmt.Sprintf("%s.linux-amd64.tar.gz", version.Raw)
+	var fileName string
+	switch runtime.GOARCH {
+	case "amd64":
+		fileName = fmt.Sprintf("%s.linux-amd64.tar.gz", version.Raw)
+	case "arm64":
+		fileName = fmt.Sprintf("%s.linux-arm64.tar.gz", version.Raw)
+	default:
+		return fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
+	}
+
 	downloadUrl, err := buildUrl(c.DownloadRegistryBase, c.DownloadRegistryPath, fileName)
 	if err != nil {
 		return err
