@@ -9,6 +9,14 @@ The features provided here have the following benefits:
 * Small and fast
 * Good extendability
 
+## Features
+
+Below is a list with included features, click on the link for more details.
+
+| Name | Description |
+| --- | --- |
+| [go](./features/src/go/README.md) | A feature which installs Go. |
+
 ## Usage
 
 ### Global overwrites

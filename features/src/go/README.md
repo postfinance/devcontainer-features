@@ -1,6 +1,6 @@
 # Go (go)
 
-A package which installs Go.
+A feature which installs Go.
 
 ## Example Usage
 
