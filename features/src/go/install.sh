@@ -1,4 +1,10 @@
-./installer \
+case $(uname -m) in
+  x86_64*) ARCH=amd64 ;;
+  arm*)    ARCH=arm64 ;;
+  *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+
+"./installer_$ARCH" \
     -version="${VERSION:-"latest"}" \
     -isExactVersion="${IS_EXACT_VERSION:-false}" \
     -downloadRegistryBase="${DOWNLOAD_REGISTRY_BASE:-""}" \

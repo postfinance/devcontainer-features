@@ -60,45 +60,63 @@ func init() {
 // Helpers
 ////////////////////////////////////////////////////////////
 
-func buildGo(workingDirectory string, binaryName string) error {
+func buildGo(workingDirectory string, binaryName string) ([]string, error) {
 	// Check if a go installer exists and only compile it then
 	if _, err := os.Stat(filepath.Join(workingDirectory, "installer.go")); err != nil {
 		if os.IsNotExist(err) {
 			log.Information("No go installer found, skip compiling")
-			return nil
+			return nil, nil
 		} else {
-			return err
+			return nil, err
 		}
 	}
 
-	// Force static linking
-	os.Setenv("CGO_ENABLED", "0")
-	// Compile the go installer
-	cmd := exec.Command("go", "build", "-o", binaryName, "-ldflags", "-w", ".")
-	cmd.Env = os.Environ()
-	cmd.Env = append(cmd.Env, "GOOS=linux")
-	cmd.Env = append(cmd.Env, "GOARCH=amd64")
-	cmd.Dir = workingDirectory
-	if err := execr.RunCommand(true, cmd); err != nil {
-		return err
+	// Compile for x86_64 and arm
+	totalSize := int64(0)
+	buildBinaries := []string{}
+	for _, arch := range []string{"amd64", "arm64"} {
+		archBinaryName := fmt.Sprintf("%s_%s", binaryName, arch)
+		log.Informationf("Compiling for architecture %s", arch)
+		// Force static linking
+		os.Setenv("CGO_ENABLED", "0")
+		// Compile the go installer
+		// Optimizations:
+		//   ldflags -w (disable DWARF generation), -s (disable symbol table and debug information)
+		//   gcflags -l (disable inlining), -B (disable bounds checking)
+		cmd := exec.Command("go", "build", "-o", archBinaryName, "-ldflags", "-w -s", "-gcflags", "all=-l -B", ".")
+		cmd.Env = os.Environ()
+		cmd.Env = append(cmd.Env, "GOOS=linux")
+		cmd.Env = append(cmd.Env, fmt.Sprintf("GOARCH=%s", arch))
+		cmd.Dir = workingDirectory
+		if err := execr.RunCommand(true, cmd); err != nil {
+			return buildBinaries, err
+		}
+		buildBinaries = append(buildBinaries, archBinaryName)
+		fullPath := filepath.Join(workingDirectory, archBinaryName)
+		fi, err := os.Stat(fullPath)
+		if err != nil {
+			return buildBinaries, err
+		}
+		totalSize += fi.Size()
+		log.Informationf("Built %s with a size of %s", fullPath, installer.HumanizeBytes(fi.Size(), true))
 	}
-	fullPath := filepath.Join(workingDirectory, binaryName)
-	fi, err := os.Stat(fullPath)
-	if err != nil {
-		return err
-	}
-	log.Informationf("Built %s with a size of %s", fullPath, installer.HumanizeBytes(fi.Size(), false))
-	return nil
+	log.Informationf("Total size of all binaries: %s", installer.HumanizeBytes(totalSize, true))
+	return buildBinaries, nil
 }
 
 func packageFeature(featureName string) error {
 	featurePath := path.Join("features/src", featureName)
 
 	// Build the installer
-	if err := buildGo(featurePath, "installer"); err != nil {
+	buildBinaries, err := buildGo(featurePath, "installer")
+	if err != nil {
 		return err
 	}
-	defer os.Remove(filepath.Join(featurePath, "installer"))
+	defer func() {
+		for _, binary := range buildBinaries {
+			os.Remove(filepath.Join(featurePath, binary))
+		}
+	}()
 
 	// Package the feature
 	settings := &gttools.DevContainerCliFeaturesPackageSettings{
@@ -190,7 +208,7 @@ func testFeature(featureName string) error {
 			}
 
 			// Build the go installer inside the feature
-			if err := buildGo(copiedFeaturePath, "installer"); err != nil {
+			if _, err := buildGo(copiedFeaturePath, "installer"); err != nil {
 				return err
 			}
 
