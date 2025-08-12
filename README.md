@@ -50,6 +50,8 @@ If your remote points directly to `https://dl.google.com/go`, you need to set:
 * base = "your-remote"
 * url = "/" (so it will not add any subpath after the remote)
 
+Look at [override-all.env](./override-all.env) for a file with all possible override variables.
+
 ### Extend an existing feature
 
 TBD

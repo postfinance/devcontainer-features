@@ -21,8 +21,8 @@ A feature which installs Zig.
 |-----|-----|-----|-----|-----|
 | version | The version of Zig to install. | string | latest | latest, 0.13.0, 0.12 |
 | isExactVersion | Whether to install the exact version specified. | boolean | false | true, false |
-| downloadRegistryBase | The download registry to use for Zig binaries. | string | <empty> | https://mycompany.com/artifactory/ziglang-generic-remote |
-| downloadRegistryPath | The download registry path to use for Zig binaries. | string | <empty> |  |
+| downloadRegistryBase | The download registry to use for Zig binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/ziglang-generic-remote |
+| downloadRegistryPath | The download registry path to use for Zig binaries. | string | &lt;empty&gt; |  |
 
 ## Notes
 

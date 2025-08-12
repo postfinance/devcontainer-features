@@ -21,8 +21,8 @@ A feature which installs Go.
 |-----|-----|-----|-----|-----|
 | version | The version of Go to install. | string | latest | latest, 1.24, 1.21.8 |
 | isExactVersion | Whether to install the exact version specified. | boolean | false | true, false |
-| downloadRegistryBase | The download registry to use for Go binaries. | string | <empty> | https://mycompany.com/artifactory/dl-google-generic-remote |
-| downloadRegistryPath | The download registry path to use for Go binaries. | string | <empty> |  |
+| downloadRegistryBase | The download registry to use for Go binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/dl-google-generic-remote |
+| downloadRegistryPath | The download registry path to use for Go binaries. | string | &lt;empty&gt; |  |
 
 ## Customizations
 

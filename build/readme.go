@@ -45,7 +45,7 @@ func BuildReadmeForFeature(featurePath string) error {
 			defaultValue := option.Default.(string)
 			defaultValueOrEmpty := defaultValue
 			if defaultValueOrEmpty == "" {
-				defaultValueOrEmpty = "<empty>"
+				defaultValueOrEmpty = "&lt;empty&gt;"
 			}
 			newOption.Proposals = strings.Join(option.Proposals, ", ")
 			newOption.Default = strconv.Quote(defaultValue)
