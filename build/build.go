@@ -21,6 +21,7 @@ import (
 
 var featureList = []string{
 	"go",
+	"zig",
 }
 
 ////////////////////////////////////////////////////////////
@@ -45,6 +46,7 @@ func init() {
 		return nil
 	})
 
+	////////// Go
 	gotaskr.Task("Feature:go:Package", func() error {
 		return packageFeature("go")
 	})
@@ -53,6 +55,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:go:Publish", func() error {
 		return publishFeature("go")
+	})
+
+	////////// Zig
+	gotaskr.Task("Feature:zig:Package", func() error {
+		return packageFeature("zig")
+	})
+	gotaskr.Task("Feature:zig:Test", func() error {
+		return testFeature("zig")
+	})
+	gotaskr.Task("Feature:zig:Publish", func() error {
+		return publishFeature("zig")
 	})
 }
 

@@ -7,5 +7,4 @@ Debian, Ubuntu, Alpine
 ### Accessed Urls
 
 Needs to access the following urls to install non-exact versions:
-* https://go.dev/dl/?mode=json&include=all
-* https://go.dev/VERSION?m=text
+* https://ziglang.org/download/index.json

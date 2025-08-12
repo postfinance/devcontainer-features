@@ -96,7 +96,7 @@ func (c *goComponent) GetAllVersions() ([]*gover.Version, error) {
 	if err != nil {
 		return nil, err
 	}
-	var jsonData []map[string]interface{}
+	var jsonData []map[string]any
 	if err := json.Unmarshal(versionFileContent, &jsonData); err != nil {
 		return nil, err
 	}

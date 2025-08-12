@@ -1,0 +1,39 @@
+{
+    "id": "zig",
+    "version": "1.0.0",
+    "name": "Zig",
+    "description": "A feature which installs Zig.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "0.13.0",
+                "0.12"
+            ],
+            "default": "latest",
+            "description": "The version of Zig to install."
+        },
+        "isExactVersion": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to install the exact version specified."
+        },
+        "downloadRegistryBase": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/ziglang-generic-remote"
+            ],
+            "description": "The download registry to use for Zig binaries."
+        },
+        "downloadRegistryPath": {
+            "type": "string",
+            "default": "",
+            "description": "The download registry path to use for Zig binaries."
+        }
+    },
+    "containerEnv": {
+        "PATH": "/usr/local/zig:${PATH}"
+    }
+}
