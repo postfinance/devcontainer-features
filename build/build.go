@@ -255,29 +255,31 @@ func testFeature(featureName string) error {
 }
 
 func publishFeature(featureName string) error {
-	// TODO
-	return nil
+	registry := "ghcr.io"
+	namespace := "postfinance/devcontainer-features"
 
-	/*
-		featurePath := path.Join("features/src", featureName)
+	featurePath := path.Join("features/src", featureName)
 
-		// Build the installer
-		if err := buildGo(featurePath, "installer"); err != nil {
-			return err
+	// Build the installer
+	buildBinaries, err := buildGo(featurePath, "installer")
+	if err != nil {
+		return err
+	}
+	defer func() {
+		for _, binary := range buildBinaries {
+			os.Remove(filepath.Join(featurePath, binary))
 		}
-		defer os.Remove(filepath.Join(featurePath, "installer"))
+	}()
 
-		//  Set OCI authentication
-		if err := setOCIAuth(); err != nil {
-			return err
-		}
-		// Build and publish the feature
-		settings := &gttools.DevContainerCliFeaturesPublishSettings{
-			Target:    featurePath,
-			Registry:  registry,
-			Namespace: namespace,
-		}
-		settings.OutputToConsole = true
-		return gotaskr.Tools.DevContainerCli.FeaturesPublish(settings)
-	*/
+	// No authentication needed - DevContainerCLI supports GITHUB_TOKEN
+	// os.Setenv("DEVCONTAINERS_OCI_AUTH", "ghcr.io|USERNAME|"+os.Getenv("GITHUB_TOKEN"))
+
+	// Build and publish the feature
+	settings := &gttools.DevContainerCliFeaturesPublishSettings{
+		Target:    featurePath,
+		Registry:  registry,
+		Namespace: namespace,
+	}
+	settings.OutputToConsole = true
+	return gotaskr.Tools.DevContainerCli.FeaturesPublish(settings)
 }
