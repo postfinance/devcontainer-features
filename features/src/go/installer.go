@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"net/url"
 	"os"
 	"regexp"
 	"runtime"
@@ -58,10 +57,6 @@ func runMain() error {
 			DownloadRegistryPath: *downloadRegistryPath,
 		})
 	return feature.Process()
-}
-
-func buildUrl(base string, parts ...string) (string, error) {
-	return url.JoinPath(base, parts...)
 }
 
 //////////
@@ -125,7 +120,7 @@ func (c *goComponent) InstallVersion(version *gover.Version) error {
 		return fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
 	}
 
-	downloadUrl, err := buildUrl(c.DownloadRegistryBase, c.DownloadRegistryPath, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadRegistryBase, c.DownloadRegistryPath, fileName)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,52 @@
+{
+    "id": "docker-out",
+    "version": "1.0.0",
+    "name": "Docker outside Docker",
+    "description": "A feature which installs the Docker client and re-uses the host socket.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "20.10"
+            ],
+            "default": "latest",
+            "description": "The version of the Docker CLI to install."
+        },
+        "composeVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "2.39.1",
+                "2.29"
+            ],
+            "default": "latest",
+            "description": "The version of the Compose plugin to install."
+        },
+        "buildxVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "0.26.1",
+                "0.10"
+            ],
+            "default": "latest",
+            "description": "The version of the buildx plugin to install."
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "mounts": [
+        {
+            "source": "/var/run/docker.sock",
+            "target": "/var/run/docker.sock",
+            "type": "bind"
+        }
+    ],
+    "entrypoint": "/usr/local/share/docker-init.sh"
+}

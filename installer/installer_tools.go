@@ -4,6 +4,8 @@ type tools struct {
 	Compression *compression
 	Download    *download
 	FileSystem  *fileSystem
+	GitHub      *gitHub
+	Http        *httpTools
 }
 
 var Tools *tools
@@ -13,5 +15,7 @@ func init() {
 		Compression: &compression{},
 		Download:    &download{},
 		FileSystem:  &fileSystem{},
+		GitHub:      &gitHub{},
+		Http:        &httpTools{},
 	}
 }

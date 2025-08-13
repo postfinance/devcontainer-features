@@ -98,6 +98,12 @@ func (f *fileSystem) MoveFolders(src []string, dest string) error {
 	return nil
 }
 
+func (f *fileSystem) MoveFile(src, dest string) error {
+	dir := filepath.Dir(dest)
+	os.MkdirAll(dir, os.ModePerm)
+	return os.Rename(src, dest)
+}
+
 func (f *fileSystem) CreateSymLink(targetPath string, symLinkPath string, allowNotExistingTarget bool) error {
 	// Check if the symlink path exists and delete it then
 	if _, err := os.Lstat(symLinkPath); err == nil {

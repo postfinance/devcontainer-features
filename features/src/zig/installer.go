@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"net/url"
 	"os"
 	"regexp"
 	"runtime"
@@ -56,10 +55,6 @@ func runMain() error {
 			DownloadRegistryPath: *downloadRegistryPath,
 		})
 	return feature.Process()
-}
-
-func buildUrl(base string, parts ...string) (string, error) {
-	return url.JoinPath(base, parts...)
 }
 
 //////////
@@ -121,7 +116,7 @@ func (c *zigComponent) InstallVersion(version *gover.Version) error {
 		}
 	}
 
-	downloadUrl, err := buildUrl(c.DownloadRegistryBase, c.DownloadRegistryPath, version.Raw, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadRegistryBase, c.DownloadRegistryPath, version.Raw, fileName)
 	if err != nil {
 		return err
 	}

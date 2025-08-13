@@ -14,7 +14,11 @@ jobs:
   build:
     strategy:
       matrix:
-        feature: ["go", "zig"]
+        feature: [
+          #"docker-out",
+          "go",
+          "zig"
+        ]
     runs-on: ubuntu-latest
     permissions:
       contents: read

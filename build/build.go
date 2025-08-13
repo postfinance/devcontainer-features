@@ -20,6 +20,7 @@ import (
 ////////////////////////////////////////////////////////////
 
 var featureList = []string{
+	"docker-out",
 	"go",
 	"zig",
 }
@@ -46,7 +47,18 @@ func init() {
 		return nil
 	})
 
-	////////// Go
+	////////// docker-out
+	gotaskr.Task("Feature:docker-out:Package", func() error {
+		return packageFeature("docker-out")
+	})
+	gotaskr.Task("Feature:docker-out:Test", func() error {
+		return testFeature("docker-out")
+	})
+	gotaskr.Task("Feature:docker-out:Publish", func() error {
+		return publishFeature("docker-out")
+	})
+
+	////////// go
 	gotaskr.Task("Feature:go:Package", func() error {
 		return packageFeature("go")
 	})
@@ -57,7 +69,7 @@ func init() {
 		return publishFeature("go")
 	})
 
-	////////// Zig
+	////////// zig
 	gotaskr.Task("Feature:zig:Package", func() error {
 		return packageFeature("zig")
 	})
