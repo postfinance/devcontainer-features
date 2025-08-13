@@ -4,5 +4,8 @@
 # Packaged features
 output/
 
+# Builded installers
+features/src/**/installer_*
+
 # Cache for tests
 .scenario-test/
