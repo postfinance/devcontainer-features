@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         feature: [
-          #"docker-out",
+          "docker-out",
           "go",
           "zig"
         ]

@@ -34,7 +34,6 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "The version of Zig to install.")
-	isExactVersion := flag.Bool("isExactVersion", false, "Whether to install the exact version specified.")
 	downloadRegistryBase := flag.String("downloadRegistryBase", "", "The download registry to use for Zig binaries.")
 	downloadRegistryPath := flag.String("downloadRegistryPath", "", "The download registry path to use for Zig binaries.")
 	flag.Parse()
@@ -50,7 +49,7 @@ func runMain() error {
 	// Create and process the feature
 	feature := installer.NewFeature("Zig", true,
 		&zigComponent{
-			ComponentBase:        installer.NewComponentBase("Zig", *version, *isExactVersion),
+			ComponentBase:        installer.NewComponentBase("Zig", *version),
 			DownloadRegistryBase: *downloadRegistryBase,
 			DownloadRegistryPath: *downloadRegistryPath,
 		})

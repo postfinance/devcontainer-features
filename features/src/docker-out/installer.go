@@ -41,13 +41,13 @@ func runMain() error {
 	// Create and process the feature
 	feature := installer.NewFeature("Docker-Out", false,
 		&dockerCliComponent{
-			ComponentBase: installer.NewComponentBase("Docker CLI", *version, false),
+			ComponentBase: installer.NewComponentBase("Docker CLI", *version),
 		},
 		&dockerComposeComponent{
-			ComponentBase: installer.NewComponentBase("Docker Compose", *composeVersion, false),
+			ComponentBase: installer.NewComponentBase("Docker Compose", *composeVersion),
 		},
 		&dockerBuildxComponent{
-			ComponentBase: installer.NewComponentBase("Docker buildx", *buildxVersion, false),
+			ComponentBase: installer.NewComponentBase("Docker buildx", *buildxVersion),
 		},
 	)
 	return feature.Process()

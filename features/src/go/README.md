@@ -6,9 +6,8 @@ A feature which installs Go.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/go:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/go:0.1.0": {
         "version": "latest",
-        "isExactVersion": false,
         "downloadRegistryBase": "",
         "downloadRegistryPath": ""
     }
@@ -19,8 +18,7 @@ A feature which installs Go.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | The version of Go to install. | string | latest | latest, 1.24, 1.21.8 |
-| isExactVersion | Whether to install the exact version specified. | boolean | false | true, false |
+| version | The version of Go to install. | string | latest | latest, 1.24, 1.21.8! |
 | downloadRegistryBase | The download registry to use for Go binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/dl-google-generic-remote |
 | downloadRegistryPath | The download registry path to use for Go binaries. | string | &lt;empty&gt; |  |
 

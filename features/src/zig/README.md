@@ -6,9 +6,8 @@ A feature which installs Zig.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/zig:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/zig:0.1.0": {
         "version": "latest",
-        "isExactVersion": false,
         "downloadRegistryBase": "",
         "downloadRegistryPath": ""
     }
@@ -19,8 +18,7 @@ A feature which installs Zig.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | The version of Zig to install. | string | latest | latest, 0.13.0, 0.12 |
-| isExactVersion | Whether to install the exact version specified. | boolean | false | true, false |
+| version | The version of Zig to install. | string | latest | latest, 0.13.0!, 0.12 |
 | downloadRegistryBase | The download registry to use for Zig binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/ziglang-generic-remote |
 | downloadRegistryPath | The download registry path to use for Zig binaries. | string | &lt;empty&gt; |  |
 

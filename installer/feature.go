@@ -36,7 +36,7 @@ func (f *Feature) Process() error {
 	for _, component := range f.components {
 		fmt.Printf("Processing component '%s'\n", component.GetName())
 		requestedVersionString := component.GetRequestedVersion()
-		isExactVersion := component.IsExactVersion()
+		isExactVersion := strings.HasSuffix(requestedVersionString, "!")
 
 		// Skip if "none" version was requested
 		if requestedVersionString == VERSION_NONE {
@@ -124,8 +124,6 @@ type IComponent interface {
 	GetName() string
 	// Gets the requestedVersion of the component.
 	GetRequestedVersion() string
-	// Returns whether the requested version is an exact version.
-	IsExactVersion() bool
 	// Returns a list of all available versions.
 	GetAllVersions() ([]*gover.Version, error)
 	// Returns the latest version. Defaults to nil which then uses the max of GetAllVersions.
@@ -135,11 +133,10 @@ type IComponent interface {
 }
 
 // Constructor for a base component.
-func NewComponentBase(name string, requestedVersion string, isExactVersion bool) *ComponentBase {
+func NewComponentBase(name string, requestedVersion string) *ComponentBase {
 	return &ComponentBase{
 		name:             name,
 		requestedVersion: requestedVersion,
-		isExactVersion:   isExactVersion,
 	}
 }
 
@@ -147,7 +144,6 @@ func NewComponentBase(name string, requestedVersion string, isExactVersion bool)
 type ComponentBase struct {
 	name             string
 	requestedVersion string
-	isExactVersion   bool
 }
 
 // Gets the name of the component.
@@ -158,10 +154,6 @@ func (c *ComponentBase) GetName() string {
 // Gets the requestedVersion of the component.
 func (c *ComponentBase) GetRequestedVersion() string {
 	return c.requestedVersion
-}
-
-func (c *ComponentBase) IsExactVersion() bool {
-	return c.isExactVersion
 }
 
 // Gets all possible version. Returns nil if no implementation is provided.

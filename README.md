@@ -21,6 +21,13 @@ Below is a list with included features, click on the link for more details.
 
 ## Usage
 
+### Versioning
+
+Most of the features support specifying non-absolute versions, like `latest` or `1.24` (go example) which represents only a part of the version.
+In those cases, the feature will lookup all versions and find the appropriate version to install. In case of `latest`, it is if course the latest. In case of a partial version, it takes the highest version that still matches the partial version.
+
+Now, the version number is often the exact version. In that case, a lookup to all versions could be entirely skipped. To specify a version to be `absolute`, just suffix it with an `!`, so for example: `1.24.5!`. In that case, the feature will directly try to install this exact version without any further matching. This has the benefit that the version-check url does not need to be reachable.
+
 ### Global overwrites
 
 Each feature that needs to download something provides options to overwrite the download url.
