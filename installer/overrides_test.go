@@ -59,3 +59,64 @@ func TestOverrideUseFile(t *testing.T) {
 	HandleOverride(&testValue3, "default", "test-key-set")
 	assert.Equal("no-override", testValue3)
 }
+
+func TestGitHubOverride(t *testing.T) {
+	assert := assert.New(t)
+
+	// Test default
+	func() {
+		composeDownloadUrlBase := &[]string{""}[0]
+		composeDownloadUrlPath := &[]string{""}[0]
+		HandleGitHubOverride(composeDownloadUrlBase, composeDownloadUrlPath, "docker/compose", "test-download-url")
+		assert.Equal("https://github.com", *composeDownloadUrlBase)
+		assert.Equal("docker/compose/releases/download", *composeDownloadUrlPath)
+	}()
+
+	// Test remote repo to github.com
+	func() {
+		composeDownloadUrlBase := &[]string{""}[0]
+		composeDownloadUrlPath := &[]string{""}[0]
+		os.Setenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE", "https://mycompany.com/artifactory/github-generic-remote")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE")
+		HandleGitHubOverride(composeDownloadUrlBase, composeDownloadUrlPath, "docker/compose", "test-download-url")
+		assert.Equal("https://mycompany.com/artifactory/github-generic-remote", *composeDownloadUrlBase)
+		assert.Equal("docker/compose/releases/download", *composeDownloadUrlPath)
+	}()
+
+	// Test remote repo to github.com/docker
+	func() {
+		composeDownloadUrlBase := &[]string{""}[0]
+		composeDownloadUrlPath := &[]string{""}[0]
+		os.Setenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE", "https://mycompany.com/artifactory/github-docker-generic-remote")
+		os.Setenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_PATH", "compose/releases/download")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_PATH")
+		HandleGitHubOverride(composeDownloadUrlBase, composeDownloadUrlPath, "docker/compose", "test-download-url")
+		assert.Equal("https://mycompany.com/artifactory/github-docker-generic-remote", *composeDownloadUrlBase)
+		assert.Equal("compose/releases/download", *composeDownloadUrlPath)
+	}()
+
+	// Test remote repo to github.com/docker/compose
+	func() {
+		composeDownloadUrlBase := &[]string{""}[0]
+		composeDownloadUrlPath := &[]string{""}[0]
+		os.Setenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE", "https://mycompany.com/artifactory/github-docker-compose-generic-remote")
+		os.Setenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_PATH", "releases/download")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_PATH")
+		HandleGitHubOverride(composeDownloadUrlBase, composeDownloadUrlPath, "docker/compose", "test-download-url")
+		assert.Equal("https://mycompany.com/artifactory/github-docker-compose-generic-remote", *composeDownloadUrlBase)
+		assert.Equal("releases/download", *composeDownloadUrlPath)
+	}()
+
+	// Test global github override
+	func() {
+		composeDownloadUrlBase := &[]string{""}[0]
+		composeDownloadUrlPath := &[]string{""}[0]
+		os.Setenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE", "https://mycompany.com/artifactory/github-generic-remote")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL_BASE")
+		HandleGitHubOverride(composeDownloadUrlBase, composeDownloadUrlPath, "docker/compose", "test-download-url")
+		assert.Equal("https://mycompany.com/artifactory/github-generic-remote", *composeDownloadUrlBase)
+		assert.Equal("docker/compose/releases/download", *composeDownloadUrlPath)
+	}()
+}

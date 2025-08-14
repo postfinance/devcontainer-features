@@ -14,3 +14,7 @@ esac
     -downloadUrlBase="${DOWNLOADURLBASE:-""}" \
     -downloadUrlPath="${DOWNLOADURLPATH:-""}" \
     -versionsUrl="${VERSIONSURL:-""}" \
+    -composeDownloadUrlBase="${COMPOSEDOWNLOADURLBASE:-""}" \
+    -composeDownloadUrlPath="${COMPOSEDOWNLOADURLPATH:-""}" \
+    -buildxDownloadUrlBase="${BUILDXDOWNLOADURLBASE:-""}" \
+    -buildxDownloadUrlPath="${BUILDXDOWNLOADURLPATH:-""}"

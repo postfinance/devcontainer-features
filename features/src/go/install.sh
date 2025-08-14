@@ -10,4 +10,4 @@ esac
     -downloadUrlBase="${DOWNLOADURLBASE:-""}" \
     -downloadUrlPath="${DOWNLOADURLPATH:-""}" \
     -latestUrl="${LATESTURL:-""}" \
-    -versionsUrl="${VERSIONSURL:-""}" \
+    -versionsUrl="${VERSIONSURL:-""}"

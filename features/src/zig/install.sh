@@ -9,4 +9,4 @@ esac
     -versionResolve="${VERSIONRESOLVE:-"false"}" \
     -downloadUrlBase="${DOWNLOADURLBASE:-""}" \
     -downloadUrlPath="${DOWNLOADURLPATH:-""}" \
-    -versionsUrl="${VERSIONSURL:-""}" \
+    -versionsUrl="${VERSIONSURL:-""}"

@@ -15,7 +15,11 @@ A feature which installs the Docker client and re-uses the host socket.
         "buildxVersionResolve": false,
         "downloadUrlBase": "",
         "downloadUrlPath": "",
-        "versionsUrl": ""
+        "versionsUrl": "",
+        "composeDownloadUrlBase": "",
+        "composeDownloadUrlPath": "",
+        "buildxDownloadUrlBase": "",
+        "buildxDownloadUrlPath": ""
     }
 }
 ```
@@ -33,6 +37,10 @@ A feature which installs the Docker client and re-uses the host socket.
 | downloadUrlBase | The download URL to use for Docker binaries. | string | &lt;empty&gt; |  |
 | downloadUrlPath | The download URL path to use for Docker binaries. | string | &lt;empty&gt; |  |
 | versionsUrl | The URL to use for checking available versions. | string | &lt;empty&gt; |  |
+| composeDownloadUrlBase | The download URL to use for Docker Compose binaries. | string | &lt;empty&gt; |  |
+| composeDownloadUrlPath | The download URL path to use for Docker Compose binaries. | string | &lt;empty&gt; |  |
+| buildxDownloadUrlBase | The download URL to use for Docker Buildx binaries. | string | &lt;empty&gt; |  |
+| buildxDownloadUrlPath | The download URL path to use for Docker Buildx binaries. | string | &lt;empty&gt; |  |
 
 ## Customizations
 
@@ -50,3 +58,4 @@ Debian, Ubuntu, Alpine
 
 Needs access to the following URL for downloading and resolving:
 * https://download.docker.com
+* https://github.com

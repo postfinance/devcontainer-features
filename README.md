@@ -65,6 +65,14 @@ If your remote points directly to `https://dl.google.com/go`, you need to set:
 
 See [override-all.env](./override-all.env) for a file with all possible override variables.
 
+#### Special overrides
+
+There are a few sources which are used in multiple installations. For those sources, there is an override that globaly overrides all installations from this sources. Here is the list of those sources and their keys.
+
+```
+GITHUB_DOWNLOAD_URL_BASE=...
+```
+
 ### Extend an existing feature
 
 TBD

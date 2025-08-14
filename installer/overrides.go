@@ -52,13 +52,38 @@ func LoadOverrides() error {
 func HandleOverride(passedValue *string, defaultValue string, key string) {
 	if *passedValue == "" {
 		// Convert the key to a compatible format
-		key = strings.ToUpper(strings.ReplaceAll(key, "-", "_"))
+		key = keyToEnv(key)
 		// Try get the value from an environment variable
-		if envValue := os.Getenv(fmt.Sprintf("DEV_FEATURE_OVERRIDE_%s", key)); envValue != "" {
+		if envValue := os.Getenv(key); envValue != "" {
 			*passedValue = envValue
 			return
 		}
 		// Otherwise set to default value
 		*passedValue = defaultValue
 	}
+}
+
+func HandleGitHubOverride(downloadUrlBase *string, downloadUrlPath *string, gitHubPath string, key string) {
+	if *downloadUrlBase == "" {
+		baseKey := keyToEnv(key) + "_BASE"
+		if envValue := os.Getenv(baseKey); envValue != "" {
+			*downloadUrlBase = envValue
+		} else if envValue := os.Getenv("GITHUB_DOWNLOAD_URL_BASE"); envValue != "" {
+			*downloadUrlBase = envValue
+		} else {
+			*downloadUrlBase = "https://github.com"
+		}
+	}
+	if *downloadUrlPath == "" {
+		pathKey := keyToEnv(key) + "_PATH"
+		if envValue := os.Getenv(pathKey); envValue != "" {
+			*downloadUrlPath = envValue
+		} else {
+			*downloadUrlPath = fmt.Sprintf("%s/releases/download", gitHubPath)
+		}
+	}
+}
+
+func keyToEnv(key string) string {
+	return "DEV_FEATURE_OVERRIDE_" + strings.ToUpper(strings.ReplaceAll(key, "-", "_"))
 }

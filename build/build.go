@@ -153,6 +153,8 @@ func packageFeature(featureName string) error {
 }
 
 func testFeature(featureName string) error {
+	// For debugging
+	keepImage := false
 	// Prepare the temporary folder for the devcontainer spec
 	testPath := ".scenario-test"
 	os.RemoveAll(testPath)
@@ -246,7 +248,9 @@ func testFeature(featureName string) error {
 			}); err != nil {
 				return err
 			}
-			defer execr.Run(false, "docker", "image", "rm", imageName)
+			if !keepImage {
+				defer execr.Run(false, "docker", "image", "rm", imageName)
+			}
 
 			// Run the check in the container
 			checkError := execr.Run(true, "docker", "run", "-t", "--rm", "-v", "/var/run/docker.sock:/var/run/docker.sock", imageName, "sh", "-c", "/tmp/check.sh")
