@@ -48,8 +48,8 @@ An environment variable `DEV_FEATURE_OVERRIDE_LOCATION` can be set to a location
 The content of the file is simple `key=value` like an env file.
 The key names are `DEV_FEATURE_OVERRIDE_<key-to-overwrite>`, but you can also just skip the `DEV_FEATURE_OVERRIDE_` and directly use the desired key name. So for example:
 ```
-GO_DOWNLOAD_REGISTRY_BASE=https://mycompany.com/artifactory/dl-google-generic-remote
-GO_DOWNLOAD_REGISTRY_PATH=/go
+GO_DOWNLOAD_URL_BASE=https://mycompany.com/artifactory/dl-google-generic-remote
+GO_DOWNLOAD_URL_PATH=/go
 ```
 As the remote can be configured differently (e.g. by including or excluding sub-paths), there are usually two variables: one for the base and one for the path.
 
