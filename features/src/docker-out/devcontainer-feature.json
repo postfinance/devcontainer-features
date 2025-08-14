@@ -48,6 +48,21 @@
             "type": "boolean",
             "default": false,
             "description": "Whether to resolve the version automatically."
+        },
+        "downloadUrlBase": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for Docker binaries."
+        },
+        "downloadUrlPath": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL path to use for Docker binaries."
+        },
+        "versionsUrl":{
+            "type": "string",
+            "default": "",
+            "description": "The URL to use for checking available versions."
         }
     },
     "customizations": {

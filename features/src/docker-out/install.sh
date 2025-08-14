@@ -10,4 +10,7 @@ esac
     -composeVersion="${COMPOSEVERSION:-"latest"}" \
     -composeVersionResolve="${COMPOSEVERSIONRESOLVE:-"false"}" \
     -buildxVersion="${BUILDXVERSION:-"latest"}" \
-    -buildxVersionResolve="${BUILDXVERSIONRESOLVE:-"false"}"
+    -buildxVersionResolve="${BUILDXVERSIONRESOLVE:-"false"}" \
+    -downloadUrlBase="${DOWNLOADURLBASE:-""}" \
+    -downloadUrlPath="${DOWNLOADURLPATH:-""}" \
+    -versionsUrl="${VERSIONSURL:-""}" \

@@ -9,8 +9,10 @@ A feature which installs Go.
     "ghcr.io/postfinance/devcontainer-features/go:0.1.0": {
         "version": "latest",
         "versionResolve": false,
-        "downloadRegistryBase": "",
-        "downloadRegistryPath": ""
+        "downloadUrlBase": "",
+        "downloadUrlPath": "",
+        "latestUrl": "",
+        "versionsUrl": ""
     }
 }
 ```
@@ -21,8 +23,10 @@ A feature which installs Go.
 |-----|-----|-----|-----|-----|
 | version | The version of Go to install. | string | latest | latest, 1.24, 1.21.8 |
 | versionResolve | Whether to resolve the version automatically. | boolean | false | true, false |
-| downloadRegistryBase | The download registry to use for Go binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/dl-google-generic-remote |
-| downloadRegistryPath | The download registry path to use for Go binaries. | string | &lt;empty&gt; |  |
+| downloadUrlBase | The download URL to use for Go binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/dl-google-generic-remote |
+| downloadUrlPath | The download URL path to use for Go binaries. | string | &lt;empty&gt; |  |
+| latestUrl | The URL to fetch the latest Go version from. | string | &lt;empty&gt; |  |
+| versionsUrl | The URL to fetch the available Go versions from. | string | &lt;empty&gt; |  |
 
 ## Customizations
 
@@ -38,6 +42,8 @@ Debian, Ubuntu, Alpine
 
 ### Accessed Urls
 
-Needs to access the following urls to install non-exact versions:
-* https://go.dev/dl/?mode=json&include=all
-* https://go.dev/VERSION?m=text
+Needs access to the following URL for downloading:
+* https://dl.google.com
+
+Needs access to the following URL for resolving:
+* https://go.dev

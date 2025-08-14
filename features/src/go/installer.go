@@ -17,9 +17,6 @@ import (
 // Configuration
 //////////
 
-const versionsIndexUrl = "https://go.dev/dl/?mode=json&include=all"
-const latestVersionUrl = "https://go.dev/VERSION?m=text"
-
 var versionRegexp *regexp.Regexp = regexp.MustCompile(`(?m:)^go(?P<raw>(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:([a-z]+)(\d+)?)?)$`)
 
 //////////
@@ -35,10 +32,12 @@ func main() {
 
 func runMain() error {
 	// Handle the flags
-	version := flag.String("version", "latest", "The version of Go to install.")
-	versionResolve := flag.Bool("versionResolve", false, "Whether to resolve the version to the latest available version.")
-	downloadRegistryBase := flag.String("downloadRegistryBase", "", "The download registry to use for Go binaries.")
-	downloadRegistryPath := flag.String("downloadRegistryPath", "", "The download registry path to use for Go binaries.")
+	version := flag.String("version", "latest", "")
+	versionResolve := flag.Bool("versionResolve", false, "")
+	downloadUrlBase := flag.String("downloadUrlBase", "", "")
+	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	latestUrl := flag.String("latestUrl", "", "")
+	versionsUrl := flag.String("versionsUrl", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -46,15 +45,19 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadRegistryBase, "https://dl.google.com", "go-download-registry-base")
-	installer.HandleOverride(downloadRegistryPath, "/go", "go-download-registry-path")
+	installer.HandleOverride(downloadUrlBase, "https://dl.google.com", "go-download-url-base")
+	installer.HandleOverride(downloadUrlPath, "/go", "go-download-url-path")
+	installer.HandleOverride(latestUrl, "https://go.dev/VERSION?m=text", "go-latest-url")
+	installer.HandleOverride(versionsUrl, "https://go.dev/dl/?mode=json&include=all", "go-versions-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Go", true,
 		&goComponent{
-			ComponentBase:        installer.NewComponentBase("Go", *version, *versionResolve),
-			DownloadRegistryBase: *downloadRegistryBase,
-			DownloadRegistryPath: *downloadRegistryPath,
+			ComponentBase:   installer.NewComponentBase("Go", *version, *versionResolve),
+			DownloadUrlBase: *downloadUrlBase,
+			DownloadUrlPath: *downloadUrlPath,
+			LatestUrl:       *latestUrl,
+			VersionsUrl:     *versionsUrl,
 		})
 	return feature.Process()
 }
@@ -65,12 +68,14 @@ func runMain() error {
 
 type goComponent struct {
 	*installer.ComponentBase
-	DownloadRegistryBase string
-	DownloadRegistryPath string
+	DownloadUrlBase string
+	DownloadUrlPath string
+	LatestUrl       string
+	VersionsUrl     string
 }
 
 func (c *goComponent) GetLatestVersion() (*gover.Version, error) {
-	versionFileContent, err := installer.Tools.Download.AsString(latestVersionUrl)
+	versionFileContent, err := installer.Tools.Download.AsString(c.LatestUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +92,7 @@ func (c *goComponent) GetLatestVersion() (*gover.Version, error) {
 }
 
 func (c *goComponent) GetAllVersions() ([]*gover.Version, error) {
-	versionFileContent, err := installer.Tools.Download.AsBytes(versionsIndexUrl)
+	versionFileContent, err := installer.Tools.Download.AsBytes(c.VersionsUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +125,7 @@ func (c *goComponent) InstallVersion(version *gover.Version) error {
 		return fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
 	}
 
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadRegistryBase, c.DownloadRegistryPath, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, fileName)
 	if err != nil {
 		return err
 	}

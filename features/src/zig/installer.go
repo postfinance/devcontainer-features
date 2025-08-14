@@ -16,8 +16,6 @@ import (
 // Configuration
 //////////
 
-const versionsIndexUrl = "https://ziglang.org/download/index.json"
-
 var versionRegexp *regexp.Regexp = gover.RegexpSimple
 
 //////////
@@ -33,10 +31,11 @@ func main() {
 
 func runMain() error {
 	// Handle the flags
-	version := flag.String("version", "latest", "The version of Zig to install.")
-	versionResolve := flag.Bool("versionResolve", false, "Whether to resolve the version to the latest available version.")
-	downloadRegistryBase := flag.String("downloadRegistryBase", "", "The download registry to use for Zig binaries.")
-	downloadRegistryPath := flag.String("downloadRegistryPath", "", "The download registry path to use for Zig binaries.")
+	version := flag.String("version", "latest", "")
+	versionResolve := flag.Bool("versionResolve", false, "")
+	downloadUrlBase := flag.String("downloadUrlBase", "", "")
+	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	versionsUrl := flag.String("versionsUrl", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -44,15 +43,17 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadRegistryBase, "https://ziglang.org", "zig-download-registry-base")
-	installer.HandleOverride(downloadRegistryPath, "/download", "zig-download-registry-path")
+	installer.HandleOverride(downloadUrlBase, "https://ziglang.org", "zig-download-url-base")
+	installer.HandleOverride(downloadUrlPath, "/download", "zig-download-url-path")
+	installer.HandleOverride(versionsUrl, "https://ziglang.org/download/index.json", "zig-versions-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Zig", true,
 		&zigComponent{
-			ComponentBase:        installer.NewComponentBase("Zig", *version, *versionResolve),
-			DownloadRegistryBase: *downloadRegistryBase,
-			DownloadRegistryPath: *downloadRegistryPath,
+			ComponentBase:   installer.NewComponentBase("Zig", *version, *versionResolve),
+			DownloadUrlBase: *downloadUrlBase,
+			DownloadUrlPath: *downloadUrlPath,
+			VersionsUrl:     *versionsUrl,
 		})
 	return feature.Process()
 }
@@ -63,12 +64,13 @@ func runMain() error {
 
 type zigComponent struct {
 	*installer.ComponentBase
-	DownloadRegistryBase string
-	DownloadRegistryPath string
+	DownloadUrlBase string
+	DownloadUrlPath string
+	VersionsUrl     string
 }
 
 func (c *zigComponent) GetAllVersions() ([]*gover.Version, error) {
-	versionFileContent, err := installer.Tools.Download.AsBytes(versionsIndexUrl)
+	versionFileContent, err := installer.Tools.Download.AsBytes(c.VersionsUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +118,7 @@ func (c *zigComponent) InstallVersion(version *gover.Version) error {
 		}
 	}
 
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadRegistryBase, c.DownloadRegistryPath, version.Raw, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, version.Raw, fileName)
 	if err != nil {
 		return err
 	}

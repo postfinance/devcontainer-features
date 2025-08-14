@@ -6,6 +6,7 @@ SOCKET_GID=$(stat -c '%g' /var/run/docker.sock)
 
 # Find an existing group with the same GID
 # This is needed eg. for alpine which already has GID 999 (ping)
+# If this breaks some things, we might need to implement a solution based on socat
 EXISTING_GROUP=$(getent group $SOCKET_GID | cut -d: -f1)
 if [ -n "$EXISTING_GROUP" ]; then
   # Delete this group

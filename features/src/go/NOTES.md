@@ -6,6 +6,8 @@ Debian, Ubuntu, Alpine
 
 ### Accessed Urls
 
-Needs to access the following urls to install non-exact versions:
-* https://go.dev/dl/?mode=json&include=all
-* https://go.dev/VERSION?m=text
+Needs access to the following URL for downloading:
+* https://dl.google.com
+
+Needs access to the following URL for resolving:
+* https://go.dev

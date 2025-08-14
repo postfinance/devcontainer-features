@@ -19,18 +19,23 @@
             "default": false,
             "description": "Whether to resolve the version automatically."
         },
-        "downloadRegistryBase": {
+        "downloadUrlBase": {
             "type": "string",
             "default": "",
             "proposals": [
                 "https://mycompany.com/artifactory/ziglang-generic-remote"
             ],
-            "description": "The download registry to use for Zig binaries."
+            "description": "The download URL to use for Zig binaries."
         },
-        "downloadRegistryPath": {
+        "downloadUrlPath": {
             "type": "string",
             "default": "",
-            "description": "The download registry path to use for Zig binaries."
+            "description": "The download URL path to use for Zig binaries."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the available Zig versions from."
         }
     },
     "containerEnv": {

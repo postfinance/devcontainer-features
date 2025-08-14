@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
 
 	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gover"
@@ -15,9 +16,6 @@ import (
 //////////
 // Configuration
 //////////
-
-var downloadRegistryBase = "https://download.docker.com"
-var downloadRegistryPath = "/linux/static/stable/x86_64/"
 
 //////////
 // Main
@@ -32,19 +30,33 @@ func main() {
 
 func runMain() error {
 	// Handle the flags
-	version := flag.String("version", "latest", "The version of the Docker CLI to install.")
-	versionResolve := flag.Bool("versionResolve", false, "Whether to resolve the version to the latest available version.")
-	composeVersion := flag.String("composeVersion", "latest", "The version of the Compose plugin to install.")
-	composeVersionResolve := flag.Bool("composeVersionResolve", false, "Whether to resolve the version to the latest available version.")
-	buildxVersion := flag.String("buildxVersion", "latest", "The version of the buildx plugin to install.")
-	buildxVersionResolve := flag.Bool("buildxVersionResolve", false, "Whether to resolve the version to the latest available version.")
-
+	version := flag.String("version", "latest", "")
+	versionResolve := flag.Bool("versionResolve", false, "")
+	composeVersion := flag.String("composeVersion", "latest", "")
+	composeVersionResolve := flag.Bool("composeVersionResolve", false, "")
+	buildxVersion := flag.String("buildxVersion", "latest", "")
+	buildxVersionResolve := flag.Bool("buildxVersionResolve", false, "")
+	downloadUrlBase := flag.String("downloadUrlBase", "", "")
+	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	versionsUrl := flag.String("versionsUrl", "", "")
 	flag.Parse()
+
+	// Load settings from an external file
+	if err := installer.LoadOverrides(); err != nil {
+		return err
+	}
+
+	installer.HandleOverride(downloadUrlBase, "https://download.docker.com", "docker-out-download-url-base")
+	installer.HandleOverride(downloadUrlPath, "/linux/static/stable", "docker-out-download-url-path")
+	installer.HandleOverride(versionsUrl, "https://download.docker.com/linux/static/stable", "docker-out-versions-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Docker-Out", false,
 		&dockerCliComponent{
-			ComponentBase: installer.NewComponentBase("Docker CLI", *version, *versionResolve),
+			ComponentBase:   installer.NewComponentBase("Docker CLI", *version, *versionResolve),
+			DownloadUrlBase: *downloadUrlBase,
+			DownloadUrlPath: *downloadUrlPath,
+			VersionsUrl:     *versionsUrl,
 		},
 		&dockerComposeComponent{
 			ComponentBase: installer.NewComponentBase("Docker Compose", *composeVersion, *composeVersionResolve),
@@ -60,12 +72,22 @@ func runMain() error {
 // Implementation
 //////////
 
+// Docker CLI
+
 type dockerCliComponent struct {
 	*installer.ComponentBase
+	DownloadUrlBase string
+	DownloadUrlPath string
+	VersionsUrl     string
 }
 
 func (c *dockerCliComponent) GetAllVersions() ([]*gover.Version, error) {
-	url, err := installer.Tools.Http.BuildUrl(downloadRegistryBase, downloadRegistryPath)
+	// Download the file
+	architecturePathPart, err := c.getArchitecturePathPart()
+	if err != nil {
+		return nil, err
+	}
+	url, err := installer.Tools.Http.BuildUrl(c.VersionsUrl, architecturePathPart)
 	if err != nil {
 		return nil, err
 	}
@@ -82,8 +104,12 @@ func (c *dockerCliComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
+	architecturePathPart, err := c.getArchitecturePathPart()
+	if err != nil {
+		return err
+	}
 	fileName := fmt.Sprintf("docker-%s.tgz", version.Raw)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(downloadRegistryBase, downloadRegistryPath, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, architecturePathPart, fileName)
 	if err != nil {
 		return err
 	}
@@ -112,6 +138,21 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 
 	return nil
 }
+
+func (c *dockerCliComponent) getArchitecturePathPart() (string, error) {
+	var pathArchitecturePart string
+	switch runtime.GOARCH {
+	case "amd64":
+		pathArchitecturePart = "x86_64"
+	case "arm64":
+		pathArchitecturePart = "aarch64"
+	default:
+		return "", fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
+	}
+	return pathArchitecturePart, nil
+}
+
+// Docker Compose
 
 type dockerComposeComponent struct {
 	*installer.ComponentBase
@@ -148,6 +189,8 @@ func (c *dockerComposeComponent) InstallVersion(version *gover.Version) error {
 	}
 	return nil
 }
+
+// Docker buildx
 
 type dockerBuildxComponent struct {
 	*installer.ComponentBase

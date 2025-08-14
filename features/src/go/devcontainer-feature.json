@@ -19,18 +19,28 @@
             "default": false,
             "description": "Whether to resolve the version automatically."
         },
-        "downloadRegistryBase": {
+        "downloadUrlBase": {
             "type": "string",
             "default": "",
             "proposals": [
                 "https://mycompany.com/artifactory/dl-google-generic-remote"
             ],
-            "description": "The download registry to use for Go binaries."
+            "description": "The download URL to use for Go binaries."
         },
-        "downloadRegistryPath": {
+        "downloadUrlPath": {
             "type": "string",
             "default": "",
-            "description": "The download registry path to use for Go binaries."
+            "description": "The download URL path to use for Go binaries."
+        },
+        "latestUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the latest Go version from."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the available Go versions from."
         }
     },
     "customizations": {
