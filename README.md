@@ -21,12 +21,17 @@ Below is a list with included features, click on the link for more details.
 
 ## Usage
 
-### Versioning
+### Versions
 
-Most of the features support specifying non-absolute versions, like `latest` or `1.24` (go example) which represents only a part of the version.
-In those cases, the feature will lookup all versions and find the appropriate version to install. In case of `latest`, it is if course the latest. In case of a partial version, it takes the highest version that still matches the partial version.
+Most features allow to define one or more versions of the software that should be installed by the feature.
 
-Now, the version number is often the exact version. In that case, a lookup to all versions could be entirely skipped. To specify a version to be `absolute`, just suffix it with an `!`, so for example: `1.24.5!`. In that case, the feature will directly try to install this exact version without any further matching. This has the benefit that the version-check url does not need to be reachable.
+The preferred way to do this is by defining the full version number, eg. 1.24.3 for go. The features by default try to directly download this version and fail, if this does not work.
+
+Alternatively, the version often can be set to `latest` or a partial version (eg. `1.24`). In this case, the feature will resolve the version and find out the appropriate one to install and install that.
+
+NOTE: If you use partial versions, there is also a matching `versionResolve` option that needs to be set to `true` in order for the resoling to be used. This is because some software do not respect semver and deploy eg. version 2.13 as 2.13 instead of 2.13.0, so with this flag, we can distinguish those cases.
+
+NOTE2: The url for resolving the versions are usually a separate configuration option. This is that a feature can be configured to use a cache service (eg. Artifactory) for downloading the binaries but use the `live` url for checking versions.
 
 ### Global overwrites
 
