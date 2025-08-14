@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"runtime"
 
 	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gover"
@@ -140,16 +139,10 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 }
 
 func (c *dockerCliComponent) getArchitecturePathPart() (string, error) {
-	var pathArchitecturePart string
-	switch runtime.GOARCH {
-	case "amd64":
-		pathArchitecturePart = "x86_64"
-	case "arm64":
-		pathArchitecturePart = "aarch64"
-	default:
-		return "", fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
-	}
-	return pathArchitecturePart, nil
+	return installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "x86_64",
+		installer.ARM64: "aarch64",
+	})
 }
 
 // Docker Compose
@@ -179,7 +172,14 @@ func (c *dockerComposeComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *dockerComposeComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
-	downloadUrl := fmt.Sprintf("https://github.com/docker/compose/releases/download/%s/docker-compose-linux-x86_64", version.Raw)
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "x86_64",
+		installer.ARM64: "aarch64",
+	})
+	if err != nil {
+		return err
+	}
+	downloadUrl := fmt.Sprintf("https://github.com/docker/compose/releases/download/%s/docker-compose-linux-%s", version.Raw, archPart)
 	if err := installer.Tools.Download.ToFile(downloadUrl, "/usr/local/lib/docker/cli-plugins/docker-compose", "Docker Compose"); err != nil {
 		return err
 	}
@@ -217,7 +217,14 @@ func (c *dockerBuildxComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *dockerBuildxComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
-	downloadUrl := fmt.Sprintf("https://github.com/docker/buildx/releases/download/%s/buildx-%s.linux-amd64", version.Raw, version.Raw)
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "amd64",
+		installer.ARM64: "arm64",
+	})
+	if err != nil {
+		return err
+	}
+	downloadUrl := fmt.Sprintf("https://github.com/docker/buildx/releases/download/%s/buildx-%s.linux-%s", version.Raw, version.Raw, archPart)
 	if err := installer.Tools.Download.ToFile(downloadUrl, "/usr/local/lib/docker/cli-plugins/docker-buildx", "Docker buildx"); err != nil {
 		return err
 	}

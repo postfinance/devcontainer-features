@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"regexp"
-	"runtime"
 	"strings"
 
 	"github.com/roemer/gover"
@@ -115,16 +114,14 @@ func (c *goComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *goComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
-	var fileName string
-	switch runtime.GOARCH {
-	case "amd64":
-		fileName = fmt.Sprintf("go%s.linux-amd64.tar.gz", version.Raw)
-	case "arm64":
-		fileName = fmt.Sprintf("go%s.linux-arm64.tar.gz", version.Raw)
-	default:
-		return fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "amd64",
+		installer.ARM64: "arm64",
+	})
+	if err != nil {
+		return err
 	}
-
+	fileName := fmt.Sprintf("go%s.linux-%s.tar.gz", version.Raw, archPart)
 	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, fileName)
 	if err != nil {
 		return err

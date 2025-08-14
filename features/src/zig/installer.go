@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"regexp"
-	"runtime"
 
 	"github.com/roemer/gover"
 )
@@ -96,28 +95,20 @@ func (c *zigComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *zigComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "x86_64",
+		installer.ARM64: "aarch64",
+	})
+	if err != nil {
+		return err
+	}
 	var fileName string
 	// The url format changed from OS-Arch-Version to Arch-OS-Version with 0.14.1
 	if version.LessThan(gover.ParseSimple(0, 14, 1)) {
-		switch runtime.GOARCH {
-		case "amd64":
-			fileName = fmt.Sprintf("zig-linux-x86_64-%s.tar.xz", version.Raw)
-		case "arm64":
-			fileName = fmt.Sprintf("zig-linux-aarch64-%s.tar.xz", version.Raw)
-		default:
-			return fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
-		}
+		fileName = fmt.Sprintf("zig-linux-%s-%s.tar.xz", archPart, version.Raw)
 	} else {
-		switch runtime.GOARCH {
-		case "amd64":
-			fileName = fmt.Sprintf("zig-x86_64-linux-%s.tar.xz", version.Raw)
-		case "arm64":
-			fileName = fmt.Sprintf("zig-aarch64-linux-%s.tar.xz", version.Raw)
-		default:
-			return fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
-		}
+		fileName = fmt.Sprintf("zig-%s-linux-%s.tar.xz", archPart, version.Raw)
 	}
-
 	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, version.Raw, fileName)
 	if err != nil {
 		return err

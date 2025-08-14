@@ -23,6 +23,7 @@
             "type": "string",
             "proposals": [
                 "latest",
+                "none",
                 "2.39.1",
                 "2.29"
             ],
@@ -38,6 +39,7 @@
             "type": "string",
             "proposals": [
                 "latest",
+                "none",
                 "0.26.1",
                 "0.10"
             ],

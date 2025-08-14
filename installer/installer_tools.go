@@ -6,6 +6,7 @@ type tools struct {
 	FileSystem  *fileSystem
 	GitHub      *gitHub
 	Http        *httpTools
+	System      *system
 }
 
 var Tools *tools
@@ -17,5 +18,6 @@ func init() {
 		FileSystem:  &fileSystem{},
 		GitHub:      &gitHub{},
 		Http:        &httpTools{},
+		System:      &system{},
 	}
 }
