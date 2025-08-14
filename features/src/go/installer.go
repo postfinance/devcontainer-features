@@ -20,7 +20,7 @@ import (
 const versionsIndexUrl = "https://go.dev/dl/?mode=json&include=all"
 const latestVersionUrl = "https://go.dev/VERSION?m=text"
 
-var versionRegexp *regexp.Regexp = regexp.MustCompile(`(?m:)^go(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:([a-z]+)(\d+)?)?$`)
+var versionRegexp *regexp.Regexp = regexp.MustCompile(`(?m:)^go(?P<raw>(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:([a-z]+)(\d+)?)?)$`)
 
 //////////
 // Main
@@ -112,9 +112,9 @@ func (c *goComponent) InstallVersion(version *gover.Version) error {
 	var fileName string
 	switch runtime.GOARCH {
 	case "amd64":
-		fileName = fmt.Sprintf("%s.linux-amd64.tar.gz", version.Raw)
+		fileName = fmt.Sprintf("go%s.linux-amd64.tar.gz", version.Raw)
 	case "arm64":
-		fileName = fmt.Sprintf("%s.linux-arm64.tar.gz", version.Raw)
+		fileName = fmt.Sprintf("go%s.linux-arm64.tar.gz", version.Raw)
 	default:
 		return fmt.Errorf("unsupported architecture: %s", runtime.GOARCH)
 	}

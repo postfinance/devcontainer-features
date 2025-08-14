@@ -37,6 +37,7 @@ func (f *Feature) Process() error {
 		fmt.Printf("Processing component '%s'\n", component.GetName())
 		requestedVersionString := component.GetRequestedVersion()
 		isExactVersion := strings.HasSuffix(requestedVersionString, "!")
+		requestedVersionString = strings.TrimSuffix(requestedVersionString, "!")
 
 		// Skip if "none" version was requested
 		if requestedVersionString == VERSION_NONE {
@@ -85,6 +86,7 @@ func (f *Feature) Process() error {
 			if isExactVersion {
 				// The exact version was passed, so directly use it
 				versionToInstall = referenceVersion
+				versionToInstall.Raw = requestedVersionString
 			} else {
 				// Get all versions
 				allVersions, err := component.GetAllVersions()
