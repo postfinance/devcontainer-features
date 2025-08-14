@@ -9,10 +9,15 @@
             "proposals": [
                 "latest",
                 "1.24",
-                "1.21.8!"
+                "1.21.8"
             ],
             "default": "latest",
             "description": "The version of Go to install."
+        },
+        "versionResolve":{
+            "type":"boolean",
+            "default": false,
+            "description": "Whether to resolve the version automatically."
         },
         "downloadRegistryBase": {
             "type": "string",

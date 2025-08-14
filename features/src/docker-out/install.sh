@@ -6,5 +6,8 @@ esac
 
 "./installer_$ARCH" \
     -version="${VERSION:-"latest"}" \
+    -versionResolve="${VERSIONRESOLVE:-"false"}" \
     -composeVersion="${COMPOSEVERSION:-"latest"}" \
-    -buildxVersion="${BUILDXVERSION:-"latest"}"
+    -composeVersionResolve="${COMPOSEVERSIONRESOLVE:-"false"}" \
+    -buildxVersion="${BUILDXVERSION:-"latest"}" \
+    -buildxVersionResolve="${BUILDXVERSIONRESOLVE:-"false"}"

@@ -8,6 +8,7 @@ A feature which installs Go.
 "features": {
     "ghcr.io/postfinance/devcontainer-features/go:0.1.0": {
         "version": "latest",
+        "versionResolve": false,
         "downloadRegistryBase": "",
         "downloadRegistryPath": ""
     }
@@ -18,7 +19,8 @@ A feature which installs Go.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | The version of Go to install. | string | latest | latest, 1.24, 1.21.8! |
+| version | The version of Go to install. | string | latest | latest, 1.24, 1.21.8 |
+| versionResolve | Whether to resolve the version automatically. | boolean | false | true, false |
 | downloadRegistryBase | The download registry to use for Go binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/dl-google-generic-remote |
 | downloadRegistryPath | The download registry path to use for Go binaries. | string | &lt;empty&gt; |  |
 

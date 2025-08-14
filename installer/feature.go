@@ -36,8 +36,7 @@ func (f *Feature) Process() error {
 	for _, component := range f.components {
 		fmt.Printf("Processing component '%s'\n", component.GetName())
 		requestedVersionString := component.GetRequestedVersion()
-		isExactVersion := strings.HasSuffix(requestedVersionString, "!")
-		requestedVersionString = strings.TrimSuffix(requestedVersionString, "!")
+		resolveVersion := component.GetResolveVersion()
 
 		// Skip if "none" version was requested
 		if requestedVersionString == VERSION_NONE {
@@ -83,11 +82,12 @@ func (f *Feature) Process() error {
 		} else {
 			// Parse the reference version
 			referenceVersion := gover.ParseSimple(strings.Split(strings.ReplaceAll(requestedVersionString, "-", "."), "."))
-			if isExactVersion {
+			if !resolveVersion {
 				// The exact version was passed, so directly use it
 				versionToInstall = referenceVersion
 				versionToInstall.Raw = requestedVersionString
 			} else {
+				fmt.Println("Resolving version...")
 				// Get all versions
 				allVersions, err := component.GetAllVersions()
 				if err != nil {
@@ -126,6 +126,8 @@ type IComponent interface {
 	GetName() string
 	// Gets the requestedVersion of the component.
 	GetRequestedVersion() string
+	// Gets the resolveVersion of the component.
+	GetResolveVersion() bool
 	// Returns a list of all available versions.
 	GetAllVersions() ([]*gover.Version, error)
 	// Returns the latest version. Defaults to nil which then uses the max of GetAllVersions.
@@ -135,10 +137,11 @@ type IComponent interface {
 }
 
 // Constructor for a base component.
-func NewComponentBase(name string, requestedVersion string) *ComponentBase {
+func NewComponentBase(name string, requestedVersion string, resolveVersion bool) *ComponentBase {
 	return &ComponentBase{
 		name:             name,
 		requestedVersion: requestedVersion,
+		resolveVersion:   resolveVersion,
 	}
 }
 
@@ -146,6 +149,7 @@ func NewComponentBase(name string, requestedVersion string) *ComponentBase {
 type ComponentBase struct {
 	name             string
 	requestedVersion string
+	resolveVersion   bool
 }
 
 // Gets the name of the component.
@@ -156,6 +160,11 @@ func (c *ComponentBase) GetName() string {
 // Gets the requestedVersion of the component.
 func (c *ComponentBase) GetRequestedVersion() string {
 	return c.requestedVersion
+}
+
+// Gets the resolveVersion of the component.
+func (c *ComponentBase) GetResolveVersion() bool {
+	return c.resolveVersion
 }
 
 // Gets all possible version. Returns nil if no implementation is provided.

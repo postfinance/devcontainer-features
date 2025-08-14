@@ -8,11 +8,16 @@
             "type": "string",
             "proposals": [
                 "latest",
-                "0.13.0!",
+                "0.13.0",
                 "0.12"
             ],
             "default": "latest",
             "description": "The version of Zig to install."
+        },
+        "versionResolve":{
+            "type":"boolean",
+            "default": false,
+            "description": "Whether to resolve the version automatically."
         },
         "downloadRegistryBase": {
             "type": "string",

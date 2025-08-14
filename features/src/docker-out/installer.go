@@ -33,21 +33,24 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "The version of the Docker CLI to install.")
+	versionResolve := flag.Bool("versionResolve", false, "Whether to resolve the version to the latest available version.")
 	composeVersion := flag.String("composeVersion", "latest", "The version of the Compose plugin to install.")
+	composeVersionResolve := flag.Bool("composeVersionResolve", false, "Whether to resolve the version to the latest available version.")
 	buildxVersion := flag.String("buildxVersion", "latest", "The version of the buildx plugin to install.")
+	buildxVersionResolve := flag.Bool("buildxVersionResolve", false, "Whether to resolve the version to the latest available version.")
 
 	flag.Parse()
 
 	// Create and process the feature
 	feature := installer.NewFeature("Docker-Out", false,
 		&dockerCliComponent{
-			ComponentBase: installer.NewComponentBase("Docker CLI", *version),
+			ComponentBase: installer.NewComponentBase("Docker CLI", *version, *versionResolve),
 		},
 		&dockerComposeComponent{
-			ComponentBase: installer.NewComponentBase("Docker Compose", *composeVersion),
+			ComponentBase: installer.NewComponentBase("Docker Compose", *composeVersion, *composeVersionResolve),
 		},
 		&dockerBuildxComponent{
-			ComponentBase: installer.NewComponentBase("Docker buildx", *buildxVersion),
+			ComponentBase: installer.NewComponentBase("Docker buildx", *buildxVersion, *buildxVersionResolve),
 		},
 	)
 	return feature.Process()
