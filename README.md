@@ -33,20 +33,20 @@ NOTE: If you use partial versions, there is also a matching `versionResolve` opt
 
 NOTE2: The URLs for resolving the versions are usually in separate configuration options. This is so that a feature can be configured to use a cache service (e.g. Artifactory) for downloading the binaries but use the `live` URL for checking versions.
 
-### Global overwrites
+### Global overrides
 
-Each feature that needs to download something provides options to overwrite the download URL.
+Each feature that needs to download something provides options to override the download URL.
 This is good if a few projects need a few features.
 But if many projects need many features, it can become a nightmare to maintain that.
 
-For this reason, there is a possibility to globally set those overwrites (e.g. for the whole company):
+For this reason, there is a possibility to globally set those overrides (e.g. for the whole company):
 
-An environment variable `DEV_FEATURE_OVERRIDE_LOCATION` can be set to a location where a text file with the overwrites can be found.
+An environment variable `DEV_FEATURE_OVERRIDE_LOCATION` can be set to a location where a text file with the overrides can be found.
 * The variable itself can be defined in the `devcontainer.json` file or already be set in your base images used for dev containers.
 * This file can either be on a reachable web or file path. So it can be hosted in a git repository or directly copied into your base images used for dev containers.
 
 The content of the file is simple `key=value` like an env file.
-The key names are `DEV_FEATURE_OVERRIDE_<key-to-overwrite>`, but you can also just skip the `DEV_FEATURE_OVERRIDE_` and directly use the desired key name. So for example:
+The key names are `DEV_FEATURE_OVERRIDE_<key-to-override>`, but you can also just skip the `DEV_FEATURE_OVERRIDE_` and directly use the desired key name. So for example:
 ```
 GO_DOWNLOAD_URL_BASE=https://mycompany.com/artifactory/dl-google-generic-remote
 GO_DOWNLOAD_URL_PATH=/go

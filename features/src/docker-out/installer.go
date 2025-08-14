@@ -16,6 +16,10 @@ import (
 // Configuration
 //////////
 
+var dockerCliVersionRegexp *regexp.Regexp = regexp.MustCompile(`(?m)^(\d+)\.(\d+)\.(\d+)$`)
+var dockerComposeVersionRegexp *regexp.Regexp = regexp.MustCompile(`(?m)^v(\d+)\.(\d+)\.(\d+)$`)
+var dockerBuildxVersionRegexp *regexp.Regexp = regexp.MustCompile(`(?m)^v(\d+)\.(\d+)\.(\d+)$`)
+
 //////////
 // Main
 //////////
@@ -90,11 +94,10 @@ func (c *dockerCliComponent) GetAllVersions() ([]*gover.Version, error) {
 	if err != nil {
 		return nil, err
 	}
-	versionRegexp := regexp.MustCompile(`(?m)^(\d+)\.(\d+)\.(\d+)$`)
 	allVersions, err := installer.Tools.Http.GetVersionsFromHtmlIndex(
 		url,
 		regexp.MustCompile(`^.*<a href="docker-([0-9\.]+).tgz">.*$`),
-		versionRegexp)
+		dockerCliVersionRegexp)
 	if err != nil {
 		return nil, err
 	}
@@ -152,15 +155,14 @@ type dockerComposeComponent struct {
 }
 
 func (c *dockerComposeComponent) GetAllVersions() ([]*gover.Version, error) {
-	versionRegexp := regexp.MustCompile(`(?m)^v(\d+)\.(\d+)\.(\d+)$`)
 	versions := []*gover.Version{}
 	allTags, err := installer.Tools.GitHub.GetTags("docker", "compose")
 	if err != nil {
 		return nil, err
 	}
 	for _, tag := range allTags {
-		if versionRegexp.MatchString(tag.Name) {
-			version, err := gover.ParseVersionFromRegex(tag.Name, versionRegexp)
+		if dockerComposeVersionRegexp.MatchString(tag.Name) {
+			version, err := gover.ParseVersionFromRegex(tag.Name, dockerComposeVersionRegexp)
 			if err != nil {
 				return nil, err
 			}
@@ -197,15 +199,14 @@ type dockerBuildxComponent struct {
 }
 
 func (c *dockerBuildxComponent) GetAllVersions() ([]*gover.Version, error) {
-	versionRegexp := regexp.MustCompile(`(?m)^v(\d+)\.(\d+)\.(\d+)$`)
 	versions := []*gover.Version{}
 	allTags, err := installer.Tools.GitHub.GetTags("docker", "buildx")
 	if err != nil {
 		return nil, err
 	}
 	for _, tag := range allTags {
-		if versionRegexp.MatchString(tag.Name) {
-			version, err := gover.ParseVersionFromRegex(tag.Name, versionRegexp)
+		if dockerBuildxVersionRegexp.MatchString(tag.Name) {
+			version, err := gover.ParseVersionFromRegex(tag.Name, dockerBuildxVersionRegexp)
 			if err != nil {
 				return nil, err
 			}
