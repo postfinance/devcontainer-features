@@ -21,6 +21,7 @@ import (
 
 var featureList = []string{
 	"docker-out",
+	"git-lfs",
 	"go",
 	"zig",
 }
@@ -56,6 +57,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:docker-out:Publish", func() error {
 		return publishFeature("docker-out")
+	})
+
+	////////// git-lfs
+	gotaskr.Task("Feature:git-lfs:Package", func() error {
+		return packageFeature("git-lfs")
+	})
+	gotaskr.Task("Feature:git-lfs:Test", func() error {
+		return testFeature("git-lfs")
+	})
+	gotaskr.Task("Feature:git-lfs:Publish", func() error {
+		return publishFeature("git-lfs")
 	})
 
 	////////// go

@@ -16,6 +16,7 @@ jobs:
       matrix:
         feature: [
           "docker-out",
+          "git-lfs",
           "go",
           "zig"
         ]

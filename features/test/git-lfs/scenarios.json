@@ -1,0 +1,15 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./git-lfs": {
+                "version": "3.7.0"
+            }
+        }
+    }
+}
