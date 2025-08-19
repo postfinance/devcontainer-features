@@ -172,16 +172,7 @@ func (c *dockerComposeComponent) GetAllVersions() ([]*gover.Version, error) {
 	if err != nil {
 		return nil, err
 	}
-	for _, tag := range allTags {
-		if dockerComposeVersionRegexp.MatchString(tag.Name) {
-			version, err := gover.ParseVersionFromRegex(tag.Name, dockerComposeVersionRegexp)
-			if err != nil {
-				return nil, err
-			}
-			versions = append(versions, version)
-		}
-	}
-	return versions, nil
+	return installer.Tools.Versioning.ParseVersionsFromList(allTags, dockerComposeVersionRegexp, true)
 }
 
 func (c *dockerComposeComponent) InstallVersion(version *gover.Version) error {
@@ -218,21 +209,11 @@ type dockerBuildxComponent struct {
 }
 
 func (c *dockerBuildxComponent) GetAllVersions() ([]*gover.Version, error) {
-	versions := []*gover.Version{}
 	allTags, err := installer.Tools.GitHub.GetTags("docker", "buildx")
 	if err != nil {
 		return nil, err
 	}
-	for _, tag := range allTags {
-		if dockerBuildxVersionRegexp.MatchString(tag.Name) {
-			version, err := gover.ParseVersionFromRegex(tag.Name, dockerBuildxVersionRegexp)
-			if err != nil {
-				return nil, err
-			}
-			versions = append(versions, version)
-		}
-	}
-	return versions, nil
+	return installer.Tools.Versioning.ParseVersionsFromList(allTags, dockerBuildxVersionRegexp, true)
 }
 
 func (c *dockerBuildxComponent) InstallVersion(version *gover.Version) error {

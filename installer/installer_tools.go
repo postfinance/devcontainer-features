@@ -7,6 +7,7 @@ type tools struct {
 	GitHub      *gitHub
 	Http        *httpTools
 	System      *system
+	Versioning  *versioning
 }
 
 var Tools *tools
@@ -19,5 +20,6 @@ func init() {
 		GitHub:      &gitHub{},
 		Http:        &httpTools{},
 		System:      &system{},
+		Versioning:  &versioning{},
 	}
 }

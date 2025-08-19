@@ -66,21 +66,11 @@ type gitLfsComponent struct {
 }
 
 func (c *gitLfsComponent) GetAllVersions() ([]*gover.Version, error) {
-	versions := []*gover.Version{}
 	allTags, err := installer.Tools.GitHub.GetTags("git-lfs", "git-lfs")
 	if err != nil {
 		return nil, err
 	}
-	for _, tag := range allTags {
-		if gitLfsVersionRegexp.MatchString(tag.Name) {
-			version, err := gover.ParseVersionFromRegex(tag.Name, gitLfsVersionRegexp)
-			if err != nil {
-				return nil, err
-			}
-			versions = append(versions, version)
-		}
-	}
-	return versions, nil
+	return installer.Tools.Versioning.ParseVersionsFromList(allTags, gitLfsVersionRegexp, true)
 }
 
 func (c *gitLfsComponent) InstallVersion(version *gover.Version) error {

@@ -9,3 +9,6 @@ features/src/**/installer_*
 
 # Cache for tests
 .scenario-test/
+
+# Cache for prepared and cleaned feature for packaging/publishing
+.prepared-feature/

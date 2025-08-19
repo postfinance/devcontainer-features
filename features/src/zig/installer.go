@@ -82,8 +82,7 @@ func (c *zigComponent) GetAllVersions() ([]*gover.Version, error) {
 		if key == "master" {
 			continue
 		}
-		versionString := key
-		version, err := gover.ParseVersionFromRegex(versionString, versionRegexp)
+		version, err := gover.ParseVersionFromRegex(key, versionRegexp)
 		if err != nil {
 			return nil, err
 		}

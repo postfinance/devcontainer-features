@@ -97,6 +97,7 @@ func init() {
 // Helpers
 ////////////////////////////////////////////////////////////
 
+// Compiles the installer.
 func buildGo(workingDirectory string, binaryName string) ([]string, error) {
 	// Check if a go installer exists and only compile it then
 	if _, err := os.Stat(filepath.Join(workingDirectory, "installer.go")); err != nil {
@@ -141,23 +142,40 @@ func buildGo(workingDirectory string, binaryName string) ([]string, error) {
 	return buildBinaries, nil
 }
 
-func packageFeature(featureName string) error {
+// Copies the feature to targetDir, compiles and cleans it.
+func prepareFeature(featureName string, targetDir string) error {
 	featurePath := path.Join("features/src", featureName)
 
+	// Make sure the target is clean and exists
+	os.RemoveAll(targetDir)
+	os.MkdirAll(targetDir, os.ModePerm)
+
+	// Copy the feature
+	if err := os.CopyFS(targetDir, os.DirFS(featurePath)); err != nil {
+		return err
+	}
 	// Build the installer
-	buildBinaries, err := buildGo(featurePath, "installer")
+	_, err := buildGo(targetDir, "installer")
 	if err != nil {
 		return err
 	}
-	defer func() {
-		for _, binary := range buildBinaries {
-			os.Remove(filepath.Join(featurePath, binary))
-		}
-	}()
+	// Remove unneeded files
+	os.Remove(filepath.Join(targetDir, "installer.go"))
+	os.Remove(filepath.Join(targetDir, "NOTES.md"))
+
+	return nil
+}
+
+func packageFeature(featureName string) error {
+	tempDir := ".prepared-feature"
+	defer os.RemoveAll(tempDir)
+	if err := prepareFeature(featureName, tempDir); err != nil {
+		return err
+	}
 
 	// Package the feature
 	settings := &gttools.DevContainerCliFeaturesPackageSettings{
-		Target:                 featurePath,
+		Target:                 tempDir,
 		ForceCleanOutputFolder: gttools.True,
 	}
 	settings.OutputToConsole = true
@@ -239,15 +257,9 @@ func testFeature(featureName string) error {
 				return err
 			}
 
-			// Copy the required feature
-			originalFeaturePath := path.Join("features/src", featureName)
+			// Prepare the required feature
 			copiedFeaturePath := path.Join(devcontainerPath, featureName)
-			if err := os.CopyFS(copiedFeaturePath, os.DirFS(originalFeaturePath)); err != nil {
-				return err
-			}
-
-			// Build the go installer inside the feature
-			if _, err := buildGo(copiedFeaturePath, "installer"); err != nil {
+			if err := prepareFeature(featureName, copiedFeaturePath); err != nil {
 				return err
 			}
 
@@ -299,25 +311,18 @@ func publishFeature(featureName string) error {
 	registry := "ghcr.io"
 	namespace := "postfinance/devcontainer-features"
 
-	featurePath := path.Join("features/src", featureName)
-
-	// Build the installer
-	buildBinaries, err := buildGo(featurePath, "installer")
-	if err != nil {
+	tempDir := ".prepared-feature"
+	defer os.RemoveAll(tempDir)
+	if err := prepareFeature(featureName, tempDir); err != nil {
 		return err
 	}
-	defer func() {
-		for _, binary := range buildBinaries {
-			os.Remove(filepath.Join(featurePath, binary))
-		}
-	}()
 
 	// No authentication needed - DevContainerCLI supports GITHUB_TOKEN
 	// os.Setenv("DEVCONTAINERS_OCI_AUTH", "ghcr.io|USERNAME|"+os.Getenv("GITHUB_TOKEN"))
 
 	// Build and publish the feature
 	settings := &gttools.DevContainerCliFeaturesPublishSettings{
-		Target:    featurePath,
+		Target:    tempDir,
 		Registry:  registry,
 		Namespace: namespace,
 	}

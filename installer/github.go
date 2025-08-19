@@ -10,11 +10,10 @@ import (
 
 type gitHub struct{}
 
-func (g *gitHub) GetTags(owner string, repo string) ([]*GitHubTag, error) {
+func (g *gitHub) GetTags(owner string, repo string) ([]string, error) {
 	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/tags?per_page=100", owner, repo)
 	nextRegexp := regexp.MustCompile(`(?i)<([^<]*)>; rel="next"`)
-
-	var gitHubTags []*GitHubTag
+	var tagNames []string
 	for {
 		// Get the date for the current page
 		resp, err := http.Get(url)
@@ -30,11 +29,16 @@ func (g *gitHub) GetTags(owner string, repo string) ([]*GitHubTag, error) {
 			return nil, fmt.Errorf("failed to read body: %w", err)
 		}
 		// Parse the items
-		var pageItems []*GitHubTag
+		var pageItems []*struct {
+			Name string `json:"name"`
+		}
 		if err := json.Unmarshal(bodyBytes, &pageItems); err != nil {
 			return nil, err
 		}
-		gitHubTags = append(gitHubTags, pageItems...)
+		// Add the items to the result list
+		for _, item := range pageItems {
+			tagNames = append(tagNames, item.Name)
+		}
 		// Search for a next link
 		if linkHeader, ok := resp.Header["Link"]; ok {
 			matches := nextRegexp.FindStringSubmatch(linkHeader[0])
@@ -48,9 +52,5 @@ func (g *gitHub) GetTags(owner string, repo string) ([]*GitHubTag, error) {
 		break
 	}
 	// Return the found items
-	return gitHubTags, nil
-}
-
-type GitHubTag struct {
-	Name string `json:"name"`
+	return tagNames, nil
 }
