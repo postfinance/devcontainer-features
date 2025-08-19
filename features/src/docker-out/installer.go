@@ -167,7 +167,6 @@ type dockerComposeComponent struct {
 }
 
 func (c *dockerComposeComponent) GetAllVersions() ([]*gover.Version, error) {
-	versions := []*gover.Version{}
 	allTags, err := installer.Tools.GitHub.GetTags("docker", "compose")
 	if err != nil {
 		return nil, err
