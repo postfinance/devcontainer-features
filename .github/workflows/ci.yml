@@ -18,6 +18,7 @@ jobs:
           "docker-out",
           "git-lfs",
           "go",
+          "node",
           "zig"
         ]
     runs-on: ubuntu-latest

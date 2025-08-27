@@ -18,6 +18,7 @@ Below is a list with included features, click on the link for more details.
 | [docker-out](./features/src/docker-out/README.md) | A feature which installs the Docker client and re-uses the host socket. |
 | [git-lfs](./features/src/git-lfs/README.md) | A feature which installs Git LFS. |
 | [go](./features/src/go/README.md) | A feature which installs Go. |
+| [node](./features/src/node/README.md) | A package which installs Node.js. |
 | [zig](./features/src/zig/README.md) | A feature which installs Zig. |
 
 ## Usage
