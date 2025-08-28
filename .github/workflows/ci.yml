@@ -19,6 +19,7 @@ jobs:
           "git-lfs",
           "go",
           "node",
+          "vault-cli",
           "zig"
         ]
     runs-on: ubuntu-latest

@@ -19,6 +19,7 @@ Below is a list with included features, click on the link for more details.
 | [git-lfs](./features/src/git-lfs/README.md) | A feature which installs Git LFS. |
 | [go](./features/src/go/README.md) | A feature which installs Go. |
 | [node](./features/src/node/README.md) | A package which installs Node.js. |
+| [vault-cli](./features/src/vault-cli/README.md) | A feature which installs the Vault CLI. |
 | [zig](./features/src/zig/README.md) | A feature which installs Zig. |
 
 ## Usage

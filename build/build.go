@@ -24,6 +24,7 @@ var featureList = []string{
 	"git-lfs",
 	"go",
 	"node",
+	"vault-cli",
 	"zig",
 }
 
@@ -91,6 +92,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:node:Publish", func() error {
 		return publishFeature("node")
+	})
+
+	////////// vault-cli
+	gotaskr.Task("Feature:vault-cli:Package", func() error {
+		return packageFeature("vault-cli")
+	})
+	gotaskr.Task("Feature:vault-cli:Test", func() error {
+		return testFeature("vault-cli")
+	})
+	gotaskr.Task("Feature:vault-cli:Publish", func() error {
+		return publishFeature("vault-cli")
 	})
 
 	////////// zig
