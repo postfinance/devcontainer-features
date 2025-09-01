@@ -1,6 +1,6 @@
 {
     "id": "docker-out",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Docker outside Docker",
     "description": "A feature which installs the Docker client and re-uses the host socket.",
     "options": {
@@ -14,11 +14,6 @@
             "default": "latest",
             "description": "The version of the Docker CLI to install."
         },
-        "versionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
-        },
         "composeVersion": {
             "type": "string",
             "proposals": [
@@ -29,11 +24,6 @@
             ],
             "default": "latest",
             "description": "The version of the Compose plugin to install."
-        },
-        "composeVersionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
         },
         "buildxVersion": {
             "type": "string",
@@ -46,45 +36,25 @@
             "default": "latest",
             "description": "The version of the buildx plugin to install."
         },
-        "buildxVersionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
-        },
-        "downloadUrlBase": {
+        "downloadUrl": {
             "type": "string",
             "default": "",
             "description": "The download URL to use for Docker binaries."
-        },
-        "downloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Docker binaries."
         },
         "versionsUrl":{
             "type": "string",
             "default": "",
             "description": "The URL to use for checking available versions."
         },
-        "composeDownloadUrlBase": {
+        "composeDownloadUrl": {
             "type": "string",
             "default": "",
             "description": "The download URL to use for Docker Compose binaries."
         },
-        "composeDownloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Docker Compose binaries."
-        },
-        "buildxDownloadUrlBase": {
+        "buildxDownloadUrl": {
             "type": "string",
             "default": "",
             "description": "The download URL to use for Docker Buildx binaries."
-        },
-        "buildxDownloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Docker Buildx binaries."
         }
     },
     "customizations": {

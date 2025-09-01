@@ -50,6 +50,7 @@ jobs:
         run: go run ./build --target "Feature:${{ matrix.feature }}:Test"
       
       - name: Publish
+        if: github.ref == 'refs/heads/main'
         run: go run ./build --target "Feature:${{ matrix.feature }}:Publish"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,6 @@
 {
     "id": "zig",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Zig",
     "description": "A feature which installs Zig.",
     "options": {
@@ -14,23 +14,13 @@
             "default": "latest",
             "description": "The version of Zig to install."
         },
-        "versionResolve":{
-            "type":"boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
-        },
-        "downloadUrlBase": {
+        "downloadUrl": {
             "type": "string",
             "default": "",
             "proposals": [
-                "https://mycompany.com/artifactory/ziglang-generic-remote"
+                "https://mycompany.com/artifactory/ziglang-generic-remote/download"
             ],
             "description": "The download URL to use for Zig binaries."
-        },
-        "downloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Zig binaries."
         },
         "versionsUrl": {
             "type": "string",

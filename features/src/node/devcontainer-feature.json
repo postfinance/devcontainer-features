@@ -1,6 +1,6 @@
 {
     "id": "node",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Node.js",
     "description": "A package which installs Node.js.",
     "options": {
@@ -15,11 +15,6 @@
             "default": "lts",
             "description": "The version of Node.js to install."
         },
-        "versionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
-        },
         "npmVersion": {
             "type": "string",
             "proposals": [
@@ -30,11 +25,6 @@
             ],
             "default": "included",
             "description": "The version of NPM to install."
-        },
-        "npmVersionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the NPM version automatically."
         },
         "yarnVersion": {
             "type": "string",
@@ -47,11 +37,6 @@
             "default": "none",
             "description": "The version of Yarn to install."
         },
-        "yarnVersionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the Yarn version automatically."
-        },
         "pnpmVersion": {
             "type": "string",
             "proposals": [
@@ -63,23 +48,13 @@
             "default": "none",
             "description": "The version of Pnpm to install."
         },
-        "pnpmVersionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the Pnpm version automatically."
-        },
-        "downloadUrlBase": {
+        "downloadUrl": {
             "type": "string",
             "default": "",
             "proposals": [
-                "https://mycompany.com/artifactory/nodejs-generic-remote"
+                "https://mycompany.com/artifactory/nodejs-generic-remote/dist"
             ],
             "description": "The download URL to use for Node.js binaries."
-        },
-        "downloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Node.js binaries."
         },
         "versionsUrl": {
             "type": "string",

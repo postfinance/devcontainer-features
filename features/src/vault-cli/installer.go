@@ -33,9 +33,7 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "")
-	versionResolve := flag.Bool("versionResolve", false, "")
-	downloadUrlBase := flag.String("downloadUrlBase", "", "")
-	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	downloadUrl := flag.String("downloadUrl", "", "")
 	versionsUrl := flag.String("versionsUrl", "", "")
 	flag.Parse()
 
@@ -44,17 +42,15 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadUrlBase, "https://releases.hashicorp.com", "vault-cli-download-url-base")
-	installer.HandleOverride(downloadUrlPath, "/vault", "vault-cli-download-url-path")
+	installer.HandleOverride(downloadUrl, "https://releases.hashicorp.com/vault", "vault-cli-download-url")
 	installer.HandleOverride(versionsUrl, "https://releases.hashicorp.com/vault/index.json", "vault-cli-versions-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Vault CLI", true,
 		&vaultCliComponent{
-			ComponentBase:   installer.NewComponentBase("Vault CLI", *version, *versionResolve),
-			DownloadUrlBase: *downloadUrlBase,
-			DownloadUrlPath: *downloadUrlPath,
-			VersionsUrl:     *versionsUrl,
+			ComponentBase: installer.NewComponentBase("Vault CLI", *version),
+			DownloadUrl:   *downloadUrl,
+			VersionsUrl:   *versionsUrl,
 		})
 	return feature.Process()
 }
@@ -65,9 +61,8 @@ func runMain() error {
 
 type vaultCliComponent struct {
 	*installer.ComponentBase
-	DownloadUrlBase string
-	DownloadUrlPath string
-	VersionsUrl     string
+	DownloadUrl string
+	VersionsUrl string
 }
 
 func (c *vaultCliComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -103,7 +98,7 @@ func (c *vaultCliComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	fileName := fmt.Sprintf("vault_%s_linux_%s.zip", version.Raw, archPart)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, version.Raw, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, version.Raw, fileName)
 	if err != nil {
 		return err
 	}

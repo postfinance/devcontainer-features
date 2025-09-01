@@ -1,6 +1,6 @@
 {
     "id": "go",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Go",
     "description": "A feature which installs Go.",
     "options": {
@@ -14,23 +14,13 @@
             "default": "latest",
             "description": "The version of Go to install."
         },
-        "versionResolve":{
-            "type":"boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
-        },
-        "downloadUrlBase": {
+        "downloadUrl": {
             "type": "string",
             "default": "",
             "proposals": [
-                "https://mycompany.com/artifactory/dl-google-generic-remote"
+                "https://mycompany.com/artifactory/dl-google-generic-remote/go"
             ],
             "description": "The download URL to use for Go binaries."
-        },
-        "downloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Go binaries."
         },
         "latestUrl": {
             "type": "string",

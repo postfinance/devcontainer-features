@@ -63,23 +63,14 @@ func HandleOverride(passedValue *string, defaultValue string, key string) {
 	}
 }
 
-func HandleGitHubOverride(downloadUrlBase *string, downloadUrlPath *string, gitHubPath string, key string) {
-	if *downloadUrlBase == "" {
-		baseKey := keyToEnv(key) + "_BASE"
-		if envValue := os.Getenv(baseKey); envValue != "" {
-			*downloadUrlBase = envValue
-		} else if envValue := os.Getenv("GITHUB_DOWNLOAD_URL_BASE"); envValue != "" {
-			*downloadUrlBase = envValue
+func HandleGitHubOverride(downloadUrl *string, gitHubPath string, key string) {
+	if *downloadUrl == "" {
+		if envValue := os.Getenv(keyToEnv(key)); envValue != "" {
+			*downloadUrl = envValue
+		} else if envValue := os.Getenv(keyToEnv("GITHUB_DOWNLOAD_URL")); envValue != "" {
+			*downloadUrl, _ = Tools.Http.BuildUrl(envValue, gitHubPath, "/releases/download")
 		} else {
-			*downloadUrlBase = "https://github.com"
-		}
-	}
-	if *downloadUrlPath == "" {
-		pathKey := keyToEnv(key) + "_PATH"
-		if envValue := os.Getenv(pathKey); envValue != "" {
-			*downloadUrlPath = envValue
-		} else {
-			*downloadUrlPath = fmt.Sprintf("%s/releases/download", gitHubPath)
+			*downloadUrl, _ = Tools.Http.BuildUrl("https://github.com", gitHubPath, "/releases/download")
 		}
 	}
 }

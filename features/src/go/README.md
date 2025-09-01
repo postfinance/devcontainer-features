@@ -6,11 +6,9 @@ A feature which installs Go.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/go:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/go:0.2.0": {
         "version": "latest",
-        "versionResolve": false,
-        "downloadUrlBase": "",
-        "downloadUrlPath": "",
+        "downloadUrl": "",
         "latestUrl": "",
         "versionsUrl": ""
     }
@@ -22,9 +20,7 @@ A feature which installs Go.
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
 | version | The version of Go to install. | string | latest | latest, 1.24, 1.21.8 |
-| versionResolve | Whether to resolve the version automatically. | boolean | false | true, false |
-| downloadUrlBase | The download URL to use for Go binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/dl-google-generic-remote |
-| downloadUrlPath | The download URL path to use for Go binaries. | string | &lt;empty&gt; |  |
+| downloadUrl | The download URL to use for Go binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/dl-google-generic-remote/go |
 | latestUrl | The URL to fetch the latest Go version from. | string | &lt;empty&gt; |  |
 | versionsUrl | The URL to fetch the available Go versions from. | string | &lt;empty&gt; |  |
 

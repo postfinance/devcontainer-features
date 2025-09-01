@@ -4,7 +4,7 @@ go 1.24.5
 
 require (
 	github.com/roemer/gotaskr v0.6.0
-	github.com/roemer/gover v0.7.0
+	github.com/roemer/gover v0.8.0
 	github.com/schollz/progressbar/v3 v3.18.0
 	github.com/stretchr/testify v1.10.0
 	github.com/ulikunitz/xz v0.5.12

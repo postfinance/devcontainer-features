@@ -34,18 +34,12 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "")
-	versionResolve := flag.Bool("versionResolve", false, "")
 	composeVersion := flag.String("composeVersion", "latest", "")
-	composeVersionResolve := flag.Bool("composeVersionResolve", false, "")
 	buildxVersion := flag.String("buildxVersion", "latest", "")
-	buildxVersionResolve := flag.Bool("buildxVersionResolve", false, "")
-	downloadUrlBase := flag.String("downloadUrlBase", "", "")
-	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	downloadUrl := flag.String("downloadUrl", "", "")
 	versionsUrl := flag.String("versionsUrl", "", "")
-	composeDownloadUrlBase := flag.String("composeDownloadUrlBase", "", "")
-	composeDownloadUrlPath := flag.String("composeDownloadUrlPath", "", "")
-	buildxDownloadUrlBase := flag.String("buildxDownloadUrlBase", "", "")
-	buildxDownloadUrlPath := flag.String("buildxDownloadUrlPath", "", "")
+	composeDownloadUrl := flag.String("composeDownloadUrl", "", "")
+	buildxDownloadUrl := flag.String("buildxDownloadUrl", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -53,29 +47,25 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadUrlBase, "https://download.docker.com", "docker-out-download-url-base")
-	installer.HandleOverride(downloadUrlPath, "/linux/static/stable", "docker-out-download-url-path")
+	installer.HandleOverride(downloadUrl, "https://download.docker.com/linux/static/stable", "docker-out-download-url")
 	installer.HandleOverride(versionsUrl, "https://download.docker.com/linux/static/stable", "docker-out-versions-url")
-	installer.HandleGitHubOverride(composeDownloadUrlBase, composeDownloadUrlPath, "docker/compose", "docker-out-compose-download-url")
-	installer.HandleGitHubOverride(buildxDownloadUrlBase, buildxDownloadUrlPath, "docker/buildx", "docker-out-buildx-download-url")
+	installer.HandleGitHubOverride(composeDownloadUrl, "docker/compose", "docker-out-compose-download-url")
+	installer.HandleGitHubOverride(buildxDownloadUrl, "docker/buildx", "docker-out-buildx-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Docker-Out", false,
 		&dockerCliComponent{
-			ComponentBase:   installer.NewComponentBase("Docker CLI", *version, *versionResolve),
-			DownloadUrlBase: *downloadUrlBase,
-			DownloadUrlPath: *downloadUrlPath,
-			VersionsUrl:     *versionsUrl,
+			ComponentBase: installer.NewComponentBase("Docker CLI", *version),
+			DownloadUrl:   *downloadUrl,
+			VersionsUrl:   *versionsUrl,
 		},
 		&dockerComposeComponent{
-			ComponentBase:   installer.NewComponentBase("Docker Compose", *composeVersion, *composeVersionResolve),
-			DownloadUrlBase: *composeDownloadUrlBase,
-			DownloadUrlPath: *composeDownloadUrlPath,
+			ComponentBase: installer.NewComponentBase("Docker Compose", *composeVersion),
+			DownloadUrl:   *composeDownloadUrl,
 		},
 		&dockerBuildxComponent{
-			ComponentBase:   installer.NewComponentBase("Docker buildx", *buildxVersion, *buildxVersionResolve),
-			DownloadUrlBase: *buildxDownloadUrlBase,
-			DownloadUrlPath: *buildxDownloadUrlPath,
+			ComponentBase: installer.NewComponentBase("Docker buildx", *buildxVersion),
+			DownloadUrl:   *buildxDownloadUrl,
 		},
 	)
 	return feature.Process()
@@ -89,9 +79,8 @@ func runMain() error {
 
 type dockerCliComponent struct {
 	*installer.ComponentBase
-	DownloadUrlBase string
-	DownloadUrlPath string
-	VersionsUrl     string
+	DownloadUrl string
+	VersionsUrl string
 }
 
 func (c *dockerCliComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -121,7 +110,7 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	fileName := fmt.Sprintf("docker-%s.tgz", version.Raw)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, architecturePathPart, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, architecturePathPart, fileName)
 	if err != nil {
 		return err
 	}
@@ -162,8 +151,7 @@ func (c *dockerCliComponent) getArchitecturePathPart() (string, error) {
 
 type dockerComposeComponent struct {
 	*installer.ComponentBase
-	DownloadUrlBase string
-	DownloadUrlPath string
+	DownloadUrl string
 }
 
 func (c *dockerComposeComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -185,7 +173,7 @@ func (c *dockerComposeComponent) InstallVersion(version *gover.Version) error {
 	}
 	// https://github.com/docker/compose/releases/download/v2.39.2/docker-compose-linux-x86_64
 	versionPart := fmt.Sprintf("v%s", version.Raw)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, versionPart, fmt.Sprintf("docker-compose-linux-%s", archPart))
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, versionPart, fmt.Sprintf("docker-compose-linux-%s", archPart))
 	if err != nil {
 		return err
 	}
@@ -203,8 +191,7 @@ func (c *dockerComposeComponent) InstallVersion(version *gover.Version) error {
 
 type dockerBuildxComponent struct {
 	*installer.ComponentBase
-	DownloadUrlBase string
-	DownloadUrlPath string
+	DownloadUrl string
 }
 
 func (c *dockerBuildxComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -226,7 +213,7 @@ func (c *dockerBuildxComponent) InstallVersion(version *gover.Version) error {
 	}
 	// https://github.com/docker/buildx/releases/download/v0.26.1/buildx-v0.26.1.linux-amd64
 	versionPart := fmt.Sprintf("v%s", version.Raw)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, versionPart, fmt.Sprintf("buildx-%s.linux-%s", versionPart, archPart))
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, versionPart, fmt.Sprintf("buildx-%s.linux-%s", versionPart, archPart))
 	if err != nil {
 		return err
 	}
