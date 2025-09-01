@@ -32,9 +32,7 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "")
-	versionResolve := flag.Bool("versionResolve", false, "")
-	downloadUrlBase := flag.String("downloadUrlBase", "", "")
-	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	downloadUrl := flag.String("downloadUrl", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -42,14 +40,13 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleGitHubOverride(downloadUrlBase, downloadUrlPath, "git-lfs/git-lfs", "git-lfs-download-url")
+	installer.HandleGitHubOverride(downloadUrl, "git-lfs/git-lfs", "git-lfs-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Git LFS", false,
 		&gitLfsComponent{
-			ComponentBase:   installer.NewComponentBase("Git LFS", *version, *versionResolve),
-			DownloadUrlBase: *downloadUrlBase,
-			DownloadUrlPath: *downloadUrlPath,
+			ComponentBase: installer.NewComponentBase("Git LFS", *version),
+			DownloadUrl:   *downloadUrl,
 		},
 	)
 	return feature.Process()
@@ -61,8 +58,7 @@ func runMain() error {
 
 type gitLfsComponent struct {
 	*installer.ComponentBase
-	DownloadUrlBase string
-	DownloadUrlPath string
+	DownloadUrl string
 }
 
 func (c *gitLfsComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -86,7 +82,7 @@ func (c *gitLfsComponent) InstallVersion(version *gover.Version) error {
 	// https://github.com/git-lfs/git-lfs/releases/download/v3.7.0/git-lfs-linux-arm64-v3.7.0.tar.gz
 	versionPart := fmt.Sprintf("v%s", version.Raw)
 	fileName := fmt.Sprintf("git-lfs-linux-%s-%s.tar.gz", archPart, versionPart)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, versionPart, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, versionPart, fileName)
 	if err != nil {
 		return err
 	}

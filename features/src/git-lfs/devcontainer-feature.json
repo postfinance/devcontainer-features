@@ -1,6 +1,6 @@
 {
     "id": "git-lfs",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Git LFS",
     "description": "A feature which installs Git LFS.",
     "options": {
@@ -14,20 +14,14 @@
             "default": "latest",
             "description": "The version of Git LFS to install."
         },
-        "versionResolve": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
-        },
-        "downloadUrlBase": {
+        "downloadUrl": {
             "type": "string",
             "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-generic-remote/git-lfs/git-lfs/releases/download",
+                "https://mycompany.com/artifactory/git-lfs-download-generic-remote"
+            ],
             "description": "The download URL to use for Git LFS binaries."
-        },
-        "downloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Git LFS binaries."
         }
     }
 }

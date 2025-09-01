@@ -29,7 +29,6 @@
 
 ## Project Conventions
 - Prefer explicit version pinning for reproducibility; partial versions require `versionResolve: true`.
-- Download URLs are split into `downloadUrlBase` and `downloadUrlPath` for flexibility with proxies/caches.
 - All features support ARM64 and AMD64 where possible; Alpine support is best-effort.
 - Use Go for core installer logic, with shell scripts for entrypoints.
 

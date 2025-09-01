@@ -6,14 +6,9 @@ esac
 
 "./installer_$ARCH" \
     -version="${VERSION:-"lts"}" \
-    -versionResolve="${VERSIONRESOLVE:-false}" \
     -npmVersion="${NPMVERSION:-"included"}" \
-    -npmVersionResolve="${NPMVERSIONRESOLVE:-false}" \
     -yarnVersion="${YARNVERSION:-"none"}" \
-    -yarnVersionResolve="${YARNVERSIONRESOLVE:-false}" \
     -pnpmVersion="${PNPMVERSION:-"none"}" \
-    -pnpmVersionResolve="${PNPMVERSIONRESOLVE:-false}" \
-    -downloadUrlBase="${DOWNLOADURLBASE:-""}" \
-    -downloadUrlPath="${DOWNLOADURLPATH:-""}" \
+    -downloadUrl="${DOWNLOADURL:-""}" \
     -versionsUrl="${VERSIONSURL:-""}" \
     -globalNpmRegistry="${GLOBALNPMREGISTRY:-""}"

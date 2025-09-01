@@ -6,15 +6,9 @@ esac
 
 "./installer_$ARCH" \
     -version="${VERSION:-"latest"}" \
-    -versionResolve="${VERSIONRESOLVE:-"false"}" \
     -composeVersion="${COMPOSEVERSION:-"latest"}" \
-    -composeVersionResolve="${COMPOSEVERSIONRESOLVE:-"false"}" \
     -buildxVersion="${BUILDXVERSION:-"latest"}" \
-    -buildxVersionResolve="${BUILDXVERSIONRESOLVE:-"false"}" \
-    -downloadUrlBase="${DOWNLOADURLBASE:-""}" \
-    -downloadUrlPath="${DOWNLOADURLPATH:-""}" \
+    -downloadUrl="${DOWNLOADURL:-""}" \
     -versionsUrl="${VERSIONSURL:-""}" \
-    -composeDownloadUrlBase="${COMPOSEDOWNLOADURLBASE:-""}" \
-    -composeDownloadUrlPath="${COMPOSEDOWNLOADURLPATH:-""}" \
-    -buildxDownloadUrlBase="${BUILDXDOWNLOADURLBASE:-""}" \
-    -buildxDownloadUrlPath="${BUILDXDOWNLOADURLPATH:-""}"
+    -composeDownloadUrl="${COMPOSEDOWNLOADURL:-""}" \
+    -buildxDownloadUrl="${BUILDXDOWNLOADURL:-""}"

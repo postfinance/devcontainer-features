@@ -34,15 +34,10 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "lts", "")
-	versionResolve := flag.Bool("versionResolve", false, "")
 	npmVersion := flag.String("npmVersion", "included", "")
-	npmVersionResolve := flag.Bool("npmVersionResolve", false, "")
 	yarnVersion := flag.String("yarnVersion", "none", "")
-	yarnVersionResolve := flag.Bool("yarnVersionResolve", false, "")
 	pnpmVersion := flag.String("pnpmVersion", "none", "")
-	pnpmVersionResolve := flag.Bool("pnpmVersionResolve", false, "")
-	downloadUrlBase := flag.String("downloadUrlBase", "", "")
-	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	downloadUrl := flag.String("downloadUrl", "", "")
 	versionsUrl := flag.String("versionsUrl", "", "")
 	globalNpmRegistry := flag.String("globalNpmRegistry", "", "")
 	flag.Parse()
@@ -52,29 +47,27 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadUrlBase, "https://nodejs.org", "node-download-url-base")
-	installer.HandleOverride(downloadUrlPath, "/dist", "node-download-url-path")
+	installer.HandleOverride(downloadUrl, "https://nodejs.org/dist", "node-download-url")
 	installer.HandleOverride(versionsUrl, "https://nodejs.org/dist/index.json", "node-versions-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Node.js", false,
 		&nodeComponent{
-			ComponentBase:     installer.NewComponentBase("Node.js", *version, *versionResolve),
-			DownloadUrlBase:   *downloadUrlBase,
-			DownloadUrlPath:   *downloadUrlPath,
+			ComponentBase:     installer.NewComponentBase("Node.js", *version),
+			DownloadUrl:       *downloadUrl,
 			VersionsUrl:       *versionsUrl,
 			GlobalNpmRegistry: *globalNpmRegistry,
 		},
 		&npmComponent{
-			ComponentBase: installer.NewComponentBase("NPM", *npmVersion, *npmVersionResolve),
+			ComponentBase: installer.NewComponentBase("NPM", *npmVersion),
 			PackageName:   "npm",
 		},
 		&npmComponent{
-			ComponentBase: installer.NewComponentBase("Yarn", *yarnVersion, *yarnVersionResolve),
+			ComponentBase: installer.NewComponentBase("Yarn", *yarnVersion),
 			PackageName:   "yarn",
 		},
 		&npmComponent{
-			ComponentBase: installer.NewComponentBase("Pnpm", *pnpmVersion, *pnpmVersionResolve),
+			ComponentBase: installer.NewComponentBase("Pnpm", *pnpmVersion),
 			PackageName:   "pnpm",
 		},
 	)
@@ -87,8 +80,7 @@ func runMain() error {
 
 type nodeComponent struct {
 	*installer.ComponentBase
-	DownloadUrlBase   string
-	DownloadUrlPath   string
+	DownloadUrl       string
 	VersionsUrl       string
 	GlobalNpmRegistry string
 }
@@ -136,7 +128,7 @@ func (c *nodeComponent) InstallVersion(version *gover.Version) error {
 	versionString := "v" + version.Raw
 	releaseName := fmt.Sprintf("node-%s-linux-%s", versionString, archPart)
 	fileName := fmt.Sprintf("%s.tar.gz", releaseName)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, versionString, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, versionString, fileName)
 	if err != nil {
 		return err
 	}

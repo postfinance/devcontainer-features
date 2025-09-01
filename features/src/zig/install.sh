@@ -6,7 +6,5 @@ esac
 
 "./installer_$ARCH" \
     -version="${VERSION:-"latest"}" \
-    -versionResolve="${VERSIONRESOLVE:-"false"}" \
-    -downloadUrlBase="${DOWNLOADURLBASE:-""}" \
-    -downloadUrlPath="${DOWNLOADURLPATH:-""}" \
+    -downloadUrl="${DOWNLOADURL:-""}" \
     -versionsUrl="${VERSIONSURL:-""}"

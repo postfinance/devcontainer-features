@@ -32,9 +32,7 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "")
-	versionResolve := flag.Bool("versionResolve", false, "")
-	downloadUrlBase := flag.String("downloadUrlBase", "", "")
-	downloadUrlPath := flag.String("downloadUrlPath", "", "")
+	downloadUrl := flag.String("downloadUrl", "", "")
 	latestUrl := flag.String("latestUrl", "", "")
 	versionsUrl := flag.String("versionsUrl", "", "")
 	flag.Parse()
@@ -44,19 +42,17 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadUrlBase, "https://dl.google.com", "go-download-url-base")
-	installer.HandleOverride(downloadUrlPath, "/go", "go-download-url-path")
+	installer.HandleOverride(downloadUrl, "https://dl.google.com/go", "go-download-url")
 	installer.HandleOverride(latestUrl, "https://go.dev/VERSION?m=text", "go-latest-url")
 	installer.HandleOverride(versionsUrl, "https://go.dev/dl/?mode=json&include=all", "go-versions-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Go", true,
 		&goComponent{
-			ComponentBase:   installer.NewComponentBase("Go", *version, *versionResolve),
-			DownloadUrlBase: *downloadUrlBase,
-			DownloadUrlPath: *downloadUrlPath,
-			LatestUrl:       *latestUrl,
-			VersionsUrl:     *versionsUrl,
+			ComponentBase: installer.NewComponentBase("Go", *version),
+			DownloadUrl:   *downloadUrl,
+			LatestUrl:     *latestUrl,
+			VersionsUrl:   *versionsUrl,
 		})
 	return feature.Process()
 }
@@ -67,10 +63,9 @@ func runMain() error {
 
 type goComponent struct {
 	*installer.ComponentBase
-	DownloadUrlBase string
-	DownloadUrlPath string
-	LatestUrl       string
-	VersionsUrl     string
+	DownloadUrl string
+	LatestUrl   string
+	VersionsUrl string
 }
 
 func (c *goComponent) GetLatestVersion() (*gover.Version, error) {
@@ -122,7 +117,7 @@ func (c *goComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	fileName := fmt.Sprintf("go%s.linux-%s.tar.gz", version.Raw, archPart)
-	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrlBase, c.DownloadUrlPath, fileName)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, fileName)
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,14 @@
 {
 	"name": "PF dev-feat DEV",
-	"dockerFile": "Dockerfile",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"options": [
+			"--add-host=host.docker.internal:host-gateway"
+		]
+	},
+	"runArgs": [
+		"--add-host=host.docker.internal:host-gateway"
+	],
 	"containerEnv": {
 		"GOMODCACHE": "${containerWorkspaceFolder}/.go_cache"
 	},

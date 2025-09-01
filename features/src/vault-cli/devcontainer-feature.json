@@ -1,6 +1,6 @@
 {
     "id": "vault-cli",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Vault CLI",
     "description": "A feature which installs the Vault CLI.",
     "options": {
@@ -14,23 +14,13 @@
             "default": "latest",
             "description": "The version of Vault CLI to install."
         },
-        "versionResolve":{
-            "type":"boolean",
-            "default": false,
-            "description": "Whether to resolve the version automatically."
-        },
-        "downloadUrlBase": {
+        "downloadUrl": {
             "type": "string",
             "default": "",
             "proposals": [
-                "https://mycompany.com/artifactory/hashicorp-releases-generic-remote"
+                "https://mycompany.com/artifactory/hashicorp-releases-generic-remote/vault"
             ],
             "description": "The download URL to use for Vault CLI binaries."
-        },
-        "downloadUrlPath": {
-            "type": "string",
-            "default": "",
-            "description": "The download URL path to use for Vault CLI binaries."
         },
         "versionsUrl": {
             "type": "string",
