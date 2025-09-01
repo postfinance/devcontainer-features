@@ -3,6 +3,7 @@ package installer
 import (
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -89,19 +90,52 @@ func (f *fileSystem) MoveFolder(src, dest string, includeFolder bool) error {
 }
 
 // Moves all given folders to the destination including the folder name itself (merging if they already exist).
-func (f *fileSystem) MoveFolders(src []string, dest string) error {
+func (f *fileSystem) MoveFolders(src []string, dst string) error {
 	for _, currSrc := range src {
-		if err := f.MoveFolder(currSrc, dest, true); err != nil {
+		if err := f.MoveFolder(currSrc, dst, true); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func (f *fileSystem) MoveFile(src, dest string) error {
-	dir := filepath.Dir(dest)
+func (f *fileSystem) MoveFile(src, dst string) error {
+	dir := filepath.Dir(dst)
 	os.MkdirAll(dir, os.ModePerm)
-	return os.Rename(src, dest)
+	return os.Rename(src, dst)
+}
+
+func (f *fileSystem) CopyFile(src, dst string) error {
+	dir := filepath.Dir(dst)
+	os.MkdirAll(dir, os.ModePerm)
+
+	// Open the source file
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		return fmt.Errorf("failed to open source file: %w", err)
+	}
+	defer sourceFile.Close()
+
+	// Create the destination file
+	destinationFile, err := os.Create(dst)
+	if err != nil {
+		return fmt.Errorf("failed to create destination file: %w", err)
+	}
+	defer destinationFile.Close()
+
+	// Copy the content
+	_, err = io.Copy(destinationFile, sourceFile)
+	if err != nil {
+		return fmt.Errorf("failed to copy file: %w", err)
+	}
+
+	// Flush file metadata to disk
+	err = destinationFile.Sync()
+	if err != nil {
+		return fmt.Errorf("failed to sync destination file: %w", err)
+	}
+
+	return nil
 }
 
 func (f *fileSystem) CreateSymLink(targetPath string, symLinkPath string, allowNotExistingTarget bool) error {
