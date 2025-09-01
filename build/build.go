@@ -178,6 +178,10 @@ func prepareFeature(featureName string, targetDir string) error {
 	if err := os.CopyFS(targetDir, os.DirFS(featurePath)); err != nil {
 		return err
 	}
+	// Copy the functions file
+	if err := installer.Tools.FileSystem.CopyFile("features/src/functions.sh", filepath.Join(targetDir, "functions.sh")); err != nil {
+		return err
+	}
 	// Build the installer
 	_, err := buildGo(targetDir, "installer")
 	if err != nil {

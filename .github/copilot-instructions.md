@@ -25,10 +25,9 @@
 - **Build**: Use Go to build/test feature logic. No monolithic build; each feature is self-contained.
 - **Testing**: Test scripts are in `features/test/<feature>/`. Use shell scripts for scenario-based testing.
 - **Overrides**: Set `DEV_FEATURE_OVERRIDE_LOCATION` to a file or URL for global download URL overrides. See `override-all.env` for supported keys.
-- **Version Resolution**: Features support both explicit and partial versioning. Set `versionResolve: true` to enable partial version resolution.
+- **Version Resolution**: Features support both explicit and partial versioning.
 
 ## Project Conventions
-- Prefer explicit version pinning for reproducibility; partial versions require `versionResolve: true`.
 - All features support ARM64 and AMD64 where possible; Alpine support is best-effort.
 - Use Go for core installer logic, with shell scripts for entrypoints.
 
