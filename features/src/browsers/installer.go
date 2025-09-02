@@ -292,11 +292,18 @@ func (c *firefoxComponent) GetAllVersions() ([]*gover.Version, error) {
 }
 
 func (c *firefoxComponent) InstallVersion(version *gover.Version) error {
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "x86_64",
+		installer.ARM64: "aarch64",
+	})
+	if err != nil {
+		return err
+	}
 	fileName := "firefox.tar.xz"
-	downloadUrl := fmt.Sprintf("%s/%s/linux-x86_64/en-US/firefox-%s.tar.xz", c.FirefoxDownloadBaseUrl, version.Raw, version.Raw)
+	downloadUrl := fmt.Sprintf("%s/%s/linux-%s/en-US/firefox-%s.tar.xz", c.FirefoxDownloadBaseUrl, version.Raw, archPart, version.Raw)
 	if version.LessThan(gover.ParseSimple("135")) {
 		fileName = "firefox.tar.bz2"
-		downloadUrl = fmt.Sprintf("%s/%s/linux-x86_64/en-US/firefox-%s.tar.bz2", c.FirefoxDownloadBaseUrl, version.Raw, version.Raw)
+		downloadUrl = fmt.Sprintf("%s/%s/linux-%s/en-US/firefox-%s.tar.bz2", c.FirefoxDownloadBaseUrl, version.Raw, archPart, version.Raw)
 	}
 	// Download the file
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Firefox"); err != nil {
