@@ -37,6 +37,7 @@ func runMain() error {
 	npmVersion := flag.String("npmVersion", "included", "")
 	yarnVersion := flag.String("yarnVersion", "none", "")
 	pnpmVersion := flag.String("pnpmVersion", "none", "")
+	corepackVersion := flag.String("corepackVersion", "none", "")
 	downloadUrl := flag.String("downloadUrl", "", "")
 	versionsUrl := flag.String("versionsUrl", "", "")
 	globalNpmRegistry := flag.String("globalNpmRegistry", "", "")
@@ -69,6 +70,10 @@ func runMain() error {
 		&npmComponent{
 			ComponentBase: installer.NewComponentBase("Pnpm", *pnpmVersion),
 			PackageName:   "pnpm",
+		},
+		&npmComponent{
+			ComponentBase: installer.NewComponentBase("corepack", *corepackVersion),
+			PackageName:   "corepack",
 		},
 	)
 	return feature.Process()
