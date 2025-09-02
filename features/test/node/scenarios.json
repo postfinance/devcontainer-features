@@ -14,5 +14,19 @@
                 "pnpmVersion": "9.14.2"
             }
         }
+    },
+    "corepack": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./node": {
+                "version": "24.4.1", 
+                "corepackVersion": "0.34.0"
+            }
+        }
     }
 }

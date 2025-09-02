@@ -5,6 +5,7 @@
     -npmVersion="${NPMVERSION:-"included"}" \
     -yarnVersion="${YARNVERSION:-"none"}" \
     -pnpmVersion="${PNPMVERSION:-"none"}" \
+    -corepackVersion="${COREPACKVERSION:-"none"}" \
     -downloadUrl="${DOWNLOADURL:-""}" \
     -versionsUrl="${VERSIONSURL:-""}" \
     -globalNpmRegistry="${GLOBALNPMREGISTRY:-""}"

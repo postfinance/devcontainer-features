@@ -1,6 +1,6 @@
 {
     "id": "node",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "name": "Node.js",
     "description": "A package which installs Node.js.",
     "options": {
@@ -47,6 +47,17 @@
             ],
             "default": "none",
             "description": "The version of Pnpm to install."
+        },
+        "corepackVersion": {
+            "type": "string",
+            "proposals": [
+                "none",
+                "latest",
+                "0.34.0",
+                "0.29"
+            ],
+            "default": "none",
+            "description": "The version of corepack to install."
         },
         "downloadUrl": {
             "type": "string",
