@@ -15,6 +15,7 @@ jobs:
     strategy:
       matrix:
         feature: [
+          "browsers",
           "docker-out",
           "git-lfs",
           "go",

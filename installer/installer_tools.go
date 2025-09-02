@@ -9,6 +9,7 @@ type tools struct {
 	Npm         *npm
 	System      *system
 	Versioning  *versioning
+	Apt         *apt
 }
 
 var Tools *tools
@@ -23,5 +24,6 @@ func init() {
 		Npm:         &npm{},
 		System:      &system{},
 		Versioning:  &versioning{},
+		Apt:         &apt{},
 	}
 }
