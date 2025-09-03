@@ -1,0 +1,17 @@
+{
+    "id": "build-essential",
+    "version": "0.1.0",
+    "name": "Build Essential",
+    "description": "A package which installs build essentials like gcc.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "12.9"
+            ],
+            "default": "latest",
+            "description": "The version of the build essential package to install."
+        }
+    }
+}
