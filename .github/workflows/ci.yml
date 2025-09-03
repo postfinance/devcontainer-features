@@ -17,6 +17,7 @@ jobs:
         feature: [
           "browsers",
           "build-essential",
+          "cypress-deps",
           "docker-out",
           "eclipse-deps",
           "git-lfs",
