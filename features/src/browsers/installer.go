@@ -42,6 +42,7 @@ func runMain() error {
 	firefoxVersion := flag.String("firefoxVersion", "none", "")
 	firefoxDownloadUrl := flag.String("firefoxDownloadUrl", "", "")
 	firefoxVersionsUrl := flag.String("firefoxVersionsUrl", "", "")
+	firefoxVersionResolve := flag.Bool("firefoxVersionResolve", false, "")
 	flag.Parse()
 
 	// Load global overrides
@@ -80,6 +81,7 @@ func runMain() error {
 			ComponentBase:          installer.NewComponentBase("Firefox", *firefoxVersion),
 			VersionsUrl:            *firefoxVersionsUrl,
 			FirefoxDownloadBaseUrl: *firefoxDownloadUrl,
+			ShouldResolveVersion:   *firefoxVersionResolve,
 		})
 	return feature.Process()
 }
@@ -134,6 +136,15 @@ func (c *chromeComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	return nil
+}
+
+// Shared function for Chrome version check
+func isChromeFullVersion(referenceVersion *gover.Version) bool {
+	return len(referenceVersion.Segments) == 4 && referenceVersion.DefinedSegmentCount() == 4
+}
+
+func (c *chromeComponent) IsFullVersion(referenceVersion *gover.Version) bool {
+	return isChromeFullVersion(referenceVersion)
 }
 
 type chromeForTestingComponent struct {
@@ -266,10 +277,15 @@ func (c *chromeForTestingComponent) InstallVersion(version *gover.Version) error
 	return nil
 }
 
+func (c *chromeForTestingComponent) IsFullVersion(referenceVersion *gover.Version) bool {
+	return isChromeFullVersion(referenceVersion)
+}
+
 type firefoxComponent struct {
 	*installer.ComponentBase
 	VersionsUrl            string
 	FirefoxDownloadBaseUrl string
+	ShouldResolveVersion   bool
 }
 
 func (c *firefoxComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -338,4 +354,11 @@ func (c *firefoxComponent) InstallVersion(version *gover.Version) error {
 	}
 
 	return nil
+}
+
+func (c *firefoxComponent) IsFullVersion(referenceVersion *gover.Version) bool {
+	if len(referenceVersion.Segments) == 3 && referenceVersion.DefinedSegmentCount() == 3 {
+		return true
+	}
+	return c.ShouldResolveVersion
 }

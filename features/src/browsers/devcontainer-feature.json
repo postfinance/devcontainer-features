@@ -1,6 +1,6 @@
 {
   "id": "browsers",
-  "version": "1.1.1",
+  "version": "0.1.0",
   "name": "Browsers",
   "description": "A package which installs various browsers.",
   "options": {
@@ -53,6 +53,11 @@
       "type": "string",
       "default": "",
       "description": "Override Firefox versions URL."
+    },
+    "firefoxVersionResolve": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, resolves partial Firefox versions (e.g. 142.0) to the highest available patch version (e.g. 142.0.3)."
     }
   }
 }

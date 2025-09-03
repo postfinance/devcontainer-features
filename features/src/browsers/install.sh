@@ -8,4 +8,5 @@
     -chromeVersionsUrl="${CHROMEVERSIONSURL:-""}" \
     -chromeTestingVersionsUrl="${CHROMETESTINGVERSIONSURL:-""}" \
     -firefoxDownloadUrl="${FIREFOXDOWNLOADURL:-""}" \
-    -firefoxVersionsUrl="${FIREFOXVERSIONSURL:-""}" 
+    -firefoxVersionsUrl="${FIREFOXVERSIONSURL:-""}" \
+    -firefoxVersionResolve="${FIREFOXVERSIONRESOLVE:-""}"
