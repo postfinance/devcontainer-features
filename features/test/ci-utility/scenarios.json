@@ -1,0 +1,18 @@
+{
+  "default": {
+    "build": {
+      "dockerfile": "Dockerfile",
+      "options": [
+        "--add-host=host.docker.internal:host-gateway"
+      ]
+    },
+    "features": {
+      "./ci-utility": {
+        "yqVersion": "system-default",
+        "gettextbaseVersion": "system-default",
+        "yamllintVersion": "system-default",
+        "sshpassVersion": "system-default"
+      }
+    }
+  }
+}
