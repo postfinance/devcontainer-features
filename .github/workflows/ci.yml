@@ -17,6 +17,7 @@ jobs:
         feature: [
           "browsers",
           "docker-out",
+          "eclipse-deps",
           "git-lfs",
           "go",
           "node",
