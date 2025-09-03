@@ -21,6 +21,7 @@ import (
 
 var featureList = []string{
 	"browsers",
+	"cypress-deps",
 	"docker-out",
 	"git-lfs",
 	"go",
@@ -60,6 +61,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:browsers:Publish", func() error {
 		return publishFeature("browsers")
+	})
+
+	////////// cypress-deps
+	gotaskr.Task("Feature:cypress-deps:Package", func() error {
+		return packageFeature("cypress-deps")
+	})
+	gotaskr.Task("Feature:cypress-deps:Test", func() error {
+		return testFeature("cypress-deps")
+	})
+	gotaskr.Task("Feature:cypress-deps:Publish", func() error {
+		return publishFeature("cypress-deps")
 	})
 
 	////////// docker-out
