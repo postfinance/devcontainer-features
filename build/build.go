@@ -278,6 +278,17 @@ func init() {
 		return publishFeature("sonar-scanner-cli")
 	})
 
+	////////// system-packages
+	gotaskr.Task("Feature:system-packages:Package", func() error {
+		return packageFeature("system-packages")
+	})
+	gotaskr.Task("Feature:system-packages:Test", func() error {
+		return testFeature("system-packages")
+	})
+	gotaskr.Task("Feature:system-packages:Publish", func() error {
+		return publishFeature("system-packages")
+	})
+
 	////////// timezone
 	gotaskr.Task("Feature:timezone:Package", func() error {
 		return packageFeature("timezone")

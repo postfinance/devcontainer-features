@@ -15,6 +15,21 @@ const (
 
 type system struct{}
 
+func (s *system) InstallPackages(packages []string) error {
+	osInfo, err := s.GetOsInfo()
+	if err != nil {
+		return err
+	}
+	switch {
+	case osInfo.IsDebian(), osInfo.IsUbuntu():
+		return Tools.Apt.InstallDependencies(packages...)
+	case osInfo.IsAlpine():
+		return Tools.Apk.InstallDependencies(packages...)
+	default:
+		return fmt.Errorf("unsupported OS vendor: %s", osInfo.Vendor)
+	}
+}
+
 func (s *system) MapArchitecture(mapping map[string]string) (string, error) {
 	mappedValue, ok := mapping[runtime.GOARCH]
 	if !ok {
@@ -56,6 +71,10 @@ func (v *OsInfo) IsDebian() bool {
 
 func (v *OsInfo) IsUbuntu() bool {
 	return v.Vendor == "ubuntu"
+}
+
+func (v *OsInfo) IsAlpine() bool {
+	return v.Vendor == "alpine"
 }
 
 func (v *OsInfo) MajorVersion() int {

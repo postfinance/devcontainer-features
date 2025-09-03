@@ -11,6 +11,7 @@ type tools struct {
 	System      *system
 	Versioning  *versioning
 	Apt         *apt
+	Apk         *apk
 }
 
 var Tools *tools
@@ -27,5 +28,6 @@ func init() {
 		System:      &system{},
 		Versioning:  &versioning{},
 		Apt:         &apt{},
+		Apk:         &apk{},
 	}
 }
