@@ -249,7 +249,7 @@ func (c *chromeForTestingComponent) InstallVersion(version *gover.Version) error
 
 	// Install dependencies
 	// Taken from https://source.chromium.org/chromium/chromium/src/+/main:chrome/installer/linux/debian/dist_package_versions.json
-	if err := installer.Apt.InstallDependencies(
+	if err := installer.Tools.Apt.InstallDependencies(
 		"libasound2",
 		"libatk-bridge2.0-0",
 		"libatk1.0-0",
@@ -357,7 +357,7 @@ func (c *firefoxComponent) InstallVersion(version *gover.Version) error {
 	}
 
 	// Install dependencies
-	if err := installer.Apt.InstallDependencies(
+	if err := installer.Tools.Apt.InstallDependencies(
 		"libasound2",
 		"libgtk-3-0",
 		"libx11-xcb1",
