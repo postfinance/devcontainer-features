@@ -1,0 +1,62 @@
+{
+    "chrome": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./browsers": {
+                "chromeVersion": "130.0.6723.69",
+                "useChromeForTesting": "false",
+                "firefoxVersion": "none"
+            }
+        }
+    },
+    "chrome-testing": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./browsers": {
+                "chromeVersion": "130.0.6723.69",
+                "useChromeForTesting": "true",
+                "firefoxVersion": "none"
+            }
+        }
+    },
+    "firefox": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./browsers": {
+                "chromeVersion": "none",
+                "useChromeForTesting": "false",
+                "firefoxVersion": "132.0"
+            }
+        }
+    },
+    "firefox-after-135": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./browsers": {
+                "chromeVersion": "none",
+                "useChromeForTesting": "false",
+                "firefoxVersion": "135.0"
+            }
+        }
+    }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "browsers",
+  "version": "0.1.0",
+  "name": "Browsers",
+  "description": "A package which installs various browsers.",
+  "options": {
+    "chromeVersion": {
+      "type": "string",
+      "description": "The version of the Chrome to install.",
+      "default": "none",
+      "proposals": [
+        "none",
+        "latest",
+        "126"
+      ]
+    },
+    "useChromeForTesting": {
+      "type": "boolean",
+      "description": "A flag to indicate if the Chrome for Testing or the default chrome should be used.",
+      "default": true
+    },
+    "chromeDownloadUrl": {
+      "type": "string",
+      "default": "",
+      "description": "Override Chrome download base URL."
+    },
+    "chromeVersionsUrl": {
+      "type": "string",
+      "default": "",
+      "description": "Override Chrome versions URL."
+    },
+    "chromeTestingVersionsUrl": {
+      "type": "string",
+      "default": "",
+      "description": "Override Chrome for Testing versions URL."
+    },
+    "firefoxVersion": {
+      "type": "string",
+      "description": "The version of the Firefox to install.",
+      "default": "none",
+      "proposals": [
+        "none",
+        "latest",
+        "128"
+      ]
+    },
+    "firefoxDownloadUrl": {
+      "type": "string",
+      "default": "",
+      "description": "Override Firefox download base URL."
+    },
+    "firefoxVersionsUrl": {
+      "type": "string",
+      "default": "",
+      "description": "Override Firefox versions URL."
+    },
+    "firefoxVersionResolve": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, resolves partial Firefox versions (e.g. 142.0) to the highest available patch version (e.g. 142.0.3)."
+    }
+  }
+}

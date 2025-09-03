@@ -15,6 +15,7 @@ Below is a list with included features, click on the link for more details.
 
 | Name | Description |
 | --- | --- |
+| [browsers](./features/src/browsers/README.md) | A package which installs various browsers. |
 | [docker-out](./features/src/docker-out/README.md) | A feature which installs the Docker client and re-uses the host socket. |
 | [git-lfs](./features/src/git-lfs/README.md) | A feature which installs Git LFS. |
 | [go](./features/src/go/README.md) | A feature which installs Go. |

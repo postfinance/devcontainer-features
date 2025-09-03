@@ -20,6 +20,7 @@ import (
 ////////////////////////////////////////////////////////////
 
 var featureList = []string{
+	"browsers",
 	"docker-out",
 	"git-lfs",
 	"go",
@@ -48,6 +49,17 @@ func init() {
 			}
 		}
 		return nil
+	})
+
+	////////// browsers
+	gotaskr.Task("Feature:browsers:Package", func() error {
+		return packageFeature("browsers")
+	})
+	gotaskr.Task("Feature:browsers:Test", func() error {
+		return testFeature("browsers")
+	})
+	gotaskr.Task("Feature:browsers:Publish", func() error {
+		return publishFeature("browsers")
 	})
 
 	////////// docker-out
