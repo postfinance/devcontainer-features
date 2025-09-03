@@ -1,0 +1,6 @@
+{
+    "id": "eclipse-deps",
+    "version": "0.1.0",
+    "name": "Eclipse Dependencies",
+    "description": "Installs all system dependencies required for running Eclipse IDE in a dev container."
+}

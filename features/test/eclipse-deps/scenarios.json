@@ -1,0 +1,13 @@
+{
+    "packages_installed": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./eclipse-deps": {}
+        }
+    }
+}
