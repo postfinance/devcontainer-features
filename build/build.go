@@ -21,6 +21,7 @@ import (
 
 var featureList = []string{
 	"browsers",
+	"build-essential",
 	"docker-out",
 	"git-lfs",
 	"go",
@@ -60,6 +61,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:browsers:Publish", func() error {
 		return publishFeature("browsers")
+	})
+
+	////////// build-essential
+	gotaskr.Task("Feature:build-essential:Package", func() error {
+		return packageFeature("build-essential")
+	})
+	gotaskr.Task("Feature:build-essential:Test", func() error {
+		return testFeature("build-essential")
+	})
+	gotaskr.Task("Feature:build-essential:Publish", func() error {
+		return publishFeature("build-essential")
 	})
 
 	////////// docker-out
