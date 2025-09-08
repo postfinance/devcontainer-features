@@ -14,6 +14,19 @@
             ],
             "default": "latest",
             "description": "The version of Instant Client to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/oracle-generic-remote"
+            ],
+            "description": "The download URL to use for Instant Client binaries."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to use to check for available Instant Client versions."
         }
     }
 }
