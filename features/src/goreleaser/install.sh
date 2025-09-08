@@ -1,4 +1,5 @@
 . ./functions.sh
 
 "./installer_$(detect_arch)" \
--version="${VERSION:-"latest"}"
+  -version="${VERSION:-"latest"}" \
+  -downloadUrl="${DOWNLOADURL:-""}"

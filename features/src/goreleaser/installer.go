@@ -33,6 +33,11 @@ func runMain() error {
 	downloadUrl := flag.String("downloadUrl", "", "")
 	flag.Parse()
 
+	// Load settings from an external file
+	if err := installer.LoadOverrides(); err != nil {
+		return err
+	}
+
 	// Apply override logic for URLs
 	installer.HandleOverride(downloadUrl, "https://github.com", "goreleaser-download-url")
 

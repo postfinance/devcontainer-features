@@ -13,6 +13,14 @@
             ],
             "default": "latest",
             "description": "The version of GoReleaser to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for GoReleaser binaries."
         }
     },
     "containerEnv": {
