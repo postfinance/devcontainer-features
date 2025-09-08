@@ -59,7 +59,7 @@ func (c *goreleaserComponent) GetAllVersions() ([]*gover.Version, error) {
 	if err != nil {
 		return nil, err
 	}
-	return installer.Tools.GitHub.ParseVersionFromTags(tags, versionRegex, "nightly")
+	return installer.Tools.Versioning.ParseVersionsFromList(tags, versionRegex, true)
 }
 
 func (c *goreleaserComponent) InstallVersion(version *gover.Version) error {
@@ -69,8 +69,15 @@ func (c *goreleaserComponent) InstallVersion(version *gover.Version) error {
 	if len(versionTag) > 0 && versionTag[0] != 'v' {
 		versionTag = "v" + versionTag
 	}
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "x86_64",
+		installer.ARM64: "arm64",
+	})
+	if err != nil {
+		return err
+	}
 	// Download the file
-	downloadUrl := fmt.Sprintf("%s/goreleaser/goreleaser/releases/download/%s/goreleaser_Linux_x86_64.tar.gz", c.DownloadUrl, versionTag)
+	downloadUrl := fmt.Sprintf("%s/goreleaser/goreleaser/releases/download/%s/goreleaser_Linux_%s.tar.gz", c.DownloadUrl, versionTag, archPart)
 	fileName := "goreleaser.tar.gz"
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "goreleaser"); err != nil {
 		return err

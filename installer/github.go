@@ -6,8 +6,6 @@ import (
 	"io"
 	"net/http"
 	"regexp"
-
-	"github.com/roemer/gover"
 )
 
 type gitHub struct{}
@@ -55,29 +53,4 @@ func (g *gitHub) GetTags(owner string, repo string) ([]string, error) {
 	}
 	// Return the found items
 	return tagNames, nil
-}
-
-func (g *gitHub) ParseVersionFromTags(tags []string, versionRegex *regexp.Regexp, excludeTags ...string) ([]*gover.Version, error) {
-	var versions []*gover.Version
-	for _, tag := range tags {
-		// Skip tags in excludeTags
-		if len(excludeTags) > 0 {
-			for _, exclude := range excludeTags {
-				if tag == exclude {
-					continue
-				}
-			}
-		}
-		// Find version using the provided regex
-		matches := versionRegex.FindStringSubmatch(tag)
-		if len(matches) > 0 {
-			verStr := matches[0]
-			ver := gover.MustParseVersionFromRegex(verStr, versionRegex)
-			versions = append(versions, ver)
-		}
-	}
-	if len(versions) == 0 {
-		return nil, fmt.Errorf("no valid versions found in tags")
-	}
-	return versions, nil
 }
