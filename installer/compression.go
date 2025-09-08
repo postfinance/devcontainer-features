@@ -99,6 +99,27 @@ func (c *compression) ExtractZip(filePath string, dstPath string, withoutRootFol
 	return nil
 }
 
+// Returns the name of the root folder in a ZIP file, ignoring META-INF
+func (c compression) GetRootFolderFromZip(zipPath string) (string, error) {
+	r, err := zip.OpenReader(zipPath)
+	if err != nil {
+		return "", err
+	}
+	defer r.Close()
+
+	for _, f := range r.File {
+		if strings.HasPrefix(f.Name, "META-INF") {
+			continue
+		}
+		parts := strings.Split(f.Name, "/")
+		if len(parts) > 1 {
+			return parts[0], nil // Return the first folder name
+		}
+	}
+
+	return "", fmt.Errorf("no root folder found in zip")
+}
+
 // Extracts a tar.gz file into a folder.
 func (c *compression) ExtractTarGz(filePath string, dstPath string, withoutRootFolder bool) error {
 	// Open the file

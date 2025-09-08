@@ -1,0 +1,19 @@
+{
+    "id": "instant-client",
+    "version": "0.1.0",
+    "name": "Instant client",
+    "description": "A package which installs the Oracle Instant Client Basic package.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "23",
+                "21",
+                "23.8.0.25.04"
+            ],
+            "default": "latest",
+            "description": "The version of Instant Client to install."
+        }
+    }
+}
