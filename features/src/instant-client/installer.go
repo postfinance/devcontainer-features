@@ -70,19 +70,27 @@ func (c *instantClientComponent) IsFullVersion(referenceVersion *gover.Version) 
 	return len(referenceVersion.Segments) == 5 && referenceVersion.DefinedSegmentCount() == 5
 }
 
-func (c *instantClientComponent) createDownloadURLForVersion(version *gover.Version) string {
+func (c *instantClientComponent) createDownloadURLForVersion(version *gover.Version) (string, error) {
 	zipVersion := version.Raw
 	// Versions below 23 have a dbru suffix
 	if version.Major() < 23 {
 		zipVersion = fmt.Sprintf("%sdbru", version.Raw)
 	}
 	majorMinor := fmt.Sprintf("%d%d", version.Major(), version.Minor())
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "x64",
+		installer.ARM64: "arm64",
+	})
+	if err != nil {
+		return "", err
+	}
 	return fmt.Sprintf(
-		"%s/otn_software/linux/instantclient/%s/instantclient-basic-linux.x64-%s.zip",
+		"%s/otn_software/linux/instantclient/%s/instantclient-basic-linux.%s-%s.zip",
 		c.downloadUrl,
 		fmt.Sprintf("%s%s", majorMinor, strings.Repeat("0", 7-len(majorMinor))),
+		archPart,
 		zipVersion,
-	)
+	), nil
 }
 
 func (c *instantClientComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -98,7 +106,10 @@ func (c *instantClientComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *instantClientComponent) InstallVersion(version *gover.Version) error {
 	fileName := "instant-client.zip"
-	downloadUrl := c.createDownloadURLForVersion(version)
+	downloadUrl, err := c.createDownloadURLForVersion(version)
+	if err != nil {
+		return err
+	}
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Instant Client"); err != nil {
 		return err
 	}
