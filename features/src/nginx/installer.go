@@ -32,8 +32,8 @@ func main() {
 
 func runMain() error {
 	// Handle the flags
-	version := flag.String("version", "latest", "The version of Nginx to install.")
-	stableOnly := flag.Bool("stableOnly", false, "A flag to indicate if only stable versions should be used.")
+	version := flag.String("version", "latest", "")
+	stableOnly := flag.Bool("stableOnly", false, "")
 	downloadUrl := flag.String("downloadUrl", "", "")
 	flag.Parse()
 
@@ -51,7 +51,7 @@ func runMain() error {
 	}
 
 	// Create and process the feature
-	feature := installer.NewFeature("PF Nginx", false,
+	feature := installer.NewFeature("Nginx", false,
 		&nginxComponent{
 			ComponentBase: installer.NewComponentBase("Nginx", *version),
 			stableOnly:    *stableOnly,
