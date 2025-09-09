@@ -21,6 +21,7 @@ Below is a list with included features, click on the link for more details.
 | [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all system dependencies required for running Eclipse IDE in a dev container. |
 | [git-lfs](./features/src/git-lfs/README.md) | A feature which installs Git LFS. |
 | [go](./features/src/go/README.md) | A feature which installs Go. |
+| [make](./features/src/make/README.md) | A feature which installs GNU Make. |
 | [mingw](./features/src/mingw/README.md) | A feature which installs MinGW (Minimalist GNU for Windows) cross-compilers and tools. |
 | [node](./features/src/node/README.md) | A package which installs Node.js. |
 | [vault-cli](./features/src/vault-cli/README.md) | A feature which installs the Vault CLI. |

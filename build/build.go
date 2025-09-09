@@ -26,6 +26,7 @@ var featureList = []string{
 	"eclipse-deps",
 	"git-lfs",
 	"go",
+	"make",
 	"mingw",
 	"node",
 	"vault-cli",
@@ -118,6 +119,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:go:Publish", func() error {
 		return publishFeature("go")
+	})
+
+	////////// make
+	gotaskr.Task("Feature:make:Package", func() error {
+		return packageFeature("make")
+	})
+	gotaskr.Task("Feature:make:Test", func() error {
+		return testFeature("make")
+	})
+	gotaskr.Task("Feature:make:Publish", func() error {
+		return publishFeature("make")
 	})
 
 	////////// mingw
