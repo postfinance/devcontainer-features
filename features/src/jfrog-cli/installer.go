@@ -74,8 +74,16 @@ func (c *jfrogCliComponent) GetAllVersions() ([]*gover.Version, error) {
 }
 
 func (c *jfrogCliComponent) InstallVersion(version *gover.Version) error {
-	// Download the file
-	downloadUrl := fmt.Sprintf("%s/v2-jf/%s/jfrog-cli-linux-amd64/jf", c.downloadUrl, version.Raw)
+	// Map architecture (like in Go installer)
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "amd64",
+		installer.ARM64: "arm64",
+	})
+	if err != nil {
+		return err
+	}
+	// Download the file (filename pattern is the same, just arch changes)
+	downloadUrl := fmt.Sprintf("%s/v2-jf/%s/jfrog-cli-linux-%s/jf", c.downloadUrl, version.Raw, archPart)
 	if err := installer.Tools.Download.ToFile(downloadUrl, "/usr/local/bin/jf", "JF"); err != nil {
 		return err
 	}
