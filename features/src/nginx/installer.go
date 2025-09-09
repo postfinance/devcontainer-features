@@ -122,7 +122,14 @@ func (c *nginxComponent) GetAllVersions() ([]*gover.Version, error) {
 func (c *nginxComponent) InstallVersion(version *gover.Version) error {
 	fileName := "nginx.deb"
 	urls := []string{}
-	debName := fmt.Sprintf("nginx_%s~%s_amd64.deb", version.Raw, c.osInfo.codename)
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "amd64",
+		installer.ARM64: "arm64",
+	})
+	if err != nil {
+		return err
+	}
+	debName := fmt.Sprintf("nginx_%s~%s_%s.deb", version.Raw, c.osInfo.codename, archPart)
 	urls = append(urls, c.getStableUrl()+debName)
 	if !c.stableOnly {
 		urls = append(urls, c.getMainlineUrl()+debName)
