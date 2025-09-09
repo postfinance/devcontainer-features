@@ -1,0 +1,32 @@
+{
+    "id": "nginx",
+    "version": "0.1.0",
+    "name": "Nginx",
+    "description": "A package which installs Nginx.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.27.2",
+                "1.27.2-1",
+                "1.26"
+            ],
+            "default": "latest",
+            "description": "The version of Nginx to install."
+        },
+        "stableOnly": {
+            "type": "boolean",
+            "default": false,
+            "description": "A flag to indicate if only stable versions should be used."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/nginx-generic-remote"
+            ],
+            "description": "The download URL to use for Nginx binaries."
+        }
+    }
+}

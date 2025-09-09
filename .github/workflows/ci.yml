@@ -24,6 +24,7 @@ jobs:
           "jfrog-cli",
           "make",
           "mingw",
+          "nginx",
           "node",
           "vault-cli",
           "zig"
