@@ -14,9 +14,6 @@ import (
 // Configuration
 //////////
 
-const baseUrl = "https://releases.jfrog.io/artifactory/jfrog-cli"
-const allVersionsUrl = "https://releases.jfrog.io/artifactory/jfrog-cli/v2-jf/"
-
 var versionRegex *regexp.Regexp = regexp.MustCompile(`(?m:)^(\d+).(\d+).(\d+)$`)
 
 //////////
@@ -33,12 +30,24 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "")
+	versionsUrl := flag.String("versionsUrl", "", "")
+	downloadUrl := flag.String("downloadUrl", "", "")
 	flag.Parse()
+
+	// Load settings from an external file (global/per-feature overrides)
+	if err := installer.LoadOverrides(); err != nil {
+		return err
+	}
+
+	installer.HandleOverride(versionsUrl, "https://releases.jfrog.io/artifactory/jfrog-cli/v2-jf/", "jfrog-cli-versions-url")
+	installer.HandleOverride(downloadUrl, "https://releases.jfrog.io/artifactory/jfrog-cli", "jfrog-cli-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("JFrog CLI", false,
 		&jfrogCliComponent{
 			ComponentBase: installer.NewComponentBase("JFrog CLI", *version),
+			versionsUrl:   *versionsUrl,
+			downloadUrl:   *downloadUrl,
 		})
 	return feature.Process()
 }
@@ -49,11 +58,13 @@ func runMain() error {
 
 type jfrogCliComponent struct {
 	*installer.ComponentBase
+	versionsUrl string
+	downloadUrl string
 }
 
 func (c *jfrogCliComponent) GetAllVersions() ([]*gover.Version, error) {
 	allVersions, err := installer.Tools.Http.GetVersionsFromHtmlIndex(
-		allVersionsUrl,
+		c.versionsUrl,
 		regexp.MustCompile(`^.*<a href="([0-9][0-9\.]+)/">.*$`),
 		versionRegex)
 	if err != nil {
@@ -64,7 +75,7 @@ func (c *jfrogCliComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *jfrogCliComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
-	downloadUrl := fmt.Sprintf("%s/v2-jf/%s/jfrog-cli-linux-amd64/jf", baseUrl, version.Raw)
+	downloadUrl := fmt.Sprintf("%s/v2-jf/%s/jfrog-cli-linux-amd64/jf", c.downloadUrl, version.Raw)
 	if err := installer.Tools.Download.ToFile(downloadUrl, "/usr/local/bin/jf", "JF"); err != nil {
 		return err
 	}
