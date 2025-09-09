@@ -1,0 +1,15 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./jfrog-cli": {
+                "version": "2.63.1"
+            }
+        }
+    }
+}
