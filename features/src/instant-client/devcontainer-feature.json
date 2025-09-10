@@ -1,0 +1,32 @@
+{
+    "id": "instant-client",
+    "version": "0.1.0",
+    "name": "Instant client",
+    "description": "A package which installs the Oracle Instant Client Basic package.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "23",
+                "21",
+                "23.8.0.25.04"
+            ],
+            "default": "latest",
+            "description": "The version of Instant Client to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/oracle-generic-remote"
+            ],
+            "description": "The download URL to use for Instant Client binaries."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to use to check for available Instant Client versions."
+        }
+    }
+}
