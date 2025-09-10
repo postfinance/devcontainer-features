@@ -28,6 +28,7 @@ var featureList = []string{
 	"go",
 	"instant-client",
 	"jfrog-cli",
+	"locale",
 	"make",
 	"mingw",
 	"node",
@@ -143,6 +144,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:jfrog-cli:Publish", func() error {
 		return publishFeature("jfrog-cli")
+	})
+
+	////////// locale
+	gotaskr.Task("Feature:locale:Package", func() error {
+		return packageFeature("locale")
+	})
+	gotaskr.Task("Feature:locale:Test", func() error {
+		return testFeature("locale")
+	})
+	gotaskr.Task("Feature:locale:Publish", func() error {
+		return publishFeature("locale")
 	})
 
 	////////// make
