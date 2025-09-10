@@ -30,6 +30,7 @@ var featureList = []string{
 	"jfrog-cli",
 	"make",
 	"mingw",
+	"nginx",
 	"node",
 	"vault-cli",
 	"zig",
@@ -165,6 +166,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:mingw:Publish", func() error {
 		return publishFeature("mingw")
+	})
+
+	////////// nginx
+	gotaskr.Task("Feature:nginx:Package", func() error {
+		return packageFeature("nginx")
+	})
+	gotaskr.Task("Feature:nginx:Test", func() error {
+		return testFeature("nginx")
+	})
+	gotaskr.Task("Feature:nginx:Publish", func() error {
+		return publishFeature("nginx")
 	})
 
 	////////// node

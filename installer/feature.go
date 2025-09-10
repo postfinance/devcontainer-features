@@ -81,6 +81,7 @@ func (f *Feature) Process() error {
 		} else {
 			// Parse the reference version
 			referenceVersion := gover.ParseSimple(strings.Split(strings.ReplaceAll(requestedVersionString, "-", "."), "."))
+			referenceVersion.Raw = requestedVersionString // keep the original raw string including possible '-'
 			isFullVersion := component.IsFullVersion(referenceVersion)
 			if isFullVersion {
 				// The exact version was passed, so directly use it
