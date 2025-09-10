@@ -23,6 +23,7 @@ var featureList = []string{
 	"browsers",
 	"build-essential",
 	"docker-out",
+	"eclipse-deps",
 	"git-lfs",
 	"go",
 	"mingw",
@@ -84,6 +85,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:docker-out:Publish", func() error {
 		return publishFeature("docker-out")
+	})
+
+	////////// eclipse-deps
+	gotaskr.Task("Feature:eclipse-deps:Package", func() error {
+		return packageFeature("eclipse-deps")
+	})
+	gotaskr.Task("Feature:eclipse-deps:Test", func() error {
+		return testFeature("eclipse-deps")
+	})
+	gotaskr.Task("Feature:eclipse-deps:Publish", func() error {
+		return publishFeature("eclipse-deps")
 	})
 
 	////////// git-lfs
