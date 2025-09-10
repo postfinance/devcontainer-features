@@ -1,0 +1,32 @@
+{
+    "id": "jfrog-cli",
+    "version": "0.1.0",
+    "name": "JFrog CLI",
+    "description": "A package which installs the JFrog CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "2",
+                "2.70",
+                "2.63.1"
+            ],
+            "default": "latest",
+            "description": "The version of JFrog-CLI to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/jfrog-generic-remote"
+            ],
+            "description": "The download URL to use for JFrog CLI binaries."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to use to check for available JFrog CLI versions."
+        }
+    }
+}

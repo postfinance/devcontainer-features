@@ -24,6 +24,7 @@ Below is a list with included features, click on the link for more details.
 | [make](./features/src/make/README.md) | A feature which installs GNU Make. |
 | [mingw](./features/src/mingw/README.md) | A feature which installs MinGW (Minimalist GNU for Windows) cross-compilers and tools. |
 | [node](./features/src/node/README.md) | A package which installs Node.js. |
+| [jfrog-cli](./features/src/jfrog-cli/README.md) | A feature which installs the JFrog CLI. |
 | [vault-cli](./features/src/vault-cli/README.md) | A feature which installs the Vault CLI. |
 | [zig](./features/src/zig/README.md) | A feature which installs Zig. |
 

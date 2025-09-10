@@ -26,6 +26,7 @@ var featureList = []string{
 	"eclipse-deps",
 	"git-lfs",
 	"go",
+	"jfrog-cli",
 	"make",
 	"mingw",
 	"node",
@@ -119,6 +120,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:go:Publish", func() error {
 		return publishFeature("go")
+	})
+
+	////////// jfrog-cli
+	gotaskr.Task("Feature:jfrog-cli:Package", func() error {
+		return packageFeature("jfrog-cli")
+	})
+	gotaskr.Task("Feature:jfrog-cli:Test", func() error {
+		return testFeature("jfrog-cli")
+	})
+	gotaskr.Task("Feature:jfrog-cli:Publish", func() error {
+		return publishFeature("jfrog-cli")
 	})
 
 	////////// make
