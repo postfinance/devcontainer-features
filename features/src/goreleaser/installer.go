@@ -14,7 +14,7 @@ import (
 // Configuration
 //////////
 
-var versionRegex *regexp.Regexp = regexp.MustCompile(`^v(\d+)\.(\d+)\.(\d+)?$`)
+var versionRegex *regexp.Regexp = regexp.MustCompile(`(?m)^v(?P<raw>(\d+)\.(\d+)\.(\d+))$`)
 
 //////////
 // Main
@@ -39,7 +39,7 @@ func runMain() error {
 	}
 
 	// Apply override logic for URLs
-	installer.HandleOverride(downloadUrl, "https://github.com", "goreleaser-download-url")
+	installer.HandleGitHubOverride(downloadUrl, "goreleaser/goreleaser", "goreleaser-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("GoReleaser", true,
@@ -68,12 +68,6 @@ func (c *goreleaserComponent) GetAllVersions() ([]*gover.Version, error) {
 }
 
 func (c *goreleaserComponent) InstallVersion(version *gover.Version) error {
-	// Prepend "v" to version.Raw if it does not already start with "v"
-	// This can happen if the vesion is not resolved and the input is without v
-	versionTag := version.Raw
-	if len(versionTag) > 0 && versionTag[0] != 'v' {
-		versionTag = "v" + versionTag
-	}
 	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
 		installer.AMD64: "x86_64",
 		installer.ARM64: "arm64",
@@ -82,8 +76,11 @@ func (c *goreleaserComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Download the file
-	downloadUrl := fmt.Sprintf("%s/goreleaser/goreleaser/releases/download/%s/goreleaser_Linux_%s.tar.gz", c.DownloadUrl, versionTag, archPart)
-	fileName := "goreleaser.tar.gz"
+	fileName := fmt.Sprintf("goreleaser_Linux_%s.tar.gz", archPart)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, "v"+version.Raw, fileName)
+	if err != nil {
+		return err
+	}
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "goreleaser"); err != nil {
 		return err
 	}
