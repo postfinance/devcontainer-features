@@ -21,6 +21,7 @@ jobs:
           "eclipse-deps",
           "git-lfs",
           "go",
+          "goreleaser",
           "jfrog-cli",
           "make",
           "mingw",

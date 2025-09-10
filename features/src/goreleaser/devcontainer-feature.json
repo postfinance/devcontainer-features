@@ -1,0 +1,29 @@
+{
+    "id": "goreleaser",
+    "version": "0.1.0",
+    "name": "GoReleaser",
+    "description": "A package which installs GoReleaser.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "2.4.8",
+                "2.3"
+            ],
+            "default": "latest",
+            "description": "The version of GoReleaser to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for GoReleaser binaries."
+        }
+    },
+    "containerEnv": {
+        "PATH": "/usr/local/goreleaser:${PATH}"
+    }
+}
