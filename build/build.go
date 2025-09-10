@@ -25,6 +25,7 @@ var featureList = []string{
 	"docker-out",
 	"git-lfs",
 	"go",
+	"mingw",
 	"node",
 	"vault-cli",
 	"zig",
@@ -105,6 +106,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:go:Publish", func() error {
 		return publishFeature("go")
+	})
+
+	////////// mingw
+	gotaskr.Task("Feature:mingw:Package", func() error {
+		return packageFeature("mingw")
+	})
+	gotaskr.Task("Feature:mingw:Test", func() error {
+		return testFeature("mingw")
+	})
+	gotaskr.Task("Feature:mingw:Publish", func() error {
+		return publishFeature("mingw")
 	})
 
 	////////// node

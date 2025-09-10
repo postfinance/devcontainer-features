@@ -20,6 +20,7 @@ jobs:
           "docker-out",
           "git-lfs",
           "go",
+          "mingw",
           "node",
           "vault-cli",
           "zig"
