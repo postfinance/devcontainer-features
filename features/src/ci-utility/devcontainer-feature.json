@@ -1,0 +1,44 @@
+{
+  "id": "ci-utility",
+  "version": "0.1.0",
+  "name": "CI Utility",
+  "description": "A package which installs various ci utility tools.",
+  "options": {
+    "yqVersion": {
+      "type": "string",
+      "proposals": [
+        "system-default",
+        "none"
+      ],
+      "default": "system-default",
+      "description": "The version of yq to install."
+    },
+    "gettextbaseVersion": {
+      "type": "string",
+      "proposals": [
+        "system-default",
+        "none"
+      ],
+      "default": "system-default",
+      "description": "The version of gettext-base to install."
+    },
+    "yamllintVersion": {
+      "type": "string",
+      "proposals": [
+        "system-default",
+        "none"
+      ],
+      "default": "system-default",
+      "description": "The version of yamllint to install."
+    },
+    "sshpassVersion": {
+      "type": "string",
+      "proposals": [
+        "system-default",
+        "none"
+      ],
+      "default": "system-default",
+      "description": "The version of sshpass to install."
+    }
+  }
+}

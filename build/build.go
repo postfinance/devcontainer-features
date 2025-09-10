@@ -22,6 +22,7 @@ import (
 var featureList = []string{
 	"browsers",
 	"build-essential",
+	"ci-utility",
 	"docker-out",
 	"eclipse-deps",
 	"git-lfs",
@@ -77,6 +78,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:build-essential:Publish", func() error {
 		return publishFeature("build-essential")
+	})
+
+	////////// ci-utility
+	gotaskr.Task("Feature:ci-utility:Package", func() error {
+		return packageFeature("ci-utility")
+	})
+	gotaskr.Task("Feature:ci-utility:Test", func() error {
+		return testFeature("ci-utility")
+	})
+	gotaskr.Task("Feature:ci-utility:Publish", func() error {
+		return publishFeature("ci-utility")
 	})
 
 	////////// docker-out
