@@ -1,0 +1,5 @@
+[
+    "mcr.microsoft.com/devcontainers/base:debian-11",
+    "mcr.microsoft.com/devcontainers/base:debian-12",
+    "mcr.microsoft.com/devcontainers/base:ubuntu-24.04"
+]
