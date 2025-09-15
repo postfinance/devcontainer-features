@@ -26,6 +26,7 @@ var featureList = []string{
 	"eclipse-deps",
 	"git-lfs",
 	"go",
+	"goreleaser",
 	"instant-client",
 	"jfrog-cli",
 	"locale",
@@ -123,6 +124,17 @@ func init() {
 	})
 	gotaskr.Task("Feature:go:Publish", func() error {
 		return publishFeature("go")
+	})
+
+	////////// goreleaser
+	gotaskr.Task("Feature:goreleaser:Package", func() error {
+		return packageFeature("goreleaser")
+	})
+	gotaskr.Task("Feature:goreleaser:Test", func() error {
+		return testFeature("goreleaser")
+	})
+	gotaskr.Task("Feature:goreleaser:Publish", func() error {
+		return publishFeature("goreleaser")
 	})
 
 	////////// instant-client
