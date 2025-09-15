@@ -1,0 +1,38 @@
+{
+    "de_ch": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./locale": {
+                "locale": "de_CH"
+            }
+        },
+        "containerEnv": {
+            "LANG": "de_CH.UTF-8",
+            "LANGUAGE": "de_CH.UTF-8",
+            "LC_ALL": "de_CH.UTF-8"
+        }
+    },
+    "en_us": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./locale": {
+                "locale": "en_US"
+            }
+        },
+        "containerEnv": {
+            "LANG": "en_US.UTF-8",
+            "LANGUAGE": "en_US.UTF-8",
+            "LC_ALL": "en_US.UTF-8"
+        }
+    }
+}

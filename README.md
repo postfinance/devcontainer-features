@@ -23,6 +23,7 @@ Below is a list with included features, click on the link for more details.
 | [go](./features/src/go/README.md) | A feature which installs Go. |
 | [instant-client](./features/src/instant-client/README.md) | A feature which installs the Oracle Instant Client basic package |
 | [jfrog-cli](./features/src/jfrog-cli/README.md) | A feature which installs the JFrog CLI. |
+| [locale](./features/src/locale/README.md) | A feature which configures system locale and language settings. |
 | [make](./features/src/make/README.md) | A feature which installs GNU Make. |
 | [mingw](./features/src/mingw/README.md) | A feature which installs MinGW (Minimalist GNU for Windows) cross-compilers and tools. |
 | [nginx](./features/src/nginx/README.md) | A feature which installs the NGINX web server. |
