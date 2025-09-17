@@ -24,8 +24,9 @@ func (s *system) MapArchitecture(mapping map[string]string) (string, error) {
 }
 
 type OsInfo struct {
-	Vendor   string
-	Codename string
+	Vendor    string
+	Codename  string
+	VersionId string
 }
 
 func (s *system) GetOsInfo() (*OsInfo, error) {
@@ -38,10 +39,13 @@ func (s *system) GetOsInfo() (*OsInfo, error) {
 	infoMap := map[string]string{}
 	for scanner.Scan() {
 		parts := strings.SplitN(scanner.Text(), "=", 2)
-		infoMap[parts[0]] = parts[1]
+		// Remove surrounding quotes if present
+		val := strings.Trim(parts[1], `"`)
+		infoMap[parts[0]] = val
 	}
 	return &OsInfo{
-		Vendor:   infoMap["ID"],
-		Codename: infoMap["VERSION_CODENAME"],
+		Vendor:    infoMap["ID"],
+		Codename:  infoMap["VERSION_CODENAME"],
+		VersionId: infoMap["VERSION_ID"],
 	}, nil
 }

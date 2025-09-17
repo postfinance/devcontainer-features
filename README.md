@@ -17,6 +17,7 @@ Below is a list with included features, click on the link for more details.
 | --- | --- |
 | [browsers](./features/src/browsers/README.md) | A package which installs various browsers. |
 | [build-essential](./features/src/build-essential/README.md) | Installs essential build tools (e.g., gcc, g++, make, libc-dev) for compiling C/C++ and |
+| [cypress-deps](./features/src/cypress-deps/README.md) | Installs all system dependencies required for running Cypress tests in a dev container. |
 | [docker-out](./features/src/docker-out/README.md) | A feature which installs the Docker client and re-uses the host socket. |
 | [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all system dependencies required for running Eclipse IDE in a dev container. |
 | [git-lfs](./features/src/git-lfs/README.md) | A feature which installs Git LFS. |
