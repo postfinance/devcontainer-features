@@ -23,6 +23,7 @@ jobs:
           "git-lfs",
           "go",
           "goreleaser",
+          "instant-client",
           "jfrog-cli",
           "locale",
           "make",
