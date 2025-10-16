@@ -31,20 +31,10 @@ func runMain() error {
 		"xvfb",
 	}
 
+	debianTrixieOrNewer := osInfo.IsDebian() && osInfo.MajorVersion() >= 13
+	ubuntuNobleOrNewer := osInfo.IsUbuntu() && osInfo.MajorVersion() >= 24
+
 	var deps []string
-
-	debianTrixieOrNewer := osInfo.Vendor == "debian" && func() bool {
-		var major int
-		fmt.Sscanf(osInfo.VersionId, "%d", &major)
-		return major >= 13
-	}()
-
-	ubuntuNobleOrNewer := osInfo.Vendor == "ubuntu" && func() bool {
-		var major int
-		fmt.Sscanf(osInfo.VersionId, "%d", &major)
-		return major >= 24
-	}()
-
 	if debianTrixieOrNewer || ubuntuNobleOrNewer {
 		deps = append([]string{
 			"libgtk2.0-0t64",
