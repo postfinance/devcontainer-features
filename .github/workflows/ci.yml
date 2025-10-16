@@ -32,6 +32,7 @@ jobs:
           "nginx",
           "node",
           "playwright-deps",
+          "sonar-scanner-cli",
           "timezone",
           "vault-cli",
           "zig"

@@ -1,0 +1,31 @@
+{
+    "install-with-jre": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./sonar-scanner-cli": {
+                "version": "6.2.1.4610", 
+                "includeJre": "true"
+            }
+        }
+    },
+    "install-without-jre": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "ghcr.io/devcontainers/features/java:1": {},
+            "./sonar-scanner-cli": {
+                "version": "7.3.0.5189", 
+                "includeJre": "false"
+            }
+        }
+    }
+}
