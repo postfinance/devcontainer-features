@@ -30,6 +30,7 @@ Below is a list with included features, click on the link for more details.
 | [mingw](./features/src/mingw/README.md) | A package which installs MinGW. |
 | [nginx](./features/src/nginx/README.md) | A package which installs Nginx. |
 | [node](./features/src/node/README.md) | A package which installs Node.js. |
+| [sonar-scanner-cli](./features/src/sonar-scanner-cli/README.md) | A package which installs the SonarScanner CLI. |
 | [vault-cli](./features/src/vault-cli/README.md) | A feature which installs the Vault CLI. |
 | [zig](./features/src/zig/README.md) | A feature which installs Zig. |
 
