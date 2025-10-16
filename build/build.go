@@ -8,36 +8,13 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/roemer/gotaskr"
 	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gotaskr/gttools"
 	"github.com/roemer/gotaskr/log"
 )
-
-////////////////////////////////////////////////////////////
-// Variables
-////////////////////////////////////////////////////////////
-
-var featureList = []string{
-	"browsers",
-	"build-essential",
-	"cypress-deps",
-	"docker-out",
-	"eclipse-deps",
-	"git-lfs",
-	"go",
-	"goreleaser",
-	"instant-client",
-	"jfrog-cli",
-	"locale",
-	"make",
-	"mingw",
-	"nginx",
-	"node",
-	"vault-cli",
-	"zig",
-}
 
 ////////////////////////////////////////////////////////////
 // Main
@@ -53,12 +30,54 @@ func main() {
 
 func init() {
 	gotaskr.Task("Update-Readme-Files", func() error {
+		featureList, err := getFeatures()
+		if err != nil {
+			return err
+		}
 		for _, feature := range featureList {
 			if err := BuildReadmeForFeature(fmt.Sprintf("features/src/%s", feature)); err != nil {
 				return err
 			}
 		}
 		return nil
+	})
+
+	gotaskr.Task("Update-Readme-Main", func() error {
+		// Read file and split by newlines
+		content, err := os.ReadFile("README.md")
+		if err != nil {
+			return err
+		}
+		lines := strings.Split(string(content), "\n")
+
+		isInTable := false
+		outputLines := []string{}
+		for _, line := range lines {
+			if isInTable {
+				if strings.HasPrefix(line, "| [") {
+					continue
+				}
+				if line == "" {
+					isInTable = false
+					featureList, err := getFeatures()
+					if err != nil {
+						return err
+					}
+					for _, feature := range featureList {
+						jsonData, err := ParseFeatureJson(filepath.Join("features", "src", feature))
+						if err != nil {
+							return err
+						}
+						outputLines = append(outputLines, fmt.Sprintf("| [%s](./features/src/%s/README.md) | %s |", feature, feature, jsonData.Description))
+					}
+				}
+			}
+			if line == "| Name | Description |" {
+				isInTable = true
+			}
+			outputLines = append(outputLines, line)
+		}
+		return os.WriteFile("README.md", []byte(strings.Join(outputLines, "\n")), os.ModePerm)
 	})
 
 	////////// browsers
@@ -488,4 +507,19 @@ func publishFeature(featureName string) error {
 	}
 	settings.OutputToConsole = true
 	return gotaskr.Tools.DevContainerCli.FeaturesPublish(settings)
+}
+
+func getFeatures() ([]string, error) {
+	featuresDir := "features/src"
+	entries, err := os.ReadDir(featuresDir)
+	if err != nil {
+		return nil, err
+	}
+	var features []string
+	for _, entry := range entries {
+		if entry.IsDir() {
+			features = append(features, entry.Name())
+		}
+	}
+	return features, nil
 }
