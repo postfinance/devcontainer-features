@@ -21,6 +21,7 @@ Below is a list with included features, click on the link for more details.
 | [docker-out](./features/src/docker-out/README.md) | A feature which installs the Docker client and re-uses the host socket. |
 | [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all system dependencies required for running Eclipse IDE in a dev container. |
 | [git-lfs](./features/src/git-lfs/README.md) | A feature which installs Git LFS. |
+| [gitlab-cli](./features/src/gitlab-cli/README.md) | A package which installs the GitLab CLI. |
 | [go](./features/src/go/README.md) | A feature which installs Go. |
 | [goreleaser](./features/src/goreleaser/README.md) | A package which installs GoReleaser. |
 | [instant-client](./features/src/instant-client/README.md) | A package which installs the Oracle Instant Client Basic package. |

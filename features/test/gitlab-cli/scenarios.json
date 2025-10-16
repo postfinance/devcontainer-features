@@ -1,0 +1,15 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./gitlab-cli": {
+                "version": "1.67.0"
+            }
+        }
+    }
+}
