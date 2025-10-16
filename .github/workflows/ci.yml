@@ -30,6 +30,7 @@ jobs:
           "mingw",
           "nginx",
           "node",
+          "timezone",
           "vault-cli",
           "zig"
         ]

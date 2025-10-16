@@ -1,0 +1,28 @@
+{
+    "tz_europe_zurich": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./timezone": {
+                "timezone": "Europe/Zurich"
+            }
+        }
+    },
+    "tz_utc": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./timezone": {
+                "timezone": "Etc/UTC"
+            }
+        }
+    }
+}

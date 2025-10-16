@@ -245,6 +245,17 @@ func init() {
 		return publishFeature("node")
 	})
 
+	////////// timezone
+	gotaskr.Task("Feature:timezone:Package", func() error {
+		return packageFeature("timezone")
+	})
+	gotaskr.Task("Feature:timezone:Test", func() error {
+		return testFeature("timezone")
+	})
+	gotaskr.Task("Feature:timezone:Publish", func() error {
+		return publishFeature("timezone")
+	})
+
 	////////// vault-cli
 	gotaskr.Task("Feature:vault-cli:Package", func() error {
 		return packageFeature("vault-cli")
