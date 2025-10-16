@@ -245,6 +245,17 @@ func init() {
 		return publishFeature("node")
 	})
 
+	////////// sonar-scanner-cli
+	gotaskr.Task("Feature:sonar-scanner-cli:Package", func() error {
+		return packageFeature("sonar-scanner-cli")
+	})
+	gotaskr.Task("Feature:sonar-scanner-cli:Test", func() error {
+		return testFeature("sonar-scanner-cli")
+	})
+	gotaskr.Task("Feature:sonar-scanner-cli:Publish", func() error {
+		return publishFeature("sonar-scanner-cli")
+	})
+
 	////////// vault-cli
 	gotaskr.Task("Feature:vault-cli:Package", func() error {
 		return packageFeature("vault-cli")
