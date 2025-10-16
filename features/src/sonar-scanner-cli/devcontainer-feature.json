@@ -1,0 +1,35 @@
+{
+    "id": "sonar-scanner-cli",
+    "version": "0.1.0",
+    "name": "SonarScanner CLI",
+    "description": "A package which installs the SonarScanner CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "6",
+                "6.2.1.4610"
+            ],
+            "default": "latest",
+            "description": "The version of SonarScanner CLI to install."
+        },
+        "includeJre": {
+            "type": "boolean",
+            "default": true,
+            "description": "A flag to indicate if the jre should be included in the download, otherwise a JRE needs to be installed in other ways."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/sonarsource-generic-remote/Distribution/sonar-scanner-cli"
+            ],
+            "description": "The download URL to use for the binaries."
+        }
+    },
+    "containerEnv": {
+        "PATH": "/usr/local/sonar-scanner/bin:${PATH}",
+        "SONAR_HOME": "/usr/local/sonar-scanner"
+    }
+}

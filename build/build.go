@@ -267,6 +267,17 @@ func init() {
 		return publishFeature("playwright-deps")
 	})
 
+	////////// sonar-scanner-cli
+	gotaskr.Task("Feature:sonar-scanner-cli:Package", func() error {
+		return packageFeature("sonar-scanner-cli")
+	})
+	gotaskr.Task("Feature:sonar-scanner-cli:Test", func() error {
+		return testFeature("sonar-scanner-cli")
+	})
+	gotaskr.Task("Feature:sonar-scanner-cli:Publish", func() error {
+		return publishFeature("sonar-scanner-cli")
+	})
+
 	////////// timezone
 	gotaskr.Task("Feature:timezone:Package", func() error {
 		return packageFeature("timezone")
