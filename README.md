@@ -30,6 +30,7 @@ Below is a list with included features, click on the link for more details.
 | [mingw](./features/src/mingw/README.md) | A package which installs MinGW. |
 | [nginx](./features/src/nginx/README.md) | A package which installs Nginx. |
 | [node](./features/src/node/README.md) | A package which installs Node.js. |
+| [playwright-deps](./features/src/playwright-deps/README.md) | A package which installs the needed dependencies to run Playwright. |
 | [timezone](./features/src/timezone/README.md) | A package which allows setting the timezone. |
 | [vault-cli](./features/src/vault-cli/README.md) | A feature which installs the Vault CLI. |
 | [zig](./features/src/zig/README.md) | A feature which installs Zig. |

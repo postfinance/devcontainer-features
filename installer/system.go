@@ -23,12 +23,6 @@ func (s *system) MapArchitecture(mapping map[string]string) (string, error) {
 	return mappedValue, nil
 }
 
-type OsInfo struct {
-	Vendor    string
-	Codename  string
-	VersionId string
-}
-
 func (s *system) GetOsInfo() (*OsInfo, error) {
 	f, err := os.Open("/etc/os-release")
 	if err != nil {
@@ -48,4 +42,24 @@ func (s *system) GetOsInfo() (*OsInfo, error) {
 		Codename:  infoMap["VERSION_CODENAME"],
 		VersionId: infoMap["VERSION_ID"],
 	}, nil
+}
+
+type OsInfo struct {
+	Vendor    string
+	Codename  string
+	VersionId string
+}
+
+func (v *OsInfo) IsDebian() bool {
+	return v.Vendor == "debian"
+}
+
+func (v *OsInfo) IsUbuntu() bool {
+	return v.Vendor == "ubuntu"
+}
+
+func (v *OsInfo) MajorVersion() int {
+	var major int
+	fmt.Sscanf(v.VersionId, "%d", &major)
+	return major
 }

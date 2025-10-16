@@ -245,6 +245,17 @@ func init() {
 		return publishFeature("node")
 	})
 
+	////////// playwright-deps
+	gotaskr.Task("Feature:playwright-deps:Package", func() error {
+		return packageFeature("playwright-deps")
+	})
+	gotaskr.Task("Feature:playwright-deps:Test", func() error {
+		return testFeature("playwright-deps")
+	})
+	gotaskr.Task("Feature:playwright-deps:Publish", func() error {
+		return publishFeature("playwright-deps")
+	})
+
 	////////// timezone
 	gotaskr.Task("Feature:timezone:Package", func() error {
 		return packageFeature("timezone")
