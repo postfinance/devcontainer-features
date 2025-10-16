@@ -146,6 +146,17 @@ func init() {
 		return publishFeature("git-lfs")
 	})
 
+	////////// gitlab-cli
+	gotaskr.Task("Feature:gitlab-cli:Package", func() error {
+		return packageFeature("gitlab-cli")
+	})
+	gotaskr.Task("Feature:gitlab-cli:Test", func() error {
+		return testFeature("gitlab-cli")
+	})
+	gotaskr.Task("Feature:gitlab-cli:Publish", func() error {
+		return publishFeature("gitlab-cli")
+	})
+
 	////////// go
 	gotaskr.Task("Feature:go:Package", func() error {
 		return packageFeature("go")

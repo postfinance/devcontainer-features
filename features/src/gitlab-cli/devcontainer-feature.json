@@ -1,0 +1,27 @@
+{
+    "id": "gitlab-cli",
+    "version": "0.1.0",
+    "name": "GitLab CLI",
+    "description": "A package which installs the GitLab CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.67.0"
+            ],
+            "default": "latest",
+            "description": "The version of GitLab CLI to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for the binaries."
+        },
+        "versionsUrl":{
+            "type": "string",
+            "default": "",
+            "description": "The URL to use for checking available versions."
+        }
+    }
+}

@@ -21,6 +21,7 @@ jobs:
           "docker-out",
           "eclipse-deps",
           "git-lfs",
+          "gitlab-cli",
           "go",
           "goreleaser",
           "instant-client",
