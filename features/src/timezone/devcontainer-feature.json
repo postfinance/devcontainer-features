@@ -1,0 +1,17 @@
+{
+    "id": "timezone",
+    "version": "0.1.0",
+    "name": "Set a specific timezone",
+    "description": "A package which allows setting the timezone.",
+    "options": {
+        "timezone": {
+            "type": "string",
+            "proposals": [
+                "Europe/Zurich",
+                "Etc/UTC"
+            ],
+            "default": "Etc/UTC",
+            "description": "The timezone to set."
+        }
+    }
+}
