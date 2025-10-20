@@ -8,8 +8,7 @@ A package which installs the GitLab CLI.
 "features": {
     "ghcr.io/postfinance/devcontainer-features/gitlab-cli:0.1.0": {
         "version": "latest",
-        "downloadUrl": "",
-        "versionsUrl": ""
+        "downloadUrl": ""
     }
 }
 ```
@@ -20,7 +19,6 @@ A package which installs the GitLab CLI.
 |-----|-----|-----|-----|-----|
 | version | The version of GitLab CLI to install. | string | latest | latest, 1.67.0 |
 | downloadUrl | The download URL to use for the binaries. | string | &lt;empty&gt; |  |
-| versionsUrl | The URL to use for checking available versions. | string | &lt;empty&gt; |  |
 
 ## Notes
 

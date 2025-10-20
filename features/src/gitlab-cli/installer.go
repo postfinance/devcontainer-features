@@ -2,7 +2,6 @@ package main
 
 import (
 	"builder/installer"
-	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
@@ -32,7 +31,6 @@ func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "")
 	downloadUrl := flag.String("downloadUrl", "", "")
-	versionsUrl := flag.String("versionsUrl", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -41,14 +39,12 @@ func runMain() error {
 	}
 
 	installer.HandleOverride(downloadUrl, "https://gitlab.com/gitlab-org/cli/-/releases", "gitlab-cli-download-url")
-	installer.HandleOverride(versionsUrl, "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages", "gitlab-cli-versions-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("GitLab CLI", false,
 		&glabComponent{
 			ComponentBase: installer.NewComponentBase("GitLab CLI", *version),
 			DownloadUrl:   *downloadUrl,
-			VersionsUrl:   *versionsUrl,
 		})
 	return feature.Process()
 }
@@ -60,29 +56,14 @@ func runMain() error {
 type glabComponent struct {
 	*installer.ComponentBase
 	DownloadUrl string
-	VersionsUrl string
 }
 
 func (c *glabComponent) GetAllVersions() ([]*gover.Version, error) {
-	// Download the version index
-	versionFileContent, err := installer.Tools.Download.AsBytes(c.VersionsUrl)
+	versionStrings, err := installer.Tools.GitLab.GetPackageReleases("gitlab-org/cli")
 	if err != nil {
 		return nil, err
 	}
-	// Parse the versions
-	var jsonData []struct {
-		Id      int    `json:"id"`
-		Version string `json:"version"`
-	}
-	if err := json.Unmarshal(versionFileContent, &jsonData); err != nil {
-		return nil, err
-	}
-	allVersions := []*gover.Version{}
-	for _, entry := range jsonData {
-		version := gover.MustParseVersionFromRegex(entry.Version, versionRegexp)
-		allVersions = append(allVersions, version)
-	}
-	return allVersions, nil
+	return installer.Tools.Versioning.ParseVersionsFromList(versionStrings, versionRegexp, true)
 }
 
 func (c *glabComponent) InstallVersion(version *gover.Version) error {
