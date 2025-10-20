@@ -5,6 +5,7 @@ type tools struct {
 	Download    *download
 	FileSystem  *fileSystem
 	GitHub      *gitHub
+	GitLab      *gitLab
 	Http        *httpTools
 	Npm         *npm
 	System      *system
@@ -20,6 +21,7 @@ func init() {
 		Download:    &download{},
 		FileSystem:  &fileSystem{},
 		GitHub:      &gitHub{},
+		GitLab:      &gitLab{},
 		Http:        &httpTools{},
 		Npm:         &npm{},
 		System:      &system{},
