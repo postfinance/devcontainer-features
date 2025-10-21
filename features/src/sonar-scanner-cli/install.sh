@@ -2,4 +2,5 @@
 
 "./installer_$(detect_arch)" \
     -version="${VERSION:-"latest"}" \
-    -includeJre="${INCLUDEJRE:-"true"}"
+    -includeJre="${INCLUDEJRE:-"true"}" \
+    -downloadUrl="${DOWNLOADURL:-""}"

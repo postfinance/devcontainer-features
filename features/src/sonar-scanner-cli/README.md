@@ -6,7 +6,7 @@ A package which installs the SonarScanner CLI.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/sonar-scanner-cli:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/sonar-scanner-cli:0.2.0": {
         "version": "latest",
         "includeJre": true,
         "downloadUrl": ""

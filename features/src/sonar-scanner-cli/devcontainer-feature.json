@@ -1,6 +1,6 @@
 {
     "id": "sonar-scanner-cli",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "SonarScanner CLI",
     "description": "A package which installs the SonarScanner CLI.",
     "options": {
