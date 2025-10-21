@@ -33,6 +33,7 @@ jobs:
           "node",
           "playwright-deps",
           "sonar-scanner-cli",
+          "system-packages",
           "timezone",
           "vault-cli",
           "zig"

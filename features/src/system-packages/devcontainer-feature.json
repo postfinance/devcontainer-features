@@ -1,0 +1,17 @@
+{
+  "id": "system-packages",
+  "version": "0.1.0",
+  "name": "System Packages",
+  "description": "Install arbitrary system packages using apt or apk.",
+  "options": {
+    "packages": {
+      "type": "string",
+      "description": "Comma-separated list of system packages to install.",
+      "proposals": [
+        "curl,git,htop",
+        "sshpass,yamllint,yq,gettext-base"
+      ],
+      "default": ""
+    }
+  }
+}
