@@ -1,0 +1,70 @@
+{
+    "id": "python",
+    "version": "0.1.0",
+    "name": "Python",
+    "description": "A package which installs Python.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "3.12",
+                "3.9.19"
+            ],
+            "default": "latest",
+            "description": "The version of Python to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/python-generic-ftp-remote",
+                "https://mycompany.com/artifactory/python-generic-remote/ftp/python"
+            ],
+            "description": "The download URL to use."
+        },
+        "pipIndex": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/api/pypi/python/simple",
+                "https://mycompany.com/nexus/repository/pypi-group/pypi"
+            ],
+            "description": "The pip index to use (used by search)."
+        },
+        "pipIndexUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/api/pypi/python/simple",
+                "https://mycompany.com/nexus/repository/pypi-group/simple"
+            ],
+            "description": "The pip index URL to use (used by install)."
+        },
+        "pipTrustedHost": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "mycompany.com",
+                "artifactory.mycompany.com",
+                "nexus.mycompany.com"
+            ],
+            "description": "The pip trusted host to use."
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/python/current/bin/python"
+            }
+        }
+    },
+    "containerEnv": {
+        "PATH": "/usr/local/python/current/bin:${PATH}",
+        "PYTHON_PATH": "/usr/local/python/current"
+    }
+}

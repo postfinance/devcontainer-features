@@ -3,6 +3,7 @@ module builder
 go 1.24.5
 
 require (
+	github.com/roemer/goext v0.8.1
 	github.com/roemer/gotaskr v0.6.0
 	github.com/roemer/gover v0.8.0
 	github.com/schollz/progressbar/v3 v3.18.0
