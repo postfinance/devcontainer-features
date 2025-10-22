@@ -32,6 +32,7 @@ jobs:
           "nginx",
           "node",
           "playwright-deps",
+          "python",
           "sonar-scanner-cli",
           "system-packages",
           "timezone",

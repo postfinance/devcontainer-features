@@ -41,7 +41,7 @@ type systemPackagesComponent struct {
 }
 
 func (c *systemPackagesComponent) InstallVersion(version *gover.Version) error {
-	return installer.Tools.System.InstallPackages(c.Packages)
+	return installer.Tools.System.InstallPackages(c.Packages...)
 }
 
 func parsePackages(flagValue string) []string {

@@ -15,11 +15,15 @@ const (
 
 type system struct{}
 
-func (s *system) InstallPackages(packages []string) error {
+func (s *system) InstallPackages(packages ...string) error {
 	osInfo, err := s.GetOsInfo()
 	if err != nil {
 		return err
 	}
+	return s.InstallPackagesForOs(osInfo, packages...)
+}
+
+func (s *system) InstallPackagesForOs(osInfo *OsInfo, packages ...string) error {
 	switch {
 	case osInfo.IsDebian(), osInfo.IsUbuntu():
 		return Tools.Apt.InstallDependencies(packages...)
@@ -28,6 +32,21 @@ func (s *system) InstallPackages(packages []string) error {
 	default:
 		return fmt.Errorf("unsupported OS vendor: %s", osInfo.Vendor)
 	}
+}
+
+func (s *system) InstallPackagesByOs(f func(osInfo *OsInfo) ([]string, error)) error {
+	osInfo, err := s.GetOsInfo()
+	if err != nil {
+		return err
+	}
+	packages, err := f(osInfo)
+	if err != nil {
+		return err
+	}
+	if packages == nil {
+		return nil
+	}
+	return s.InstallPackagesForOs(osInfo, packages...)
 }
 
 func (s *system) MapArchitecture(mapping map[string]string) (string, error) {

@@ -11,15 +11,16 @@ import (
 type apt struct{}
 
 func (a apt) InstallDependencies(dependencies ...string) error {
+	if len(dependencies) == 0 {
+		return nil
+	}
 	if err := execr.Run(false, "apt-get", "update"); err != nil {
 		return err
 	}
-
 	args := append([]string{"install", "-y"}, dependencies...)
 	if err := execr.Run(true, "apt-get", args...); err != nil {
 		return err
 	}
-
 	a.CleanCache()
 	return nil
 }

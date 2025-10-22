@@ -267,6 +267,17 @@ func init() {
 		return publishFeature("playwright-deps")
 	})
 
+	////////// python
+	gotaskr.Task("Feature:python:Package", func() error {
+		return packageFeature("python")
+	})
+	gotaskr.Task("Feature:python:Test", func() error {
+		return testFeature("python")
+	})
+	gotaskr.Task("Feature:python:Publish", func() error {
+		return publishFeature("python")
+	})
+
 	////////// sonar-scanner-cli
 	gotaskr.Task("Feature:sonar-scanner-cli:Package", func() error {
 		return packageFeature("sonar-scanner-cli")
