@@ -21,7 +21,9 @@
             ]
         },
         "features": {
-            "ghcr.io/devcontainers/features/java:1": {},
+            "ghcr.io/devcontainers/features/java:1": {
+                "version": "23"
+            },
             "./sonar-scanner-cli": {
                 "version": "7.3.0.5189", 
                 "includeJre": "false"
