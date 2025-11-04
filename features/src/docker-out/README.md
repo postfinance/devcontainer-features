@@ -6,10 +6,11 @@ Installs a Docker client which re-uses the host Docker socket.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/docker-out:0.2.0": {
+    "ghcr.io/postfinance/devcontainer-features/docker-out:0.3.0": {
         "version": "latest",
         "composeVersion": "latest",
         "buildxVersion": "latest",
+        "configPath": "",
         "downloadUrl": "",
         "versionsUrl": "",
         "composeDownloadUrl": "",
@@ -25,6 +26,7 @@ Installs a Docker client which re-uses the host Docker socket.
 | version | The version of the Docker CLI to install. | string | latest | latest, 28.3.3, 20.10 |
 | composeVersion | The version of the Compose plugin to install. | string | latest | latest, none, 2.39.1, 2.29 |
 | buildxVersion | The version of the buildx plugin to install. | string | latest | latest, none, 0.26.1, 0.10 |
+| configPath | Path or URL to a custom Docker client config.json file to copy into the container. | string | &lt;empty&gt; | /home/user/.docker/config.json, https://raw.githubusercontent.com/devcontainers/features/main/src/docker-out/config.json |
 | downloadUrl | The download URL to use for Docker binaries. | string | &lt;empty&gt; |  |
 | versionsUrl | The URL to use for checking available versions. | string | &lt;empty&gt; |  |
 | composeDownloadUrl | The download URL to use for Docker Compose binaries. | string | &lt;empty&gt; |  |
