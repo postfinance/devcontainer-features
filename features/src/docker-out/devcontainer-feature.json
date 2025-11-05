@@ -42,7 +42,8 @@
             "description": "Path or URL to a custom Docker client config.json file to copy into the container.",
             "proposals": [
                 "/home/user/.docker/config.json",
-                "https://raw.githubusercontent.com/devcontainers/features/main/src/docker-out/config.json"
+                "https://raw.githubusercontent.com/devcontainers/features/main/src/docker-out/config.json",
+                "none"
             ]
         },
         "downloadUrl": {

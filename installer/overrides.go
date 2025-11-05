@@ -66,6 +66,9 @@ func HandleOverride(passedValue *string, defaultValue string, key string) {
 		// Otherwise set to default value
 		*passedValue = defaultValue
 	}
+	if strings.ToLower(*passedValue) == "none" {
+		*passedValue = ""
+	}
 }
 
 func HandleGitHubOverride(downloadUrl *string, gitHubPath string, key string) {
