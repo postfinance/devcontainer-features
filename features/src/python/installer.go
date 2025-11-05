@@ -17,7 +17,7 @@ import (
 // Configuration
 //////////
 
-var pythonVersionRegexp *regexp.Regexp = regexp.MustCompile(`^(?P<d1>\d+)\.(?P<d2>\d+)(?:\.(?P<d3>\d+))?(?:(?P<s4>[a-z]+)(?P<d5>\d+))?$`)
+var pythonVersionRegexp *regexp.Regexp = regexp.MustCompile(`^v(?P<raw>(\d+)\.(\d+)(?:\.(\d+))?(?:([a-z]+)(\d+))?)$`)
 
 //////////
 // Main
@@ -110,7 +110,7 @@ func (c *pythonComponent) InstallVersion(version *gover.Version) error {
 	}
 	// Create a symlink to the installed python version
 	symLinkPath := "/usr/local/python/current"
-	targetPath := fmt.Sprintf("/usr/local/python/%s", folderName)
+	targetPath := fmt.Sprintf("/usr/local/python/%s", version.Raw)
 	if err := installer.Tools.FileSystem.CreateSymLink(targetPath, symLinkPath, false); err != nil {
 		return err
 	}

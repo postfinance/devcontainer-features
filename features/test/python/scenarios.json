@@ -11,5 +11,18 @@
                 "version": "3.9.19"
             }
         }
+    },
+    "install-alpha": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./python": {
+                "version": "3.15.0a1"
+            }
+        }
     }
 }

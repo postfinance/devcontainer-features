@@ -1,6 +1,7 @@
 package installer
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/roemer/gotaskr/execr"
@@ -11,7 +12,7 @@ type apk struct{}
 func (a apk) InstallDependencies(dependencies ...string) error {
 	args := append([]string{"add", "--no-cache"}, dependencies...)
 	if err := execr.Run(true, "apk", args...); err != nil {
-		return err
+		return fmt.Errorf("failed to install dependencies: %w", err)
 	}
 	return nil
 }
@@ -21,7 +22,7 @@ func (a apk) InstallLocalPackage(packagePath string) error {
 		packagePath = "./" + packagePath
 	}
 	if err := execr.Run(true, "apk", "add", "--no-cache", packagePath); err != nil {
-		return err
+		return fmt.Errorf("failed to install local package: %w", err)
 	}
 	return nil
 }
