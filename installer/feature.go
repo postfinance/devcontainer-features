@@ -96,7 +96,7 @@ func (f *Feature) Process() error {
 					return err
 				}
 				// Get the max according to the reference version
-				versionToInstall = gover.FindMax(allVersions, referenceVersion, false)
+				versionToInstall = gover.FindMax(allVersions, referenceVersion, true)
 			}
 		}
 
