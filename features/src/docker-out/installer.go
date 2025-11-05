@@ -144,13 +144,17 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 	}
 	// Copy the default config.json
 	if c.ConfigPath != "" {
-		fileContent, err := installer.ReadConfigFile(c.ConfigPath)
+		fileContent, err := installer.ReadFileFromUrlOrLocal(c.ConfigPath)
 		if err != nil {
 			return err
 		}
 		userName := os.Getenv("_REMOTE_USER")
-		dockerDir := fmt.Sprintf("/home/%s/.docker", userName)
-		configDest := fmt.Sprintf("%s/config.json", dockerDir)
+		homeDir := os.Getenv("_REMOTE_USER_HOME")
+		if homeDir == "" {
+			homeDir = filepath.Join("/home", userName)
+		}
+		dockerDir := filepath.Join(homeDir, ".docker")
+		configDest := filepath.Join(dockerDir, "config.json")
 		// Ensure directory exists
 		if err := os.MkdirAll(dockerDir, 0700); err != nil {
 			return err

@@ -9,7 +9,7 @@ import (
 // Loads the feature overrides from a specified location.
 func LoadOverrides() error {
 	if overrideLocation := os.Getenv("DEV_FEATURE_OVERRIDE_LOCATION"); overrideLocation != "" {
-		fileContent, err := ReadConfigFile(overrideLocation)
+		fileContent, err := ReadFileFromUrlOrLocal(overrideLocation)
 		if err != nil {
 			return err
 		}
@@ -37,8 +37,8 @@ func LoadOverrides() error {
 	return nil
 }
 
-// ReadConfigFile loads a file from a URL or local path and returns its contents as bytes.
-func ReadConfigFile(location string) ([]byte, error) {
+// ReadFileFromUrlOrLocal loads a file from a URL or local path and returns its contents as bytes.
+func ReadFileFromUrlOrLocal(location string) ([]byte, error) {
 	if strings.HasPrefix(location, "http://") || strings.HasPrefix(location, "https://") {
 		fileContent, err := Tools.Download.AsBytes(location)
 		if err != nil {
