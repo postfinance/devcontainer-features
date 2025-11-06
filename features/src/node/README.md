@@ -1,6 +1,6 @@
 # Node.js (node)
 
-A package which installs Node.js.
+Installs Node.js.
 
 ## Example Usage
 

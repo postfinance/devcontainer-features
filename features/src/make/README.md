@@ -1,6 +1,6 @@
 # Make (make)
 
-A package which installs Make.
+Installs Make.
 
 ## Example Usage
 

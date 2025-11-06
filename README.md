@@ -15,29 +15,29 @@ Below is a list with included features, click on the link for more details.
 
 | Name | Description |
 | --- | --- |
-| [browsers](./features/src/browsers/README.md) | A package which installs various browsers. |
-| [build-essential](./features/src/build-essential/README.md) | A package which installs build essentials like gcc. |
-| [cypress-deps](./features/src/cypress-deps/README.md) | Installs all system dependencies required for running Cypress tests in a dev container. |
-| [docker-out](./features/src/docker-out/README.md) | A feature which installs the Docker client and re-uses the host socket. |
-| [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all system dependencies required for running Eclipse IDE in a dev container. |
-| [git-lfs](./features/src/git-lfs/README.md) | A feature which installs Git LFS. |
-| [gitlab-cli](./features/src/gitlab-cli/README.md) | A package which installs the GitLab CLI. |
-| [go](./features/src/go/README.md) | A feature which installs Go. |
-| [goreleaser](./features/src/goreleaser/README.md) | A package which installs GoReleaser. |
-| [instant-client](./features/src/instant-client/README.md) | A package which installs the Oracle Instant Client Basic package. |
-| [jfrog-cli](./features/src/jfrog-cli/README.md) | A package which installs the JFrog CLI. |
-| [locale](./features/src/locale/README.md) | A package which allows setting the locale. |
-| [make](./features/src/make/README.md) | A package which installs Make. |
-| [mingw](./features/src/mingw/README.md) | A package which installs MinGW. |
-| [nginx](./features/src/nginx/README.md) | A package which installs Nginx. |
-| [node](./features/src/node/README.md) | A package which installs Node.js. |
-| [playwright-deps](./features/src/playwright-deps/README.md) | A package which installs the needed dependencies to run Playwright. |
-| [python](./features/src/python/README.md) | A package which installs Python. |
-| [sonar-scanner-cli](./features/src/sonar-scanner-cli/README.md) | A package which installs the SonarScanner CLI. |
-| [system-packages](./features/src/system-packages/README.md) | Install arbitrary system packages using apt or apk. |
-| [timezone](./features/src/timezone/README.md) | A package which allows setting the timezone. |
-| [vault-cli](./features/src/vault-cli/README.md) | A feature which installs the Vault CLI. |
-| [zig](./features/src/zig/README.md) | A feature which installs Zig. |
+| [browsers](./features/src/browsers/README.md) | Installs various browsers and their dependencies. |
+| [build-essential](./features/src/build-essential/README.md) | Installs build essentials like gcc. |
+| [cypress-deps](./features/src/cypress-deps/README.md) | Installs all dependencies required to run Cypress. |
+| [docker-out](./features/src/docker-out/README.md) | Installs a Docker client which re-uses the host Docker socket. |
+| [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all dependencies required to run the Eclipse IDE. |
+| [git-lfs](./features/src/git-lfs/README.md) | Installs Git LFS. |
+| [gitlab-cli](./features/src/gitlab-cli/README.md) | Installs the GitLab CLI. |
+| [go](./features/src/go/README.md) | Installs Go. |
+| [goreleaser](./features/src/goreleaser/README.md) | Installs GoReleaser. |
+| [instant-client](./features/src/instant-client/README.md) | Installs the Oracle Instant Client Basic package. |
+| [jfrog-cli](./features/src/jfrog-cli/README.md) | Installs the JFrog CLI. |
+| [locale](./features/src/locale/README.md) | Allows setting the locale. |
+| [make](./features/src/make/README.md) | Installs Make. |
+| [mingw](./features/src/mingw/README.md) | Installs MinGW. |
+| [nginx](./features/src/nginx/README.md) | Installs Nginx. |
+| [node](./features/src/node/README.md) | Installs Node.js. |
+| [playwright-deps](./features/src/playwright-deps/README.md) | Installs all dependencies required to run Playwright. |
+| [python](./features/src/python/README.md) | Installs Python. |
+| [sonar-scanner-cli](./features/src/sonar-scanner-cli/README.md) | Installs the SonarScanner CLI. |
+| [system-packages](./features/src/system-packages/README.md) | Install arbitrary system packages using the system package manager. |
+| [timezone](./features/src/timezone/README.md) | Allows setting the timezone. |
+| [vault-cli](./features/src/vault-cli/README.md) | Installs the Vault CLI. |
+| [zig](./features/src/zig/README.md) | Installs Zig. |
 
 ## Usage
 

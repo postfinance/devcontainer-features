@@ -2,7 +2,7 @@
   "id": "browsers",
   "version": "0.1.0",
   "name": "Browsers",
-  "description": "A package which installs various browsers.",
+  "description": "Installs various browsers and their dependencies.",
   "options": {
     "chromeVersion": {
       "type": "string",

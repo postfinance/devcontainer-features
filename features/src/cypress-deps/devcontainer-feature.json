@@ -2,5 +2,5 @@
     "id": "cypress-deps",
     "version": "0.1.0",
     "name": "Cypress Dependencies",
-    "description": "Installs all system dependencies required for running Cypress tests in a dev container."
+    "description": "Installs all dependencies required to run Cypress."
 }

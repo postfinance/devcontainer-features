@@ -1,6 +1,6 @@
 # MinGW (mingw)
 
-A package which installs MinGW.
+Installs MinGW.
 
 ## Example Usage
 

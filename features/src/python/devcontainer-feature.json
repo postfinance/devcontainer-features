@@ -2,7 +2,7 @@
     "id": "python",
     "version": "0.1.0",
     "name": "Python",
-    "description": "A package which installs Python.",
+    "description": "Installs Python.",
     "options": {
         "version": {
             "type": "string",

@@ -1,6 +1,6 @@
 # Set a specific locale (locale)
 
-A package which allows setting the locale.
+Allows setting the locale.
 
 ## Example Usage
 

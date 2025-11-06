@@ -1,6 +1,6 @@
 # Python (python)
 
-A package which installs Python.
+Installs Python.
 
 ## Example Usage
 

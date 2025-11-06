@@ -2,7 +2,7 @@
     "id": "locale",
     "version": "0.1.0",
     "name": "Set a specific locale",
-    "description": "A package which allows setting the locale.",
+    "description": "Allows setting the locale.",
     "options": {
         "locale": {
             "type": "string",

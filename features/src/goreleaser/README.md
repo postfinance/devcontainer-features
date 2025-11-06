@@ -1,6 +1,6 @@
 # GoReleaser (goreleaser)
 
-A package which installs GoReleaser.
+Installs GoReleaser.
 
 ## Example Usage
 

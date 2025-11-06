@@ -1,6 +1,6 @@
 # JFrog CLI (jfrog-cli)
 
-A package which installs the JFrog CLI.
+Installs the JFrog CLI.
 
 ## Example Usage
 

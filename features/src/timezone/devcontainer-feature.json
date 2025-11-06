@@ -2,7 +2,7 @@
     "id": "timezone",
     "version": "0.1.0",
     "name": "Set a specific timezone",
-    "description": "A package which allows setting the timezone.",
+    "description": "Allows setting the timezone.",
     "options": {
         "timezone": {
             "type": "string",

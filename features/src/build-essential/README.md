@@ -1,6 +1,6 @@
 # Build Essential (build-essential)
 
-A package which installs build essentials like gcc.
+Installs build essentials like gcc.
 
 ## Example Usage
 

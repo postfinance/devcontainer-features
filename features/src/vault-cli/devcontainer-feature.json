@@ -2,7 +2,7 @@
     "id": "vault-cli",
     "version": "0.2.0",
     "name": "Vault CLI",
-    "description": "A feature which installs the Vault CLI.",
+    "description": "Installs the Vault CLI.",
     "options": {
         "version": {
             "type": "string",

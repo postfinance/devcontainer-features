@@ -2,7 +2,7 @@
     "id": "playwright-deps",
     "version": "0.1.0",
     "name": "Playwright Dependencies",
-    "description": "A package which installs the needed dependencies to run Playwright.",
+    "description": "Installs all dependencies required to run Playwright.",
     "options": {
         "installChromiumDeps": {
             "type": "boolean",

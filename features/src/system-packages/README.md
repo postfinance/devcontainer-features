@@ -1,6 +1,6 @@
 # System Packages (system-packages)
 
-Install arbitrary system packages using apt or apk.
+Install arbitrary system packages using the system package manager.
 
 ## Example Usage
 

@@ -1,6 +1,6 @@
 # Git LFS (git-lfs)
 
-A feature which installs Git LFS.
+Installs Git LFS.
 
 ## Example Usage
 

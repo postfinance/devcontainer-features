@@ -2,5 +2,5 @@
     "id": "mingw",
     "version": "0.1.0",
     "name": "MinGW",
-    "description": "A package which installs MinGW."
+    "description": "Installs MinGW."
 }

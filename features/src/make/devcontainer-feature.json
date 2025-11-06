@@ -2,5 +2,5 @@
     "id": "make",
     "version": "0.1.0",
     "name": "Make",
-    "description": "A package which installs Make."
+    "description": "Installs Make."
 }

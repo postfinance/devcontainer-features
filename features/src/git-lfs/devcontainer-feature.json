@@ -2,7 +2,7 @@
     "id": "git-lfs",
     "version": "0.2.0",
     "name": "Git LFS",
-    "description": "A feature which installs Git LFS.",
+    "description": "Installs Git LFS.",
     "options": {
         "version": {
             "type": "string",

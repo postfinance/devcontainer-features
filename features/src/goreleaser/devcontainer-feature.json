@@ -2,7 +2,7 @@
     "id": "goreleaser",
     "version": "0.1.0",
     "name": "GoReleaser",
-    "description": "A package which installs GoReleaser.",
+    "description": "Installs GoReleaser.",
     "options": {
         "version": {
             "type": "string",

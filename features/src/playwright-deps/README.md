@@ -1,6 +1,6 @@
 # Playwright Dependencies (playwright-deps)
 
-A package which installs the needed dependencies to run Playwright.
+Installs all dependencies required to run Playwright.
 
 ## Example Usage
 

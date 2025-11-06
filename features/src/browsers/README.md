@@ -1,6 +1,6 @@
 # Browsers (browsers)
 
-A package which installs various browsers.
+Installs various browsers and their dependencies.
 
 ## Example Usage
 

@@ -2,7 +2,7 @@
     "id": "jfrog-cli",
     "version": "0.1.0",
     "name": "JFrog CLI",
-    "description": "A package which installs the JFrog CLI.",
+    "description": "Installs the JFrog CLI.",
     "options": {
         "version": {
             "type": "string",

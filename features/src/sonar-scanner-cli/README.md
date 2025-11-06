@@ -1,6 +1,6 @@
 # SonarScanner CLI (sonar-scanner-cli)
 
-A package which installs the SonarScanner CLI.
+Installs the SonarScanner CLI.
 
 ## Example Usage
 

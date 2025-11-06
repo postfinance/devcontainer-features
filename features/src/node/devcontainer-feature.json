@@ -2,7 +2,7 @@
     "id": "node",
     "version": "0.3.0",
     "name": "Node.js",
-    "description": "A package which installs Node.js.",
+    "description": "Installs Node.js.",
     "options": {
         "version": {
             "type": "string",

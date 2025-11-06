@@ -2,7 +2,7 @@
     "id": "go",
     "version": "0.2.0",
     "name": "Go",
-    "description": "A feature which installs Go.",
+    "description": "Installs Go.",
     "options": {
         "version": {
             "type": "string",

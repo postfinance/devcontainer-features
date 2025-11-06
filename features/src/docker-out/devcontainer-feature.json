@@ -2,7 +2,7 @@
     "id": "docker-out",
     "version": "0.2.0",
     "name": "Docker outside Docker",
-    "description": "A feature which installs the Docker client and re-uses the host socket.",
+    "description": "Installs a Docker client which re-uses the host Docker socket.",
     "options": {
         "version": {
             "type": "string",

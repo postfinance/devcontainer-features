@@ -2,7 +2,7 @@
   "id": "system-packages",
   "version": "0.1.0",
   "name": "System Packages",
-  "description": "Install arbitrary system packages using apt or apk.",
+  "description": "Install arbitrary system packages using the system package manager.",
   "options": {
     "packages": {
       "type": "string",

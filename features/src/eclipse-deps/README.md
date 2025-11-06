@@ -1,6 +1,6 @@
 # Eclipse Dependencies (eclipse-deps)
 
-Installs all system dependencies required for running Eclipse IDE in a dev container.
+Installs all dependencies required to run the Eclipse IDE.
 
 ## Example Usage
 

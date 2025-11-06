@@ -2,7 +2,7 @@
     "id": "gitlab-cli",
     "version": "0.1.0",
     "name": "GitLab CLI",
-    "description": "A package which installs the GitLab CLI.",
+    "description": "Installs the GitLab CLI.",
     "options": {
         "version": {
             "type": "string",

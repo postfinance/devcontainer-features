@@ -2,7 +2,7 @@
     "id": "nginx",
     "version": "0.1.0",
     "name": "Nginx",
-    "description": "A package which installs Nginx.",
+    "description": "Installs Nginx.",
     "options": {
         "version": {
             "type": "string",

@@ -1,6 +1,6 @@
 # Go (go)
 
-A feature which installs Go.
+Installs Go.
 
 ## Example Usage
 

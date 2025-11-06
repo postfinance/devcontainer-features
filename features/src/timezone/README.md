@@ -1,6 +1,6 @@
 # Set a specific timezone (timezone)
 
-A package which allows setting the timezone.
+Allows setting the timezone.
 
 ## Example Usage
 

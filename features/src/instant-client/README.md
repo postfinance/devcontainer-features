@@ -1,6 +1,6 @@
 # Instant client (instant-client)
 
-A package which installs the Oracle Instant Client Basic package.
+Installs the Oracle Instant Client Basic package.
 
 ## Example Usage
 

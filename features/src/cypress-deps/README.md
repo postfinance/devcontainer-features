@@ -1,6 +1,6 @@
 # Cypress Dependencies (cypress-deps)
 
-Installs all system dependencies required for running Cypress tests in a dev container.
+Installs all dependencies required to run Cypress.
 
 ## Example Usage
 

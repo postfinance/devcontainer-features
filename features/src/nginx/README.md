@@ -1,6 +1,6 @@
 # Nginx (nginx)
 
-A package which installs Nginx.
+Installs Nginx.
 
 ## Example Usage
 

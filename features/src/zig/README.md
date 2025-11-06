@@ -1,6 +1,6 @@
 # Zig (zig)
 
-A feature which installs Zig.
+Installs Zig.
 
 ## Example Usage
 

@@ -1,6 +1,6 @@
 # Vault CLI (vault-cli)
 
-A feature which installs the Vault CLI.
+Installs the Vault CLI.
 
 ## Example Usage
 

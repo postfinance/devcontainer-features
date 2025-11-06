@@ -1,6 +1,6 @@
 # GitLab CLI (gitlab-cli)
 
-A package which installs the GitLab CLI.
+Installs the GitLab CLI.
 
 ## Example Usage
 

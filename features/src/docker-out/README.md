@@ -1,6 +1,6 @@
 # Docker outside Docker (docker-out)
 
-A feature which installs the Docker client and re-uses the host socket.
+Installs a Docker client which re-uses the host Docker socket.
 
 ## Example Usage
 

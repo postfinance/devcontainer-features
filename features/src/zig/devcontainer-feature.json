@@ -2,7 +2,7 @@
     "id": "zig",
     "version": "0.2.0",
     "name": "Zig",
-    "description": "A feature which installs Zig.",
+    "description": "Installs Zig.",
     "options": {
         "version": {
             "type": "string",
