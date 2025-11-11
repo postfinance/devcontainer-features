@@ -1,6 +1,6 @@
 {
     "id": "docker-out",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "name": "Docker outside Docker",
     "description": "Installs a Docker client which re-uses the host Docker socket.",
     "options": {
@@ -35,6 +35,16 @@
             ],
             "default": "latest",
             "description": "The version of the buildx plugin to install."
+        },
+        "configPath": {
+            "type": "string",
+            "default": "",
+            "description": "Path or URL to a custom Docker client config.json file to copy into the container.",
+            "proposals": [
+                "/home/user/.docker/config.json",
+                "https://raw.githubusercontent.com/devcontainers/features/main/src/docker-out/config.json",
+                "none"
+            ]
         },
         "downloadUrl": {
             "type": "string",

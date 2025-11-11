@@ -28,5 +28,21 @@
                 "buildxVersion": "0.21.2"
             }
         }
+    },
+    "install-config": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./docker-out": {
+                "version": "28.3.3",
+                "composeVersion": "none",
+                "buildxVersion": "none",
+                "configPath": "https://raw.githubusercontent.com/postfinance/devcontainer-features/refs/heads/main/override-all.env"
+            }
+        }
     }
 }

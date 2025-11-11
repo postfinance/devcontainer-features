@@ -8,22 +8,10 @@ import (
 
 // Loads the feature overrides from a specified location.
 func LoadOverrides() error {
-	var fileContent []byte
-	var err error
 	if overrideLocation := os.Getenv("DEV_FEATURE_OVERRIDE_LOCATION"); overrideLocation != "" {
-		// Load the overrides from the specified location
-		if strings.HasPrefix(overrideLocation, "http://") || strings.HasPrefix(overrideLocation, "https://") {
-			// Load from URL
-			fileContent, err = Tools.Download.AsBytes(overrideLocation)
-			if err != nil {
-				return fmt.Errorf("error downloading override file: %v", err)
-			}
-		} else {
-			// Load from file
-			fileContent, err = os.ReadFile(overrideLocation)
-			if err != nil {
-				return fmt.Errorf("error reading override file: %v", err)
-			}
+		fileContent, err := ReadFileFromUrlOrLocal(overrideLocation)
+		if err != nil {
+			return err
 		}
 		if len(fileContent) > 0 {
 			lines := strings.SplitSeq(strings.ReplaceAll(strings.TrimSpace(string(fileContent)), "\r\n", "\n"), "\n")
@@ -49,6 +37,23 @@ func LoadOverrides() error {
 	return nil
 }
 
+// ReadFileFromUrlOrLocal loads a file from a URL or local path and returns its contents as bytes.
+func ReadFileFromUrlOrLocal(location string) ([]byte, error) {
+	if strings.HasPrefix(location, "http://") || strings.HasPrefix(location, "https://") {
+		fileContent, err := Tools.Download.AsBytes(location)
+		if err != nil {
+			return nil, fmt.Errorf("error downloading file: %v", err)
+		}
+		return fileContent, nil
+	} else {
+		fileContent, err := os.ReadFile(location)
+		if err != nil {
+			return nil, fmt.Errorf("error reading file: %v", err)
+		}
+		return fileContent, nil
+	}
+}
+
 func HandleOverride(passedValue *string, defaultValue string, key string) {
 	if *passedValue == "" {
 		// Convert the key to a compatible format
@@ -60,6 +65,12 @@ func HandleOverride(passedValue *string, defaultValue string, key string) {
 		}
 		// Otherwise set to default value
 		*passedValue = defaultValue
+	}
+	// Handle "none" value to explicitly unset the value if an override env variable is set to a different value
+	// e.g. --configPath="none" and DOCKER_OUT_CONFIG_PATH=https://example.com/config.json
+	// If we do not explicitly handle this, you could not unset a value once an override env variable is set
+	if strings.ToLower(*passedValue) == "none" {
+		*passedValue = ""
 	}
 }
 

@@ -5,8 +5,10 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/user"
 	"path/filepath"
 	"regexp"
+	"strconv"
 
 	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gover"
@@ -36,10 +38,11 @@ func runMain() error {
 	version := flag.String("version", "latest", "")
 	composeVersion := flag.String("composeVersion", "latest", "")
 	buildxVersion := flag.String("buildxVersion", "latest", "")
+	buildxDownloadUrl := flag.String("buildxDownloadUrl", "", "")
 	downloadUrl := flag.String("downloadUrl", "", "")
 	versionsUrl := flag.String("versionsUrl", "", "")
 	composeDownloadUrl := flag.String("composeDownloadUrl", "", "")
-	buildxDownloadUrl := flag.String("buildxDownloadUrl", "", "")
+	configPath := flag.String("configPath", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -51,6 +54,7 @@ func runMain() error {
 	installer.HandleOverride(versionsUrl, "https://download.docker.com/linux/static/stable", "docker-out-versions-url")
 	installer.HandleGitHubOverride(composeDownloadUrl, "docker/compose", "docker-out-compose-download-url")
 	installer.HandleGitHubOverride(buildxDownloadUrl, "docker/buildx", "docker-out-buildx-download-url")
+	installer.HandleOverride(configPath, "", "docker-out-config-path")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Docker-Out", false,
@@ -58,6 +62,7 @@ func runMain() error {
 			ComponentBase: installer.NewComponentBase("Docker CLI", *version),
 			DownloadUrl:   *downloadUrl,
 			VersionsUrl:   *versionsUrl,
+			ConfigPath:    *configPath,
 		},
 		&dockerComposeComponent{
 			ComponentBase: installer.NewComponentBase("Docker Compose", *composeVersion),
@@ -81,6 +86,7 @@ type dockerCliComponent struct {
 	*installer.ComponentBase
 	DownloadUrl string
 	VersionsUrl string
+	ConfigPath  string
 }
 
 func (c *dockerCliComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -135,6 +141,41 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 	// Copy the startup file
 	if err := execr.Run(true, "cp", "-prf", "docker-init.sh", "/usr/local/share/docker-init.sh"); err != nil {
 		return err
+	}
+	// Copy the default config.json
+	if c.ConfigPath != "" {
+		fileContent, err := installer.ReadFileFromUrlOrLocal(c.ConfigPath)
+		if err != nil {
+			return err
+		}
+		userName := os.Getenv("_REMOTE_USER")
+		homeDir := os.Getenv("_REMOTE_USER_HOME")
+		if homeDir == "" {
+			homeDir = filepath.Join("/home", userName)
+		}
+		dockerDir := filepath.Join(homeDir, ".docker")
+		configDest := filepath.Join(dockerDir, "config.json")
+		// Ensure directory exists
+		if err := os.MkdirAll(dockerDir, 0700); err != nil {
+			return err
+		}
+		// Write config file
+		if err := os.WriteFile(configDest, fileContent, 0600); err != nil {
+			return err
+		}
+		// Set ownership
+		usr, err := user.Lookup(userName)
+		if err != nil {
+			return err
+		}
+		uid, _ := strconv.Atoi(usr.Uid)
+		gid, _ := strconv.Atoi(usr.Gid)
+		if err := os.Chown(dockerDir, uid, gid); err != nil {
+			return err
+		}
+		if err := os.Chown(configDest, uid, gid); err != nil {
+			return err
+		}
 	}
 
 	return nil
