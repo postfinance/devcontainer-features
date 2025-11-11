@@ -75,12 +75,35 @@ As the remote can be configured differently (e.g. by including or excluding sub-
 
 See [override-all.env](./override-all.env) for a file with all possible override variables.
 
+The precedence for the overrides is:
+
+1. Value set via feature parameter
+2. Value set via environment variable
+3. Values from `DEV_FEATURE_OVERRIDE_LOCATION`
+
 #### Special overrides
 
 There are a few sources which are used in multiple installations. For those sources, there is an override that globaly overrides all installations from this sources. Here is the list of those sources and their keys.
 
 ```
 DEV_FEATURE_OVERRIDE_GITHUB_DOWNLOAD_URL=...
+```
+#### Unset an Override via Parameter
+
+If an override is set, setting the corresponding parameter to `""` will not unset the override. To achieve this, set the parameter to `none`.
+
+**Example:**  
+This environment variable is set: `DOCKER_OUT_CONFIG_PATH=https://example.com/config.json`
+
+Then set this in your feature to explicitly unset it:
+
+```json
+{
+    "ghcr.io/postfinance/devcontainer-features/docker-out:0.3.0": {
+        "version": "28.3.3",
+        "configPath": "none"
+    }
+}
 ```
 
 ### Extend an existing feature

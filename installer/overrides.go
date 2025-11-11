@@ -66,6 +66,9 @@ func HandleOverride(passedValue *string, defaultValue string, key string) {
 		// Otherwise set to default value
 		*passedValue = defaultValue
 	}
+	// Handle "none" value to explicitly unset the value if an override env variable is set to a different value
+	// e.g. --configPath="none" and DOCKER_OUT_CONFIG_PATH=https://example.com/config.json
+	// If we do not explicitly handle this, you could not unset a value once an override env variable is set
 	if strings.ToLower(*passedValue) == "none" {
 		*passedValue = ""
 	}
