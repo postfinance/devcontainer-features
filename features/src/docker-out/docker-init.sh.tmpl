@@ -16,10 +16,12 @@ SOURCE_SOCKET="${SOURCE_SOCKET:-"/var/run/docker-host.sock"}"
 TARGET_SOCKET="${TARGET_SOCKET:-"/var/run/docker.sock"}"
 
 # Determine the correct user
-USERNAME="${USERNAME:-"${_REMOTE_USER:-"auto"}"}"
-if [ "${USERNAME}" = "auto" ]; then
+USERNAME="{{ .User }}"
+if [ "${USERNAME}" = "" ]; then
   USERNAME=$(awk -v val=1000 -F ":" '$3==val{print $1}' /etc/passwd)
 fi
+
+echo "Initializing Docker socket permissions for user ${USERNAME}."
 
 # Check if the docker group exists
 if ! getent group docker > /dev/null 2>&1; then
