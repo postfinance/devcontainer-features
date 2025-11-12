@@ -2,6 +2,7 @@ package main
 
 import (
 	"builder/installer"
+	"bytes"
 	"flag"
 	"fmt"
 	"os"
@@ -9,6 +10,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strconv"
+	"text/template"
 
 	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gover"
@@ -138,8 +140,22 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 
-	// Copy the startup file
-	if err := execr.Run(true, "cp", "-prf", "docker-init.sh", "/usr/local/share/docker-init.sh"); err != nil {
+	// Generate the startup script
+	t1, err := template.New("docker-init.sh.tmpl").ParseFiles("./docker-init.sh.tmpl")
+	if err != nil {
+		return err
+	}
+	data := struct {
+		User string
+	}{
+		User: os.Getenv("_REMOTE_USER"),
+	}
+	var buf bytes.Buffer
+	if err := t1.Execute(&buf, data); err != nil {
+		return err
+	}
+	content := buf.String()
+	if err := os.WriteFile("/usr/local/share/docker-init.sh", []byte(content), os.ModePerm); err != nil {
 		return err
 	}
 	// Copy the default config.json

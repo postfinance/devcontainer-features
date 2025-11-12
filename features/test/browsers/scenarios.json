@@ -8,7 +8,7 @@
         },
         "features": {
             "./browsers": {
-                "chromeVersion": "130.0.6723.69",
+                "chromeVersion": "142.0.7444.162",
                 "useChromeForTesting": "false",
                 "firefoxVersion": "none"
             }
@@ -23,7 +23,7 @@
         },
         "features": {
             "./browsers": {
-                "chromeVersion": "130.0.6723.69",
+                "chromeVersion": "142.0.7444.162",
                 "useChromeForTesting": "true",
                 "firefoxVersion": "none"
             }

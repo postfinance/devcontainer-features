@@ -6,7 +6,7 @@ Installs a Docker client which re-uses the host Docker socket.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/docker-out:0.3.0": {
+    "ghcr.io/postfinance/devcontainer-features/docker-out:0.4.0": {
         "version": "latest",
         "composeVersion": "latest",
         "buildxVersion": "latest",
@@ -36,7 +36,7 @@ Installs a Docker client which re-uses the host Docker socket.
 
 ### VS Code Extensions
 
-- `ms-azuretools.vscode-docker`
+- `ms-azuretools.vscode-containers`
 
 ## Notes
 

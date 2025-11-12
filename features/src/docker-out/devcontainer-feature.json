@@ -1,6 +1,6 @@
 {
     "id": "docker-out",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "name": "Docker outside Docker",
     "description": "Installs a Docker client which re-uses the host Docker socket.",
     "options": {
@@ -51,7 +51,7 @@
             "default": "",
             "description": "The download URL to use for Docker binaries."
         },
-        "versionsUrl":{
+        "versionsUrl": {
             "type": "string",
             "default": "",
             "description": "The URL to use for checking available versions."
@@ -70,14 +70,14 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-azuretools.vscode-docker"
+                "ms-azuretools.vscode-containers"
             ]
         }
     },
     "mounts": [
         {
             "source": "/var/run/docker.sock",
-            "target": "/var/run/docker.sock",
+            "target": "/var/run/docker-host.sock",
             "type": "bind"
         }
     ],
