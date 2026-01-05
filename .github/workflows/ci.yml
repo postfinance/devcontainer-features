@@ -23,6 +23,7 @@ jobs:
           "git-lfs",
           "gitlab-cli",
           "go",
+          "gonovate",
           "goreleaser",
           "instant-client",
           "jfrog-cli",
