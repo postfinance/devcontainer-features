@@ -23,6 +23,7 @@ Below is a list with included features, click on the link for more details.
 | [git-lfs](./features/src/git-lfs/README.md) | Installs Git LFS. |
 | [gitlab-cli](./features/src/gitlab-cli/README.md) | Installs the GitLab CLI. |
 | [go](./features/src/go/README.md) | Installs Go. |
+| [gonovate](./features/src/gonovate/README.md) | Installs Gonovate. |
 | [goreleaser](./features/src/goreleaser/README.md) | Installs GoReleaser. |
 | [instant-client](./features/src/instant-client/README.md) | Installs the Oracle Instant Client Basic package. |
 | [jfrog-cli](./features/src/jfrog-cli/README.md) | Installs the JFrog CLI. |

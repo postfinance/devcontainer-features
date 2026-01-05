@@ -1,0 +1,26 @@
+{
+    "id": "gonovate",
+    "version": "0.1.0",
+    "name": "Gonovate",
+    "description": "Installs Gonovate.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "0.6.6",
+                "0.5"
+            ],
+            "default": "latest",
+            "description": "The version of Gonovate to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for Gonovate binaries."
+        }
+    }
+}

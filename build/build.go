@@ -168,6 +168,17 @@ func init() {
 		return publishFeature("go")
 	})
 
+	////////// gonovate
+	gotaskr.Task("Feature:gonovate:Package", func() error {
+		return packageFeature("gonovate")
+	})
+	gotaskr.Task("Feature:gonovate:Test", func() error {
+		return testFeature("gonovate")
+	})
+	gotaskr.Task("Feature:gonovate:Publish", func() error {
+		return publishFeature("gonovate")
+	})
+
 	////////// goreleaser
 	gotaskr.Task("Feature:goreleaser:Package", func() error {
 		return packageFeature("goreleaser")
