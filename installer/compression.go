@@ -36,11 +36,8 @@ func (c *compression) Extract(filePath string, dstPath string, withoutRootFolder
 }
 
 func (c *compression) ExtractZip(filePath string, dstPath string, withoutRootFolder bool) error {
-	// Make sure the destination path exits and is clean
-	if err := os.RemoveAll(dstPath); err != nil {
-		return fmt.Errorf("failed cleaning destination folder: %w", err)
-	}
-	if err := os.MkdirAll(dstPath, 0755); err != nil {
+	// Make sure the destination path exits
+	if err := os.MkdirAll(dstPath, os.ModePerm); err != nil {
 		return fmt.Errorf("failed creating destination folder: %w", err)
 	}
 

@@ -1,6 +1,6 @@
 {
     "id": "gonovate",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "name": "Gonovate",
     "description": "Installs Gonovate.",
     "options": {

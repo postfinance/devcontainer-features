@@ -83,7 +83,7 @@ func (c *glabComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "GitLab CLI"); err != nil {
 		return err
 	}
-	//Extract the tar.gz file
+	// Extract the tar.gz file
 	if err := installer.Tools.Compression.ExtractTarGz(fileName, "/usr/local/bin/", true); err != nil {
 		return err
 	}
