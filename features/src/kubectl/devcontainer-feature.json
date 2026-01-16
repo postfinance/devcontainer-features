@@ -1,0 +1,134 @@
+{
+    "id": "kubectl",
+    "version": "0.1.0",
+    "name": "kubectl",
+    "description": "Installs kubectl and other tools for managing kubernetes.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "1.30.0"
+            ],
+            "default": "latest",
+            "description": "The version of kubectl to install."
+        },
+        "kubectxVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "0.9.5"
+            ],
+            "default": "latest",
+            "description": "The version of kubectx to install."
+        },
+        "kubensVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "0.9.5"
+            ],
+            "default": "latest",
+            "description": "The version of kubens to install."
+        },
+        "k9sVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "0.32.5"
+            ],
+            "default": "none",
+            "description": "The version of k9s to install."
+        },
+        "helmVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "3.16.2"
+            ],
+            "default": "none",
+            "description": "The version of helm to install."
+        },
+        "kustomizeVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "5.4.2"
+            ],
+            "default": "none",
+            "description": "The version of kustomize to install."
+        },
+        "kubeconformVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "0.6.6"
+            ],
+            "default": "none",
+            "description": "The version of kubeconform to install."
+        },
+        "kubescoreVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "1.18.0"
+            ],
+            "default": "none",
+            "description": "The version of kube-score to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/dlk8sio-generic-remote/release"
+            ],
+            "description": "The download URL to use for kubectl binaries."
+        },
+        "kubectxDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for kubectx binaries."
+        },
+        "kubensDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for kubens binaries."
+        },
+        "k9sDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for k9s binaries."
+        },
+        "helmDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/gethelmsh-generic-remote"
+            ],
+            "description": "The download URL to use for helm binaries."
+        },
+        "kustomizeDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for kustomize binaries."
+        },
+        "kubeconformDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for kubeconform binaries."
+        },
+        "kubescoreDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for kube-score binaries."
+        }
+    }
+}

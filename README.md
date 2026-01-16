@@ -27,6 +27,7 @@ Below is a list with included features, click on the link for more details.
 | [goreleaser](./features/src/goreleaser/README.md) | Installs GoReleaser. |
 | [instant-client](./features/src/instant-client/README.md) | Installs the Oracle Instant Client Basic package. |
 | [jfrog-cli](./features/src/jfrog-cli/README.md) | Installs the JFrog CLI. |
+| [kubectl](./features/src/kubectl/README.md) | Installs kubectl and other tools for managing kubernetes. |
 | [locale](./features/src/locale/README.md) | Allows setting the locale. |
 | [make](./features/src/make/README.md) | Installs Make. |
 | [mingw](./features/src/mingw/README.md) | Installs MinGW. |
@@ -41,6 +42,11 @@ Below is a list with included features, click on the link for more details.
 | [zig](./features/src/zig/README.md) | Installs Zig. |
 
 ## Usage
+
+### Tokens
+
+Some version lookups depend on APIs with a rate limit. Use the following environment variables to set api tokens to increase those limits:
+* `DEV_FEATURE_TOKEN_GITHUB_API` - Set a token to use the GitHub API.
 
 ### Versions
 
@@ -110,3 +116,22 @@ Then set this in your feature to explicitly unset it:
 ### Extend an existing feature
 
 TBD
+
+## Development
+
+### Testing features
+
+To test a feature, you can compile it and copy or mount the installer into a container with root privileges.
+
+Here is an example to compile a feature:
+```go
+go build -o kubectl.bin features/src/kubectl/installer.go
+```
+Then you can run a simple docker container which mounts the folder with the installer and then just run the installer:
+```bash
+docker run --rm -it -v $PWD:/data debian /bin/bash
+```
+and then run the installer:
+```bash
+/data/kubectl.bin --version=1.35.0
+```

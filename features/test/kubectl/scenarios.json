@@ -1,0 +1,42 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./kubectl": {
+                "version": "1.31.1",
+                "kubectxVersion": "none",
+                "kubensVersion": "none",
+                "k9sVersion": "none",
+                "helmVersion": "none",
+                "kustomizeVersion": "none",
+                "kubeconformVersion": "none",
+                "kubescoreVersion": "none"
+            }
+        }
+    },
+    "full": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./kubectl": {
+                "version": "1.31.2",
+                "kubectxVersion": "0.9.5",
+                "kubensVersion": "0.9.5",
+                "k9sVersion": "0.32.5",
+                "helmVersion": "3.16.2",
+                "kustomizeVersion": "5.4.2",
+                "kubeconformVersion": "0.6.6",
+                "kubescoreVersion": "1.18.0"
+            }
+        }
+    }
+}

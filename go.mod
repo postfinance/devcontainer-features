@@ -1,14 +1,17 @@
 module builder
 
-go 1.24.5
+go 1.24.6
+
+toolchain go1.24.7
 
 require (
 	github.com/roemer/goext v0.8.1
-	github.com/roemer/gotaskr v0.6.0
+	github.com/roemer/gotaskr v0.7.0
 	github.com/roemer/gover v0.8.0
-	github.com/schollz/progressbar/v3 v3.18.0
-	github.com/stretchr/testify v1.10.0
-	github.com/ulikunitz/xz v0.5.12
+	github.com/samber/lo v1.52.0
+	github.com/schollz/progressbar/v3 v3.19.0
+	github.com/stretchr/testify v1.11.1
+	github.com/ulikunitz/xz v0.5.15
 )
 
 require (
@@ -17,7 +20,7 @@ require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/ProtonMail/go-crypto v1.1.6 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect
-	github.com/cloudflare/circl v1.6.0 // indirect
+	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/cyphar/filepath-securejoin v0.4.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dsnet/compress v0.0.2-0.20210315054119-f66993602bf5 // indirect
@@ -33,9 +36,9 @@ require (
 	github.com/gookit/color v1.5.4 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jfrog/archiver/v3 v3.6.1 // indirect
-	github.com/jfrog/build-info-go v1.10.12 // indirect
+	github.com/jfrog/build-info-go v1.10.17 // indirect
 	github.com/jfrog/gofrog v1.7.6 // indirect
-	github.com/jfrog/jfrog-client-go v1.53.1 // indirect
+	github.com/jfrog/jfrog-client-go v1.54.7 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
@@ -60,6 +63,7 @@ require (
 	golang.org/x/sync v0.12.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/term v0.30.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
