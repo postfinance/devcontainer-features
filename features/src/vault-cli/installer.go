@@ -6,10 +6,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"os/exec"
 	"regexp"
 
-	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gover"
 )
 
@@ -110,8 +108,7 @@ func (c *vaultCliComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	configureCmd := exec.Command("install", "-m", "0755", "vault/vault", "/usr/local/bin/vault")
-	if err := execr.RunCommand(true, configureCmd); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("vault/vault", "vault"); err != nil {
 		return err
 	}
 	// Cleanup

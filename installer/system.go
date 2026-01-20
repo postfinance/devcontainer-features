@@ -4,8 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/roemer/goext"
 )
 
 const (
@@ -14,6 +17,11 @@ const (
 )
 
 type system struct{}
+
+// Installs the given binary to /usr/local/bin with the given name.
+func (s *system) InstallBinaryToUsrLocalBin(binaryPath string, binaryName string) error {
+	return goext.CmdRunners.Console.Run("install", "-m", "0755", binaryPath, filepath.Join("/usr/local/bin", binaryName))
+}
 
 func (s *system) InstallPackages(packages ...string) error {
 	osInfo, err := s.GetOsInfo()

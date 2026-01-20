@@ -7,7 +7,6 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/roemer/goext"
 	"github.com/roemer/gover"
 	"github.com/samber/lo"
 )
@@ -141,7 +140,7 @@ func (c *kubectlComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", fileName, "/usr/local/bin/kubectl"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin(fileName, "kubectl"); err != nil {
 		return err
 	}
 	// Cleanup
@@ -190,7 +189,7 @@ func (c *kubectxComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", "kubectx/kubectx", "/usr/local/bin/kubectx"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("kubectx/kubectx", "kubectx"); err != nil {
 		return err
 	}
 	// Cleanup
@@ -242,7 +241,7 @@ func (c *kubensComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", "kubens/kubens", "/usr/local/bin/kubens"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("kubens/kubens", "kubens"); err != nil {
 		return err
 	}
 	// Cleanup
@@ -294,7 +293,7 @@ func (c *k9sComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", "k9s/k9s", "/usr/local/bin/k9s"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("k9s/k9s", "k9s"); err != nil {
 		return err
 	}
 	// Cleanup
@@ -346,7 +345,7 @@ func (c *helmComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", fmt.Sprintf("helm/linux-%s/helm", archPart), "/usr/local/bin/helm"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin(fmt.Sprintf("helm/linux-%s/helm", archPart), "helm"); err != nil {
 		return err
 	}
 	// Cleanup
@@ -406,7 +405,7 @@ func (c *kustomizeComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", "kustomize/kustomize", "/usr/local/bin/kustomize"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("kustomize/kustomize", "kustomize"); err != nil {
 		return err
 	}
 	// Cleanup
@@ -458,7 +457,7 @@ func (c *kubeconformComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", "kubeconform/kubeconform", "/usr/local/bin/kubeconform"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("kubeconform/kubeconform", "kubeconform"); err != nil {
 		return err
 	}
 	// Cleanup
@@ -510,7 +509,7 @@ func (c *kubescoreComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// Install
-	if err := goext.CmdRunners.Console.Run("install", "-m", "0755", "kubescore/kube-score", "/usr/local/bin/kube-score"); err != nil {
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("kubescore/kube-score", "kube-score"); err != nil {
 		return err
 	}
 	// Cleanup
