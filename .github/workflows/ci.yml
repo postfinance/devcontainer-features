@@ -27,6 +27,7 @@ jobs:
           "goreleaser",
           "instant-client",
           "jfrog-cli",
+          "kubectl",
           "locale",
           "make",
           "mingw",
