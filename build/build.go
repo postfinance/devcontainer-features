@@ -167,6 +167,10 @@ func init() {
 	gotaskr.Task("Feature:nvidia-cuda:Package", func() error { return packageFeature("nvidia-cuda") })
 	gotaskr.Task("Feature:nvidia-cuda:Test", func() error { return testFeature("nvidia-cuda") })
 
+	////////// npm-packages
+	gotaskr.Task("Feature:npm-packages:Package", func() error { return packageFeature("npm-packages") })
+	gotaskr.Task("Feature:npm-packages:Test", func() error { return testFeature("npm-packages") })
+
 	////////// playwright-deps
 	gotaskr.Task("Feature:playwright-deps:Package", func() error { return packageFeature("playwright-deps") })
 	gotaskr.Task("Feature:playwright-deps:Test", func() error { return testFeature("playwright-deps") })
