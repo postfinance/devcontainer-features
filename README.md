@@ -34,6 +34,7 @@ Below is a list with included features, click on the link for more details.
 | [mingw](./features/src/mingw/README.md) | Installs MinGW. |
 | [nginx](./features/src/nginx/README.md) | Installs Nginx. |
 | [node](./features/src/node/README.md) | Installs Node.js. |
+| [npm-packages](./features/src/npm-packages/README.md) | Installs NPM packages globally. |
 | [nvidia-cuda](./features/src/nvidia-cuda/README.md) | A package which installs NVIDIA CUDA. |
 | [opencode](./features/src/opencode/README.md) | Installs opencode, the open source AI coding agent. |
 | [playwright-deps](./features/src/playwright-deps/README.md) | Installs all dependencies required to run Playwright. |

@@ -42,6 +42,7 @@ jobs:
           "mingw",
           "nginx",
           "node",
+          "npm-packages",
           "nvidia-cuda",
           "opencode",
           "playwright-deps",
