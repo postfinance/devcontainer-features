@@ -170,6 +170,11 @@ func init() {
 	gotaskr.Task("Feature:node:Test", func() error { return testFeature("node") })
 	gotaskr.Task("Feature:node:Publish", func() error { return publishFeature("node") })
 
+	////////// npm-packages
+	gotaskr.Task("Feature:npm-packages:Package", func() error { return packageFeature("npm-packages") })
+	gotaskr.Task("Feature:npm-packages:Test", func() error { return testFeature("npm-packages") })
+	gotaskr.Task("Feature:npm-packages:Publish", func() error { return publishFeature("npm-packages") })
+
 	////////// playwright-deps
 	gotaskr.Task("Feature:playwright-deps:Package", func() error { return packageFeature("playwright-deps") })
 	gotaskr.Task("Feature:playwright-deps:Test", func() error { return testFeature("playwright-deps") })

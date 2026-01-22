@@ -33,6 +33,7 @@ Below is a list with included features, click on the link for more details.
 | [mingw](./features/src/mingw/README.md) | Installs MinGW. |
 | [nginx](./features/src/nginx/README.md) | Installs Nginx. |
 | [node](./features/src/node/README.md) | Installs Node.js. |
+| [npm-packages](./features/src/npm-packages/README.md) | Installs NPM packages globally. |
 | [playwright-deps](./features/src/playwright-deps/README.md) | Installs all dependencies required to run Playwright. |
 | [python](./features/src/python/README.md) | Installs Python. |
 | [sonar-scanner-cli](./features/src/sonar-scanner-cli/README.md) | Installs the SonarScanner CLI. |
