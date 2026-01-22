@@ -37,6 +37,7 @@ Below is a list with included features, click on the link for more details.
 | [python](./features/src/python/README.md) | Installs Python. |
 | [sonar-scanner-cli](./features/src/sonar-scanner-cli/README.md) | Installs the SonarScanner CLI. |
 | [system-packages](./features/src/system-packages/README.md) | Install arbitrary system packages using the system package manager. |
+| [terraform](./features/src/terraform/README.md) | Installs the Terraform CLI. |
 | [timezone](./features/src/timezone/README.md) | Allows setting the timezone. |
 | [vault-cli](./features/src/vault-cli/README.md) | Installs the Vault CLI. |
 | [zig](./features/src/zig/README.md) | Installs Zig. |

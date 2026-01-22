@@ -1,0 +1,31 @@
+{
+    "id": "terraform",
+    "version": "0.1.0",
+    "name": "Terraform",
+    "description": "Installs the Terraform CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.14.3",
+                "1"
+            ],
+            "default": "latest",
+            "description": "The version of Terraform CLI to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/hashicorp-releases-generic-remote/terraform"
+            ],
+            "description": "The download URL to use for Terraform CLI binaries."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the available Terraform CLI versions from."
+        }
+    }
+}

@@ -37,6 +37,7 @@ jobs:
           "python",
           "sonar-scanner-cli",
           "system-packages",
+          "terraform",
           "timezone",
           "vault-cli",
           "zig"
