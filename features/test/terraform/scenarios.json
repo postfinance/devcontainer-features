@@ -1,0 +1,15 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./terraform": {
+                "version": "1.14.3"
+            }
+        }
+    }
+}
