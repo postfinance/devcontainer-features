@@ -191,6 +191,10 @@ func init() {
 	gotaskr.Task("Feature:system-packages:Package", func() error { return packageFeature("system-packages") })
 	gotaskr.Task("Feature:system-packages:Test", func() error { return testFeature("system-packages") })
 
+	////////// terraform
+	gotaskr.Task("Feature:terraform:Package", func() error { return packageFeature("terraform") })
+	gotaskr.Task("Feature:terraform:Test", func() error { return testFeature("terraform") })
+
 	////////// timezone
 	gotaskr.Task("Feature:timezone:Package", func() error { return packageFeature("timezone") })
 	gotaskr.Task("Feature:timezone:Test", func() error { return testFeature("timezone") })
