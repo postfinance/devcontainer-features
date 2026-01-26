@@ -180,6 +180,11 @@ func init() {
 	gotaskr.Task("Feature:python:Test", func() error { return testFeature("python") })
 	gotaskr.Task("Feature:python:Publish", func() error { return publishFeature("python") })
 
+	////////// rust
+	gotaskr.Task("Feature:rust:Package", func() error { return packageFeature("rust") })
+	gotaskr.Task("Feature:rust:Test", func() error { return testFeature("rust") })
+	gotaskr.Task("Feature:rust:Publish", func() error { return publishFeature("rust") })
+
 	////////// sonar-scanner-cli
 	gotaskr.Task("Feature:sonar-scanner-cli:Package", func() error { return packageFeature("sonar-scanner-cli") })
 	gotaskr.Task("Feature:sonar-scanner-cli:Test", func() error { return testFeature("sonar-scanner-cli") })

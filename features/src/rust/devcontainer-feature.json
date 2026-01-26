@@ -1,0 +1,66 @@
+{
+    "id": "rust",
+    "version": "0.1.0",
+    "name": "Rust",
+    "description": "A package which installs Rust.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.76"
+            ],
+            "default": "latest",
+            "description": "The version of Rust to install."
+        },
+        "rustupVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.27.1"
+            ],
+            "default": "latest",
+            "description": "The version of rustup to install."
+        },
+        "profile": {
+            "type": "string",
+            "proposals": [
+                "minimal",
+                "default",
+                "complete"
+            ],
+            "default": "minimal",
+            "description": "The rustup profile to install."
+        },
+        "components": {
+            "type": "string",
+            "proposals": [
+                "",
+                "rustfmt,rust-analyzer",
+                "rls,rust-analysis"
+            ],
+            "default": "rustfmt,rust-analyzer,rust-src,clippy",
+            "description": "A comma separated list with components that should be installed."
+        },
+        "enableWindowsTarget": {
+            "type": "boolean",
+            "default": false,
+            "description": "A flag to indicate if the Windows target (and needed tools) should be installed."
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vadimcn.vscode-lldb",
+                "rust-lang.rust-analyzer",
+                "tamasfe.even-better-toml",
+                "serayuzgur.crates"
+            ]
+        }
+    },
+    "containerEnv": {
+        "CARGO_HOME": "/usr/local/cargo",
+        "RUSTUP_HOME": "/usr/local/rustup",
+        "PATH": "/usr/local/cargo/bin:${PATH}"
+    }
+}
