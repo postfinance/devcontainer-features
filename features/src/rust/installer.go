@@ -43,7 +43,7 @@ func runMain() error {
 	flag.Parse()
 
 	// Create and process the feature
-	feature := installer.NewFeature("PF Rust", true,
+	feature := installer.NewFeature("Rust", true,
 		&rustupComponent{
 			ComponentBase: installer.NewComponentBase("rustup", *rustupVersion),
 			profile:       *profile,

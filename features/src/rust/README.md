@@ -1,6 +1,6 @@
 # Rust (rust)
 
-A package which installs Rust.
+A package which installs Rust, common Rust utilities and their required dependencies.
 
 ## Example Usage
 
@@ -20,7 +20,7 @@ A package which installs Rust.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | The version of Rust to install. | string | latest | latest, 1.76 |
+| version | The version of Rust to install. | string | latest | latest, 1.93.0 |
 | rustupVersion | The version of rustup to install. | string | latest | latest, 1.27.1 |
 | profile | The rustup profile to install. | string | minimal | minimal, default, complete |
 | components | A comma separated list with components that should be installed. | string | rustfmt,rust-analyzer,rust-src,clippy | , rustfmt,rust-analyzer, rls,rust-analysis |
