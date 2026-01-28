@@ -1,0 +1,36 @@
+{
+    "install-with-windows-target": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./rust": {
+                "version": "1.76", 
+                "rustupVersion": "1.27.1", 
+                "profile": "minimal", 
+                "components": "rustfmt,rust-analyzer,rust-src,clippy", 
+                "enableWindowsTarget": "true"
+            }
+        }
+    },
+    "install-without-windows-target": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./rust": {
+                "version": "1.76", 
+                "rustupVersion": "1.27.1", 
+                "profile": "minimal", 
+                "components": "rustfmt,rust-analyzer,rust-src,clippy", 
+                "enableWindowsTarget": "false"
+            }
+        }
+    }
+}

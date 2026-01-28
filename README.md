@@ -35,6 +35,7 @@ Below is a list with included features, click on the link for more details.
 | [node](./features/src/node/README.md) | Installs Node.js. |
 | [playwright-deps](./features/src/playwright-deps/README.md) | Installs all dependencies required to run Playwright. |
 | [python](./features/src/python/README.md) | Installs Python. |
+| [rust](./features/src/rust/README.md) | A package which installs Rust, common Rust utilities and their required dependencies. |
 | [sonar-scanner-cli](./features/src/sonar-scanner-cli/README.md) | Installs the SonarScanner CLI. |
 | [system-packages](./features/src/system-packages/README.md) | Install arbitrary system packages using the system package manager. |
 | [timezone](./features/src/timezone/README.md) | Allows setting the timezone. |

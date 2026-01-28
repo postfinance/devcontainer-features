@@ -35,6 +35,7 @@ jobs:
           "node",
           "playwright-deps",
           "python",
+          "rust",
           "sonar-scanner-cli",
           "system-packages",
           "timezone",
