@@ -33,6 +33,7 @@ jobs:
           "mingw",
           "nginx",
           "node",
+          "npm-packages",
           "playwright-deps",
           "python",
           "rust",

@@ -1,0 +1,18 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "ghcr.io/postfinance/devcontainer-features/node": {
+                "version": "24.4.1"
+            },
+            "./npm-packages": {
+                "packages": "@devcontainers/cli,which@3.0.1"
+            }
+        }
+    }
+}

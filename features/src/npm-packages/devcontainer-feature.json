@@ -1,0 +1,20 @@
+{
+    "id": "npm-packages",
+    "version": "0.1.0",
+    "name": "NPM Packages",
+    "description": "Installs NPM packages globally.",
+    "options": {
+        "packages": {
+            "type": "string",
+            "proposals": [
+                "@devcontainers/cli,which@3.0.1"
+            ],
+            "default": "",
+            "description": "Comma-separated list of packages to install"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/postfinance/devcontainer-features/node",
+        "ghcr.io/devcontainers/features/node"
+    ]
+}
