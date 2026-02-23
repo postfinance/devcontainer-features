@@ -170,6 +170,11 @@ func init() {
 	gotaskr.Task("Feature:node:Test", func() error { return testFeature("node") })
 	gotaskr.Task("Feature:node:Publish", func() error { return publishFeature("node") })
 
+	////////// nvidia-cuda
+	gotaskr.Task("Feature:nvidia-cuda:Package", func() error { return packageFeature("nvidia-cuda") })
+	gotaskr.Task("Feature:nvidia-cuda:Test", func() error { return testFeature("nvidia-cuda") })
+	gotaskr.Task("Feature:nvidia-cuda:Publish", func() error { return publishFeature("nvidia-cuda") })
+
 	////////// playwright-deps
 	gotaskr.Task("Feature:playwright-deps:Package", func() error { return packageFeature("playwright-deps") })
 	gotaskr.Task("Feature:playwright-deps:Test", func() error { return testFeature("playwright-deps") })

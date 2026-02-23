@@ -1,0 +1,51 @@
+{
+    "id": "nvidia-cuda",
+    "version": "0.1.0",
+    "name": "NVIDIA CUDA",
+    "description": "A package which installs NVIDIA CUDA.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "12.3",
+                "12.9"
+            ],
+            "default": "latest",
+            "description": "The version of NVIDIA CUDA to install."
+        },
+        "installLibraries": {
+            "type": "boolean",
+            "default": true,
+            "description": "Installs all runtime CUDA Library packages."
+        },
+        "installDevLibraries": {
+            "type": "boolean",
+            "default": true,
+            "description": "Installs all development CUDA Library packages."
+        },
+        "installCompiler": {
+            "type": "boolean",
+            "default": true,
+            "description": "Installs all CUDA compiler packages."
+        },
+        "installTools": {
+            "type": "boolean",
+            "default": true,
+            "description": "Installs all CUDA command line and visual tools."
+        },
+        "additionalCudaPackages": {
+            "type": "string",
+            "default": "",
+            "description": "A comma-separated list of additional CUDA packages to install. Disable the other flags to have full control over what is installed."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/nvidia-cuda-generic-remote/"
+            ],
+            "description": "The download URL to use for CUDA binaries."
+        }
+    }
+}

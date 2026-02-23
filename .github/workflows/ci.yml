@@ -33,6 +33,7 @@ jobs:
           "mingw",
           "nginx",
           "node",
+          "nvidia-cuda",
           "playwright-deps",
           "python",
           "rust",
