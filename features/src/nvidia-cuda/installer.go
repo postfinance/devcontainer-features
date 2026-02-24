@@ -2,6 +2,7 @@ package main
 
 import (
 	"builder/installer"
+	"sync"
 
 	"flag"
 	"fmt"
@@ -108,7 +109,7 @@ func (c *cudaKeyringComponent) getCudaRepo() (string, error) {
 		return "", err
 	}
 
-	// Note: For some reason, th e website started to show errors when accessing the index without a trailing slash
+	// Note: For some reason, the website started to show errors when accessing the index without a trailing slash
 	if osInfo.IsDebian() {
 		if archPart == "arm64" {
 			return "", fmt.Errorf("No CUDA binaries are available for ARM64")
@@ -170,7 +171,7 @@ func (c *cudaPackageComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *cudaPackageComponent) InstallVersion(version *gover.Version) error {
 	packageName := fmt.Sprintf("%s-%d-%d", c.PackageName, version.Major(), version.Minor())
-	return installer.Tools.System.InstallPackages(fmt.Sprintf(packageName+"=%s", version.Raw))
+	return installer.Tools.System.InstallPackages(fmt.Sprintf("%s=%s", packageName, version.Raw))
 }
 
 //////////
@@ -179,12 +180,17 @@ func (c *cudaPackageComponent) InstallVersion(version *gover.Version) error {
 
 func getAllVersions(libraryName string) ([]*gover.Version, error) {
 	// Prepare
-	nameRegex := regexp.MustCompile(libraryName + `-[0-9\-]+/`)
+	nameRegex := regexp.MustCompile(regexp.QuoteMeta(libraryName) + `-[0-9\-]+/`)
 	versionRegex := regexp.MustCompile(`^(\d+)\.(\d+)\.(\d+)-(\d+)$`)
 
-	// Update apt packages
-	if err := execr.Run(false, "apt-get", "update"); err != nil {
-		return nil, err
+	// Update apt packages only once to improve performance, as multiple components will call this function
+	var once sync.Once
+	var updateErr error
+	once.Do(func() {
+		updateErr = execr.Run(false, "apt-get", "update")
+	})
+	if updateErr != nil {
+		return nil, updateErr
 	}
 
 	// Get the package versions
@@ -202,7 +208,15 @@ func getAllVersions(libraryName string) ([]*gover.Version, error) {
 			continue
 		}
 		lineParts := strings.Fields(line)
-		version := gover.MustParseVersionFromRegex(lineParts[1], versionRegex)
+		if len(lineParts) < 2 {
+			// Unexpected format, skip this line to avoid panicking on out-of-range access.
+			continue
+		}
+		version, err := gover.ParseVersionFromRegex(lineParts[1], versionRegex)
+		if err != nil {
+			// Version does not match the expected pattern; skip this entry safely.
+			continue
+		}
 		versions = goext.SliceAppendIfMissing(versions, version)
 	}
 

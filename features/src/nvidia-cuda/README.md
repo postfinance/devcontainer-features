@@ -38,7 +38,7 @@ A package which installs NVIDIA CUDA.
 
 Debian, Ubuntu 
 
-### Accessed Urls
+### Accessed URLs
 
 Needs access to the following URL for downloading and resolving:
 * https://developer.download.nvidia.com
