@@ -22,7 +22,7 @@ A package which installs NVIDIA CUDA.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | The version of NVIDIA CUDA to install. | string | latest | latest, 12.3, 12.9 |
+| version | The version of NVIDIA CUDA to install. | string | latest | latest, 12.9, 13.1 |
 | installLibraries | Installs all runtime CUDA Library packages. | boolean | true | true, false |
 | installDevLibraries | Installs all development CUDA Library packages. | boolean | true | true, false |
 | installCompiler | Installs all CUDA compiler packages. | boolean | true | true, false |

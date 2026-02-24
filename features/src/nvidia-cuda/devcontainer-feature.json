@@ -8,8 +8,8 @@
             "type": "string",
             "proposals": [
                 "latest",
-                "12.3",
-                "12.9"
+                "12.9",
+                "13.1"
             ],
             "default": "latest",
             "description": "The version of NVIDIA CUDA to install."
