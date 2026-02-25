@@ -1,0 +1,47 @@
+{
+    "install-default": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "args": {
+                "http_proxy": "${localEnv:http_proxy}",
+                "https_proxy": "${localEnv:https_proxy}",
+                "no_proxy": "${localEnv:no_proxy}"
+            },
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./nvidia-cuda": {
+                "version": "13.1",
+                "installLibraries": true,
+                "installDevLibraries": false,
+                "installCompiler": false,
+                "installTools": false
+            }
+        }
+    },
+    "install-custom": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "args": {
+                "http_proxy": "${localEnv:http_proxy}",
+                "https_proxy": "${localEnv:https_proxy}",
+                "no_proxy": "${localEnv:no_proxy}"
+            },
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./nvidia-cuda": {
+                "version": "13.1",
+                "installLibraries": false,
+                "installDevLibraries": false,
+                "installCompiler": false,
+                "installTools": false,
+                "additionalCudaPackages": "cuda-nvcc,cuda-nvtx"
+            }
+        }
+    }
+}
