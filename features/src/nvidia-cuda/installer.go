@@ -16,6 +16,12 @@ import (
 )
 
 //////////
+// Configuration
+//////////
+
+const nvidiaDownloadBaseURL = "https://developer.download.nvidia.com"
+
+//////////
 // Main
 //////////
 
@@ -29,6 +35,7 @@ func main() {
 func runMain() error {
 	// Handle the flags
 	version := flag.String("version", "latest", "")
+	keyringVersion := flag.String("keyringVersion", "", "")
 	installLibraries := flag.Bool("installLibraries", true, "")
 	installDevLibraries := flag.Bool("installDevLibraries", true, "")
 	installCompiler := flag.Bool("installCompiler", true, "")
@@ -42,12 +49,12 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadUrl, "https://developer.download.nvidia.com", "nvidia-cuda-download-url")
+	installer.HandleOverride(downloadUrl, nvidiaDownloadBaseURL, "nvidia-cuda-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("NVIDIA CUDA", false,
 		&cudaKeyringComponent{
-			ComponentBase: installer.NewComponentBase("Keyring", installer.VERSION_LATEST),
+			ComponentBase: installer.NewComponentBase("Keyring", *keyringVersion),
 			DownloadUrl:   *downloadUrl,
 		},
 	)
@@ -96,7 +103,7 @@ type cudaKeyringComponent struct {
 	DownloadUrl string
 }
 
-func (c *cudaKeyringComponent) getCudaRepo() (string, error) {
+func (c *cudaKeyringComponent) getCudaRepo(baseUrl string) (string, error) {
 	osInfo, err := installer.Tools.System.GetOsInfo()
 	if err != nil {
 		return "", err
@@ -114,19 +121,20 @@ func (c *cudaKeyringComponent) getCudaRepo() (string, error) {
 		if archPart == "arm64" {
 			return "", fmt.Errorf("No CUDA binaries are available for ARM64")
 		}
-		return fmt.Sprintf("%s/compute/cuda/repos/%s%d/%s/", c.DownloadUrl, osInfo.Vendor, osInfo.MajorVersion(), archPart), nil
+		return fmt.Sprintf("%s/compute/cuda/repos/%s%d/%s/", baseUrl, osInfo.Vendor, osInfo.MajorVersion(), archPart), nil
 	}
 	if osInfo.IsUbuntu() {
-		return fmt.Sprintf("%s/compute/cuda/repos/%s%s/%s/", c.DownloadUrl, osInfo.Vendor, strings.ReplaceAll(osInfo.VersionId, ".", ""), archPart), nil
+		return fmt.Sprintf("%s/compute/cuda/repos/%s%s/%s/", baseUrl, osInfo.Vendor, strings.ReplaceAll(osInfo.VersionId, ".", ""), archPart), nil
 	}
 	return "", fmt.Errorf("unsupported OS: %s", osInfo.Vendor)
 }
 
 func (c *cudaKeyringComponent) GetAllVersions() ([]*gover.Version, error) {
-	indexUrl, err := c.getCudaRepo()
+	cudaRepo, err := c.getCudaRepo(nvidiaDownloadBaseURL)
 	if err != nil {
 		return nil, err
 	}
+	indexUrl := fmt.Sprintf("%s%s", cudaRepo, "index.html")
 
 	allVersions, err := installer.Tools.Http.GetVersionsFromHtmlIndex(
 		indexUrl,
@@ -140,7 +148,7 @@ func (c *cudaKeyringComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *cudaKeyringComponent) InstallVersion(version *gover.Version) error {
 	// Download the file
-	cudaRepo, err := c.getCudaRepo()
+	cudaRepo, err := c.getCudaRepo(c.DownloadUrl)
 	if err != nil {
 		return err
 	}
