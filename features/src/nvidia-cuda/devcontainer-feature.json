@@ -1,6 +1,6 @@
 {
     "id": "nvidia-cuda",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "name": "NVIDIA CUDA",
     "description": "A package which installs NVIDIA CUDA.",
     "options": {
@@ -13,6 +13,15 @@
             ],
             "default": "latest",
             "description": "The version of NVIDIA CUDA to install."
+        },
+        "keyringVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.1-1"
+            ],
+            "default": "1.1-1",
+            "description": "The version of the NVIDIA CUDA keyring to install."
         },
         "installLibraries": {
             "type": "boolean",
