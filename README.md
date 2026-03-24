@@ -19,6 +19,7 @@ Below is a list with included features, click on the link for more details.
 | [build-essential](./features/src/build-essential/README.md) | Installs build essentials like gcc. |
 | [cypress-deps](./features/src/cypress-deps/README.md) | Installs all dependencies required to run Cypress. |
 | [docker-out](./features/src/docker-out/README.md) | Installs a Docker client which re-uses the host Docker socket. |
+| [dotnet](./features/src/dotnet/README.md) | A package which installs .NET SDKs, runtimes and workloads. |
 | [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all dependencies required to run the Eclipse IDE. |
 | [git-lfs](./features/src/git-lfs/README.md) | Installs Git LFS. |
 | [gitlab-cli](./features/src/gitlab-cli/README.md) | Installs the GitLab CLI. |

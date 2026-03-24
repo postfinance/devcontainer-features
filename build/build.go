@@ -100,6 +100,11 @@ func init() {
 	gotaskr.Task("Feature:docker-out:Test", func() error { return testFeature("docker-out") })
 	gotaskr.Task("Feature:docker-out:Publish", func() error { return publishFeature("docker-out") })
 
+	////////// dotnet
+	gotaskr.Task("Feature:dotnet:Package", func() error { return packageFeature("dotnet") })
+	gotaskr.Task("Feature:dotnet:Test", func() error { return testFeature("dotnet") })
+	gotaskr.Task("Feature:dotnet:Publish", func() error { return publishFeature("dotnet") })
+
 	////////// eclipse-deps
 	gotaskr.Task("Feature:eclipse-deps:Package", func() error { return packageFeature("eclipse-deps") })
 	gotaskr.Task("Feature:eclipse-deps:Test", func() error { return testFeature("eclipse-deps") })
