@@ -37,26 +37,6 @@ func (c Product) String() string {
 	}
 }
 
-type DotnetVersion struct {
-	Releases []struct {
-		Runtime           DotnetProduct   `json:"runtime"`
-		Sdks              []DotnetProduct `json:"sdks"`
-		AspnetcoreRuntime DotnetProduct   `json:"aspnetcore-runtime"`
-	} `json:"releases"`
-}
-
-type DotnetProduct struct {
-	Version string `json:"version"`
-	Files   []File `json:"files"`
-}
-
-type File struct {
-	Name string `json:"name"`
-	Rid  string `json:"rid"`
-	URL  string `json:"url"`
-	Hash string `json:"hash"`
-}
-
 //////////
 // Main
 //////////
