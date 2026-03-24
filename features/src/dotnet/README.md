@@ -7,7 +7,7 @@ A package which installs .NET SDKs, runtimes and workloads.
 ```json
 "features": {
     "ghcr.io/postfinance/devcontainer-features/dotnet:0.1.0": {
-        "version": "lts",
+        "version": "10.0",
         "additionalVersions": "",
         "dotnetRuntimeVersions": "",
         "aspNetCoreRuntimeVersions": "",
@@ -23,10 +23,10 @@ A package which installs .NET SDKs, runtimes and workloads.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | Select or enter a .NET SDK version. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | lts | latest, lts, none, 8.0, 7.0, 6.0, 8.0.408 |
-| additionalVersions | Enter additional .NET SDK versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 7.0,8.0, 8.0.408 |
-| dotnetRuntimeVersions | Enter additional .NET runtime versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0.15, 9.0, lts, 7.0 |
-| aspNetCoreRuntimeVersions | Enter additional ASP.NET Core runtime versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0.15, lts, 7.0 |
+| version | Select or enter a .NET SDK version. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | 10.0 | latest, lts, none, 8.0, 9.0, 8.0.408 |
+| additionalVersions | Enter additional .NET SDK versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0,9.0, 8.0.408 |
+| dotnetRuntimeVersions | Enter additional .NET runtime versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0.15, 9.0, lts, 8.0 |
+| aspNetCoreRuntimeVersions | Enter additional ASP.NET Core runtime versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0.15, lts, 8.0 |
 | workloads | Enter additional .NET SDK workloads, separated by commas. Use 'dotnet workload search' to learn what workloads are available to install. | string | &lt;empty&gt; | wasm-tools, android, macos |
 | downloadUrl | The download URL to use for Dotnet binaries. | string | &lt;empty&gt; |  |
 | versionsUrl | The URL to use for fetching available Dotnet versions. | string | &lt;empty&gt; |  |
