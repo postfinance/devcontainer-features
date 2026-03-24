@@ -25,7 +25,7 @@
                 "additionalVersions": "9.0.102",
                 "dotnetRuntimeVersions": "6.0",
                 "aspNetCoreRuntimeVersions": "8.0.15",
-                "workloads": "maui-android, wasm-tools-net7"
+                "workloads": "maui-android, wasm-tools-net8"
             }
         }
     }
