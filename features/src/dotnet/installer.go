@@ -125,12 +125,11 @@ func runMain() error {
 			workloads:     strings.Split(strings.ReplaceAll(*workloads, " ", ""), ","),
 		})
 	}
-	// Component to create a symlink, but only if an sdk was installed
-	if len(allSdks) > 0 {
-		feature.AddComponents(&symlinkComponent{
-			ComponentBase: installer.NewComponentBase("SymLink", installer.VERSION_IRRELEVANT),
-		})
-	}
+
+	feature.AddComponents(&symlinkComponent{
+		ComponentBase: installer.NewComponentBase("SymLink", installer.VERSION_IRRELEVANT),
+	})
+
 	// Process the feature
 	return feature.Process()
 }
@@ -270,7 +269,9 @@ func installDotnetBinary(downloadUrl string, product Product, fileName string, p
 	arch := ""
 	if osInfo.IsAlpine() {
 		arch = fmt.Sprintf("linux-musl-%s", archPart)
-		installer.Tools.System.InstallPackages("ca-certificates", "libgcc", "libssl3", "libstdc++", "zlib", "icu-libs", "icu-data-full", "tzdata", "krb5")
+		if err := installer.Tools.System.InstallPackages("ca-certificates", "libgcc", "libssl3", "libstdc++", "zlib", "icu-libs", "icu-data-full", "tzdata", "krb5"); err != nil {
+			return err
+		}
 	} else if osInfo.IsDebian() || osInfo.IsUbuntu() {
 		arch = fmt.Sprintf("linux-%s", archPart)
 	} else {
@@ -279,7 +280,7 @@ func installDotnetBinary(downloadUrl string, product Product, fileName string, p
 
 	// Download file
 	downloadedFileName := fmt.Sprintf("%s-%s-%s.tar.gz", fileName, version.Raw, arch)
-	fullUrl := fmt.Sprintf("%s/%s/%s/%s", downloadUrl, product, version.Raw, downloadedFileName)
+	fullUrl := fmt.Sprintf("%s/%s/%s/%s", downloadUrl, product.String(), version.Raw, downloadedFileName)
 	if err := installer.Tools.Download.ToFile(fullUrl, downloadedFileName, progressName); err != nil {
 		return err
 	}
@@ -313,13 +314,15 @@ func resolveVersion(versionsUrl string, requestedVersion string, product Product
 	if regexChannel.MatchString(strings.ToLower(requestedVersion)) {
 		// 4.0 works as channel
 		// 8.0.1xx feature band should work according to docs but does somehow work only for some versions, e.g. 8.0.2xx does not work...
-		latestVersionUrl := fmt.Sprintf("%s/%s/%s/latest.version", versionsUrl, product, strings.ToUpper(requestedVersion))
+		latestVersionUrl := fmt.Sprintf("%s/%s/%s/latest.version", versionsUrl, product.String(), strings.ToUpper(requestedVersion))
 
 		version, err := installer.Tools.Download.AsString(latestVersionUrl)
 		if err != nil {
 			return "", err
 		}
-		latestVersion = version
+		// Normalize potential CRLF line endings and trim surrounding whitespace/newlines.
+		normalized := strings.ReplaceAll(version, "\r\n", "\n")
+		latestVersion = strings.TrimSpace(normalized)
 	} else {
 		latestVersion = requestedVersion
 	}
@@ -359,7 +362,9 @@ func (c *nugetConfigComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// ensure nuget.org source is disabled and we only access sources defined in the provided config file
-	execr.Run(true, "dotnet", "nuget", "disable", "source", "nuget.org")
+	if err := execr.Run(true, "dotnet", "nuget", "disable", "source", "nuget.org"); err != nil {
+		return fmt.Errorf("failed to disable nuget.org NuGet source: %w", err)
+	}
 	if err := os.MkdirAll("/etc/opt/NuGet", 0755); err != nil {
 		return err
 	}

@@ -23,7 +23,7 @@ A package which installs .NET SDKs, runtimes and workloads.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | Select or enter a .NET SDK version. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | 10.0 | latest, lts, none, 8.0, 9.0, 8.0.408 |
+| version | Select or enter a .NET SDK version. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | 10.0 | lts, none, 8.0, 9.0, 10.0, 8.0.408 |
 | additionalVersions | Enter additional .NET SDK versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0,9.0, 8.0.408 |
 | dotnetRuntimeVersions | Enter additional .NET runtime versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0.15, 9.0, lts, 8.0 |
 | aspNetCoreRuntimeVersions | Enter additional ASP.NET Core runtime versions, separated by commas. Use 'lts' for the latest LTS version, 'X.Y' or 'X.Y.Z' for a specific version. | string | &lt;empty&gt; | 8.0.15, lts, 8.0 |

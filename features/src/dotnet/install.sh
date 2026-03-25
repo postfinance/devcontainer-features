@@ -8,4 +8,4 @@
 -workloads="${WORKLOADS:-""}" \
 -downloadUrl="${DOWNLOADURL:-""}" \
 -versionsUrl="${VERSIONSURL:-""}" \
--nugetConfigPath="${NUGETCONFIGPATH:-""}" \
+-nugetConfigPath="${NUGETCONFIGPATH:-""}"
