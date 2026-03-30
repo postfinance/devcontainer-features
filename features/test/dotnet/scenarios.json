@@ -8,7 +8,8 @@
         },
         "features": {
             "./dotnet": {
-                "version": "8.0"
+                "version": "8.0",
+                "nugetConfigPath": "https://raw.githubusercontent.com/postfinance/devcontainer-features/refs/heads/main/override-all.env"
             }
         }
     },
