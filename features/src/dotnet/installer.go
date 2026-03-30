@@ -85,12 +85,6 @@ func runMain() error {
 	}
 	// Create the feature
 	feature := installer.NewFeature(".NET", true)
-	if *nugetConfigPath != "" {
-		feature.AddComponents(&nugetConfigComponent{
-			ComponentBase:   installer.NewComponentBase("Nuget Config", installer.VERSION_IRRELEVANT),
-			NugetConfigPath: *nugetConfigPath,
-		})
-	}
 	// add sdks
 	for _, sdkVersion := range allSdks {
 		component := &sdkComponent{
@@ -117,6 +111,13 @@ func runMain() error {
 			VersionsUrl:   *versionsUrl,
 		}
 		feature.AddComponents(component)
+	}
+	// nuget config
+	if *nugetConfigPath != "" {
+		feature.AddComponents(&nugetConfigComponent{
+			ComponentBase:   installer.NewComponentBase("Nuget Config", installer.VERSION_IRRELEVANT),
+			NugetConfigPath: *nugetConfigPath,
+		})
 	}
 	// workloads
 	if len(*workloads) > 0 {
