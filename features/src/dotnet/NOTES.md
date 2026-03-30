@@ -1,7 +1,7 @@
 ## Dotnet Tools
 
-If you need additional tools for example like the Powerapps CLI you can install them using `dotnet tool install --create-manifest-if-needed <Tool>`.
-This installs the tool creates a manifest file: `.config/dotnet-tools.json`. 
+If you need additional tools, such as the PowerApps CLI, you can install them by running `dotnet tool install --create-manifest-if-needed <Tool>`.
+This installs the tool and creates a manifest file: `.config/dotnet-tools.json`. 
 
 ```json
 {
