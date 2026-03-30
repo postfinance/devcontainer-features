@@ -1,0 +1,32 @@
+{
+    "sdk-only": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./dotnet": {
+                "version": "8.0"
+            }
+        }
+    },
+    "multiple-sdk": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./dotnet": {
+                "version": "8.0",
+                "additionalVersions": "9.0.102",
+                "dotnetRuntimeVersions": "6.0",
+                "aspNetCoreRuntimeVersions": "8.0.15",
+                "workloads": "maui-android, wasm-tools-net8"
+            }
+        }
+    }
+}

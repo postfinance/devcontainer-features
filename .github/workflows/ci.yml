@@ -19,6 +19,7 @@ jobs:
           "build-essential",
           "cypress-deps",
           "docker-out",
+          "dotnet",
           "eclipse-deps",
           "git-lfs",
           "gitlab-cli",
