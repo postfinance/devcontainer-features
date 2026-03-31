@@ -6,7 +6,7 @@ Installs build essentials like gcc.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/build-essential:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/build-essential:1.0.0": {
         "version": "latest"
     }
 }

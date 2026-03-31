@@ -1,6 +1,6 @@
 {
     "id": "docker-out",
-    "version": "0.4.0",
+    "version": "1.0.0",
     "name": "Docker outside Docker",
     "description": "Installs a Docker client which re-uses the host Docker socket.",
     "options": {

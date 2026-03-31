@@ -6,7 +6,7 @@ A package which installs .NET SDKs, runtimes and workloads.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/dotnet:0.1.1": {
+    "ghcr.io/postfinance/devcontainer-features/dotnet:1.0.0": {
         "version": "10.0",
         "additionalVersions": "",
         "dotnetRuntimeVersions": "",

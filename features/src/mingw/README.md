@@ -6,7 +6,7 @@ Installs MinGW.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/mingw:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/mingw:1.0.0": {
     }
 }
 ```

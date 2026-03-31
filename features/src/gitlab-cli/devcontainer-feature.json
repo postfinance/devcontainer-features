@@ -1,6 +1,6 @@
 {
     "id": "gitlab-cli",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "GitLab CLI",
     "description": "Installs the GitLab CLI.",
     "options": {

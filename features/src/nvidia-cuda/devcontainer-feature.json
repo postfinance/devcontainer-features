@@ -1,6 +1,6 @@
 {
     "id": "nvidia-cuda",
-    "version": "0.1.1",
+    "version": "1.0.0",
     "name": "NVIDIA CUDA",
     "description": "A package which installs NVIDIA CUDA.",
     "options": {

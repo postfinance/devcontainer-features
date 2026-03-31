@@ -6,7 +6,7 @@ Installs the Oracle Instant Client Basic package.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/instant-client:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/instant-client:1.0.0": {
         "version": "latest",
         "downloadUrl": "",
         "versionsUrl": ""

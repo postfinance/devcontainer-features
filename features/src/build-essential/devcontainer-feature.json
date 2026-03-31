@@ -1,6 +1,6 @@
 {
     "id": "build-essential",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "Build Essential",
     "description": "Installs build essentials like gcc.",
     "options": {

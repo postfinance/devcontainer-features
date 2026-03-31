@@ -6,7 +6,7 @@ Allows setting the timezone.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/timezone:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/timezone:1.0.0": {
         "timezone": "Etc/UTC"
     }
 }

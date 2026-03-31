@@ -6,7 +6,7 @@ Install arbitrary system packages using the system package manager.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/system-packages:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/system-packages:1.0.0": {
         "packages": ""
     }
 }

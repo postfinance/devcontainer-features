@@ -6,7 +6,7 @@ Installs all dependencies required to run Cypress.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/cypress-deps:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/cypress-deps:1.0.0": {
     }
 }
 ```

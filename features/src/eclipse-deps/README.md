@@ -6,7 +6,7 @@ Installs all dependencies required to run the Eclipse IDE.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/eclipse-deps:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/eclipse-deps:1.0.0": {
     }
 }
 ```

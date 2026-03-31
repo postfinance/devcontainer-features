@@ -1,6 +1,6 @@
 {
     "id": "go",
-    "version": "0.2.0",
+    "version": "1.0.0",
     "name": "Go",
     "description": "Installs Go.",
     "options": {

@@ -6,7 +6,7 @@ Installs Gonovate.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/gonovate:0.1.1": {
+    "ghcr.io/postfinance/devcontainer-features/gonovate:1.0.0": {
         "version": "latest",
         "downloadUrl": ""
     }

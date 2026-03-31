@@ -6,7 +6,7 @@ Installs the Vault CLI.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/vault-cli:0.2.0": {
+    "ghcr.io/postfinance/devcontainer-features/vault-cli:1.0.0": {
         "version": "latest",
         "downloadUrl": "",
         "versionsUrl": ""

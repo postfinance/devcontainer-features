@@ -1,6 +1,6 @@
 {
   "id": "system-packages",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": "System Packages",
   "description": "Install arbitrary system packages using the system package manager.",
   "options": {

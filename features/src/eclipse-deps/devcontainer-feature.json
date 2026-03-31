@@ -1,6 +1,6 @@
 {
     "id": "eclipse-deps",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "Eclipse Dependencies",
     "description": "Installs all dependencies required to run the Eclipse IDE."
 }

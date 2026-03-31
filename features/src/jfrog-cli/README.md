@@ -6,7 +6,7 @@ Installs the JFrog CLI.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/jfrog-cli:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/jfrog-cli:1.0.0": {
         "version": "latest",
         "downloadUrl": "",
         "versionsUrl": ""

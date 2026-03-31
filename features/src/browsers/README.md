@@ -6,7 +6,7 @@ Installs various browsers and their dependencies.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/browsers:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/browsers:1.0.0": {
         "chromeVersion": "none",
         "useChromeForTesting": true,
         "chromeDownloadUrl": "",
