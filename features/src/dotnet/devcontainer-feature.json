@@ -1,6 +1,6 @@
 {
     "id": "dotnet",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "name": ".NET",
     "description": "A package which installs .NET SDKs, runtimes and workloads.",
     "options": {
