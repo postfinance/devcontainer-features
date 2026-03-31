@@ -6,7 +6,7 @@ Installs all dependencies required to run Playwright.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/playwright-deps:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/playwright-deps:1.0.0": {
         "installChromiumDeps": true,
         "installFirefoxDeps": true,
         "installWebkitDeps": true

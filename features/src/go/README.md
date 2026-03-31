@@ -6,7 +6,7 @@ Installs Go.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/go:0.2.0": {
+    "ghcr.io/postfinance/devcontainer-features/go:1.0.0": {
         "version": "latest",
         "downloadUrl": "",
         "latestUrl": "",

@@ -6,7 +6,7 @@ Allows setting the locale.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/locale:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/locale:1.0.0": {
         "locale": "en_US"
     }
 }

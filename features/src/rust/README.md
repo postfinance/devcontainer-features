@@ -6,7 +6,7 @@ A package which installs Rust, common Rust utilities and their required dependen
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/rust:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/rust:1.0.0": {
         "version": "latest",
         "rustupVersion": "latest",
         "profile": "minimal",

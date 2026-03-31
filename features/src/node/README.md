@@ -6,7 +6,7 @@ Installs Node.js.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/node:0.3.0": {
+    "ghcr.io/postfinance/devcontainer-features/node:1.0.0": {
         "version": "lts",
         "npmVersion": "included",
         "yarnVersion": "none",

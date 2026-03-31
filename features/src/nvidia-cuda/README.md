@@ -6,7 +6,7 @@ A package which installs NVIDIA CUDA.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/nvidia-cuda:0.1.1": {
+    "ghcr.io/postfinance/devcontainer-features/nvidia-cuda:1.0.0": {
         "version": "latest",
         "keyringVersion": "1.1-1",
         "installLibraries": true,

@@ -6,7 +6,7 @@ Installs a Docker client which re-uses the host Docker socket.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/docker-out:0.4.0": {
+    "ghcr.io/postfinance/devcontainer-features/docker-out:1.0.0": {
         "version": "latest",
         "composeVersion": "latest",
         "buildxVersion": "latest",

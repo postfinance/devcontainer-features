@@ -6,7 +6,7 @@ Installs Make.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/make:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/make:1.0.0": {
     }
 }
 ```

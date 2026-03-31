@@ -6,7 +6,7 @@ Installs Zig.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/zig:0.2.0": {
+    "ghcr.io/postfinance/devcontainer-features/zig:1.0.0": {
         "version": "latest",
         "downloadUrl": "",
         "versionsUrl": ""

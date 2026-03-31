@@ -6,7 +6,7 @@ Installs Nginx.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/nginx:0.1.0": {
+    "ghcr.io/postfinance/devcontainer-features/nginx:1.0.0": {
         "version": "latest",
         "stableOnly": false,
         "downloadUrl": ""

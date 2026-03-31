@@ -1,6 +1,6 @@
 {
     "id": "timezone",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "name": "Set a specific timezone",
     "description": "Allows setting the timezone.",
     "options": {
