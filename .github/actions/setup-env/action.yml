@@ -1,0 +1,22 @@
+name: Setup Build Environment
+description: Setup Go, Node, and DevContainer CLI
+
+inputs:
+  go-version:
+    required: true
+    description: Go version to setup
+  node-version:
+    required: true
+    description: Node version to setup
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-go@v5
+      with:
+        go-version: ${{ inputs.go-version }}
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+    - run: npm install -g @devcontainers/cli
+      shell: bash
