@@ -419,6 +419,8 @@ func publishFeatures() error {
 	namespace := "postfinance/devcontainer-features"
 
 	tempDir := ".prepared-features"
+	// Ensure the temp dir is clean before preparing the features and removed after publishing
+	os.RemoveAll(tempDir)
 	defer os.RemoveAll(tempDir)
 	featureList, err := getFeatures()
 	if err != nil {
