@@ -80,145 +80,120 @@ func init() {
 		return os.WriteFile("README.md", []byte(strings.Join(outputLines, "\n")), os.ModePerm)
 	})
 
+	////////// publish features
+	gotaskr.Task("Features:Publish", func() error { return publishFeatures() })
+
 	////////// browsers
 	gotaskr.Task("Feature:browsers:Package", func() error { return packageFeature("browsers") })
 	gotaskr.Task("Feature:browsers:Test", func() error { return testFeature("browsers") })
-	gotaskr.Task("Feature:browsers:Publish", func() error { return publishFeature("browsers") })
 
 	////////// build-essential
 	gotaskr.Task("Feature:build-essential:Package", func() error { return packageFeature("build-essential") })
 	gotaskr.Task("Feature:build-essential:Test", func() error { return testFeature("build-essential") })
-	gotaskr.Task("Feature:build-essential:Publish", func() error { return publishFeature("build-essential") })
 
 	////////// cypress-deps
 	gotaskr.Task("Feature:cypress-deps:Package", func() error { return packageFeature("cypress-deps") })
 	gotaskr.Task("Feature:cypress-deps:Test", func() error { return testFeature("cypress-deps") })
-	gotaskr.Task("Feature:cypress-deps:Publish", func() error { return publishFeature("cypress-deps") })
 
 	////////// docker-out
 	gotaskr.Task("Feature:docker-out:Package", func() error { return packageFeature("docker-out") })
 	gotaskr.Task("Feature:docker-out:Test", func() error { return testFeature("docker-out") })
-	gotaskr.Task("Feature:docker-out:Publish", func() error { return publishFeature("docker-out") })
 
 	////////// dotnet
 	gotaskr.Task("Feature:dotnet:Package", func() error { return packageFeature("dotnet") })
 	gotaskr.Task("Feature:dotnet:Test", func() error { return testFeature("dotnet") })
-	gotaskr.Task("Feature:dotnet:Publish", func() error { return publishFeature("dotnet") })
 
 	////////// eclipse-deps
 	gotaskr.Task("Feature:eclipse-deps:Package", func() error { return packageFeature("eclipse-deps") })
 	gotaskr.Task("Feature:eclipse-deps:Test", func() error { return testFeature("eclipse-deps") })
-	gotaskr.Task("Feature:eclipse-deps:Publish", func() error { return publishFeature("eclipse-deps") })
 
 	////////// git-lfs
 	gotaskr.Task("Feature:git-lfs:Package", func() error { return packageFeature("git-lfs") })
 	gotaskr.Task("Feature:git-lfs:Test", func() error { return testFeature("git-lfs") })
-	gotaskr.Task("Feature:git-lfs:Publish", func() error { return publishFeature("git-lfs") })
 
 	////////// gitlab-cli
 	gotaskr.Task("Feature:gitlab-cli:Package", func() error { return packageFeature("gitlab-cli") })
 	gotaskr.Task("Feature:gitlab-cli:Test", func() error { return testFeature("gitlab-cli") })
-	gotaskr.Task("Feature:gitlab-cli:Publish", func() error { return publishFeature("gitlab-cli") })
 
 	////////// go
 	gotaskr.Task("Feature:go:Package", func() error { return packageFeature("go") })
 	gotaskr.Task("Feature:go:Test", func() error { return testFeature("go") })
-	gotaskr.Task("Feature:go:Publish", func() error { return publishFeature("go") })
 
 	////////// gonovate
 	gotaskr.Task("Feature:gonovate:Package", func() error { return packageFeature("gonovate") })
 	gotaskr.Task("Feature:gonovate:Test", func() error { return testFeature("gonovate") })
-	gotaskr.Task("Feature:gonovate:Publish", func() error { return publishFeature("gonovate") })
 
 	////////// goreleaser
 	gotaskr.Task("Feature:goreleaser:Package", func() error { return packageFeature("goreleaser") })
 	gotaskr.Task("Feature:goreleaser:Test", func() error { return testFeature("goreleaser") })
-	gotaskr.Task("Feature:goreleaser:Publish", func() error { return publishFeature("goreleaser") })
 
 	////////// instant-client
 	gotaskr.Task("Feature:instant-client:Package", func() error { return packageFeature("instant-client") })
 	gotaskr.Task("Feature:instant-client:Test", func() error { return testFeature("instant-client") })
-	gotaskr.Task("Feature:instant-client:Publish", func() error { return publishFeature("instant-client") })
 
 	////////// jfrog-cli
 	gotaskr.Task("Feature:jfrog-cli:Package", func() error { return packageFeature("jfrog-cli") })
 	gotaskr.Task("Feature:jfrog-cli:Test", func() error { return testFeature("jfrog-cli") })
-	gotaskr.Task("Feature:jfrog-cli:Publish", func() error { return publishFeature("jfrog-cli") })
 
 	////////// kubectl
 	gotaskr.Task("Feature:kubectl:Package", func() error { return packageFeature("kubectl") })
 	gotaskr.Task("Feature:kubectl:Test", func() error { return testFeature("kubectl") })
-	gotaskr.Task("Feature:kubectl:Publish", func() error { return publishFeature("kubectl") })
 
 	////////// locale
 	gotaskr.Task("Feature:locale:Package", func() error { return packageFeature("locale") })
 	gotaskr.Task("Feature:locale:Test", func() error { return testFeature("locale") })
-	gotaskr.Task("Feature:locale:Publish", func() error { return publishFeature("locale") })
 
 	////////// make
 	gotaskr.Task("Feature:make:Package", func() error { return packageFeature("make") })
 	gotaskr.Task("Feature:make:Test", func() error { return testFeature("make") })
-	gotaskr.Task("Feature:make:Publish", func() error { return publishFeature("make") })
 
 	////////// mingw
 	gotaskr.Task("Feature:mingw:Package", func() error { return packageFeature("mingw") })
 	gotaskr.Task("Feature:mingw:Test", func() error { return testFeature("mingw") })
-	gotaskr.Task("Feature:mingw:Publish", func() error { return publishFeature("mingw") })
 
 	////////// nginx
 	gotaskr.Task("Feature:nginx:Package", func() error { return packageFeature("nginx") })
 	gotaskr.Task("Feature:nginx:Test", func() error { return testFeature("nginx") })
-	gotaskr.Task("Feature:nginx:Publish", func() error { return publishFeature("nginx") })
 
 	////////// node
 	gotaskr.Task("Feature:node:Package", func() error { return packageFeature("node") })
 	gotaskr.Task("Feature:node:Test", func() error { return testFeature("node") })
-	gotaskr.Task("Feature:node:Publish", func() error { return publishFeature("node") })
 
 	////////// nvidia-cuda
 	gotaskr.Task("Feature:nvidia-cuda:Package", func() error { return packageFeature("nvidia-cuda") })
 	gotaskr.Task("Feature:nvidia-cuda:Test", func() error { return testFeature("nvidia-cuda") })
-	gotaskr.Task("Feature:nvidia-cuda:Publish", func() error { return publishFeature("nvidia-cuda") })
 
 	////////// playwright-deps
 	gotaskr.Task("Feature:playwright-deps:Package", func() error { return packageFeature("playwright-deps") })
 	gotaskr.Task("Feature:playwright-deps:Test", func() error { return testFeature("playwright-deps") })
-	gotaskr.Task("Feature:playwright-deps:Publish", func() error { return publishFeature("playwright-deps") })
 
 	////////// python
 	gotaskr.Task("Feature:python:Package", func() error { return packageFeature("python") })
 	gotaskr.Task("Feature:python:Test", func() error { return testFeature("python") })
-	gotaskr.Task("Feature:python:Publish", func() error { return publishFeature("python") })
 
 	////////// rust
 	gotaskr.Task("Feature:rust:Package", func() error { return packageFeature("rust") })
 	gotaskr.Task("Feature:rust:Test", func() error { return testFeature("rust") })
-	gotaskr.Task("Feature:rust:Publish", func() error { return publishFeature("rust") })
 
 	////////// sonar-scanner-cli
 	gotaskr.Task("Feature:sonar-scanner-cli:Package", func() error { return packageFeature("sonar-scanner-cli") })
 	gotaskr.Task("Feature:sonar-scanner-cli:Test", func() error { return testFeature("sonar-scanner-cli") })
-	gotaskr.Task("Feature:sonar-scanner-cli:Publish", func() error { return publishFeature("sonar-scanner-cli") })
 
 	////////// system-packages
 	gotaskr.Task("Feature:system-packages:Package", func() error { return packageFeature("system-packages") })
 	gotaskr.Task("Feature:system-packages:Test", func() error { return testFeature("system-packages") })
-	gotaskr.Task("Feature:system-packages:Publish", func() error { return publishFeature("system-packages") })
 
 	////////// timezone
 	gotaskr.Task("Feature:timezone:Package", func() error { return packageFeature("timezone") })
 	gotaskr.Task("Feature:timezone:Test", func() error { return testFeature("timezone") })
-	gotaskr.Task("Feature:timezone:Publish", func() error { return publishFeature("timezone") })
 
 	////////// vault-cli
 	gotaskr.Task("Feature:vault-cli:Package", func() error { return packageFeature("vault-cli") })
 	gotaskr.Task("Feature:vault-cli:Test", func() error { return testFeature("vault-cli") })
-	gotaskr.Task("Feature:vault-cli:Publish", func() error { return publishFeature("vault-cli") })
 
 	////////// zig
 	gotaskr.Task("Feature:zig:Package", func() error { return packageFeature("zig") })
 	gotaskr.Task("Feature:zig:Test", func() error { return testFeature("zig") })
-	gotaskr.Task("Feature:zig:Publish", func() error { return publishFeature("zig") })
 }
 
 ////////////////////////////////////////////////////////////
@@ -439,14 +414,22 @@ func testFeature(featureName string) error {
 	}*/
 }
 
-func publishFeature(featureName string) error {
+func publishFeatures() error {
 	registry := "ghcr.io"
 	namespace := "postfinance/devcontainer-features"
 
-	tempDir := ".prepared-feature"
+	tempDir := ".prepared-features"
+	// Ensure the temp dir is clean before preparing the features and removed after publishing
+	os.RemoveAll(tempDir)
 	defer os.RemoveAll(tempDir)
-	if err := prepareFeature(featureName, tempDir); err != nil {
+	featureList, err := getFeatures()
+	if err != nil {
 		return err
+	}
+	for _, feature := range featureList {
+		if err := prepareFeature(feature, path.Join(tempDir, feature)); err != nil {
+			return err
+		}
 	}
 
 	// No authentication needed - DevContainerCLI supports GITHUB_TOKEN

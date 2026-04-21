@@ -8,6 +8,7 @@ on:
 
 env:
   GO_VERSION: 1.24.5
+  NODE_VERSION: 22
 
 jobs:
   # Build Job
@@ -52,27 +53,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Setup environment
+        uses: ./.github/actions/setup-env
         with:
-          go-version: "${{ env.GO_VERSION }}"
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Setup DevContainer-CLI
-        run: npm install -g @devcontainers/cli
+          go-version: ${{ env.GO_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Build
         run: go run ./build --target "Feature:${{ matrix.feature }}:Package"
 
       - name: Test
         run: go run ./build --target "Feature:${{ matrix.feature }}:Test"
-      
+
+  # Publish Job
+  publish:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-env
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: Publish
-        if: github.ref == 'refs/heads/main'
-        run: go run ./build --target "Feature:${{ matrix.feature }}:Publish"
+        run: go run ./build --target "Features:Publish"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
