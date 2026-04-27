@@ -155,6 +155,10 @@ func init() {
 	gotaskr.Task("Feature:nginx:Package", func() error { return packageFeature("nginx") })
 	gotaskr.Task("Feature:nginx:Test", func() error { return testFeature("nginx") })
 
+	////////// opencode
+	gotaskr.Task("Feature:opencode:Package", func() error { return packageFeature("opencode") })
+	gotaskr.Task("Feature:opencode:Test", func() error { return testFeature("opencode") })
+
 	////////// node
 	gotaskr.Task("Feature:node:Package", func() error { return packageFeature("node") })
 	gotaskr.Task("Feature:node:Test", func() error { return testFeature("node") })
