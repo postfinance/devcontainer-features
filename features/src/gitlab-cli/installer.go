@@ -38,7 +38,7 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadUrl, "https://gitlab.com/gitlab-org/cli/-/releases", "gitlab-cli-download-url")
+	installer.HandleGitLabOverride(downloadUrl, "gitlab-org/cli", "gitlab-cli-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("GitLab CLI", false,
