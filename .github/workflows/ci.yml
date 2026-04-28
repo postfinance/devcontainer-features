@@ -43,6 +43,7 @@ jobs:
           "nginx",
           "node",
           "nvidia-cuda",
+          "opencode",
           "playwright-deps",
           "python",
           "rust",
