@@ -1,0 +1,25 @@
+{
+    "id": "opencode",
+    "version": "1.0.0",
+    "name": "opencode",
+    "description": "Installs opencode, the open source AI coding agent.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.14.28"
+            ],
+            "default": "latest",
+            "description": "The version of opencode to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for opencode binaries."
+        }
+    }
+}
