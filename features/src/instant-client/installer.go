@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/roemer/gotaskr/execr"
+	"github.com/roemer/goext"
 	"github.com/roemer/gover"
 )
 
@@ -113,6 +113,7 @@ func (c *instantClientComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Instant Client"); err != nil {
 		return err
 	}
+	defer os.Remove(fileName)
 	rootFolder, err := installer.Tools.Compression.GetRootFolderFromZip(fileName)
 	if err != nil {
 		return err
@@ -126,11 +127,7 @@ func (c *instantClientComponent) InstallVersion(version *gover.Version) error {
 	if err := os.WriteFile("/etc/ld.so.conf.d/oracle-instantclient.conf", []byte(path.Join("/opt/oracle", rootFolder)), 0644); err != nil {
 		return err
 	}
-	if err := execr.Run(true, "ldconfig"); err != nil {
-		return err
-	}
-	// Cleanup
-	if err := os.RemoveAll(fileName); err != nil {
+	if err := goext.CmdRunners.Console.Run("ldconfig"); err != nil {
 		return err
 	}
 	return nil

@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/roemer/gotaskr/execr"
+	"github.com/roemer/goext"
 	"github.com/roemer/gover"
 )
 
@@ -105,7 +105,7 @@ func (c *rustupComponent) InstallVersion(version *gover.Version) error {
 	if err := os.Chmod(fileName, os.ModePerm); err != nil {
 		return err
 	}
-	if err := execr.Run(true, "./"+fileName, "-y", "--default-toolchain", "none", "--no-modify-path", "--profile", c.profile); err != nil {
+	if err := goext.CmdRunners.Console.Run("./"+fileName, "-y", "--default-toolchain", "none", "--no-modify-path", "--profile", c.profile); err != nil {
 		return err
 	}
 	// Cleanup
@@ -131,7 +131,7 @@ func (c *rustComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *rustComponent) InstallVersion(version *gover.Version) error {
 	// Install it
-	if err := execr.Run(true, "rustup", "toolchain", "install", "--profile", c.profile, "--no-self-update", version.Raw); err != nil {
+	if err := goext.CmdRunners.Console.Run("rustup", "toolchain", "install", "--profile", c.profile, "--no-self-update", version.Raw); err != nil {
 		return err
 	}
 	// Installing the components
@@ -146,7 +146,7 @@ func (c *rustComponent) InstallVersion(version *gover.Version) error {
 			args = append(args, trimmed)
 		}
 	}
-	if err := execr.Run(true, "rustup", args...); err != nil {
+	if err := goext.CmdRunners.Console.Run("rustup", args...); err != nil {
 		return err
 	}
 	return nil
@@ -165,7 +165,7 @@ type windowsTargetComponent struct {
 }
 
 func (c *windowsTargetComponent) InstallVersion(version *gover.Version) error {
-	if err := execr.Run(true, "rustup", "target", "add", "x86_64-pc-windows-gnu"); err != nil {
+	if err := goext.CmdRunners.Console.Run("rustup", "target", "add", "x86_64-pc-windows-gnu"); err != nil {
 		return err
 	}
 	if err := installer.Tools.System.InstallPackages("mingw-w64"); err != nil {
@@ -179,5 +179,5 @@ type permissionsComponent struct {
 }
 
 func (c *permissionsComponent) InstallVersion(version *gover.Version) error {
-	return execr.Run(true, "chmod", "-R", "777", os.Getenv("RUSTUP_HOME"), os.Getenv("CARGO_HOME"))
+	return goext.CmdRunners.Console.Run("chmod", "-R", "777", os.Getenv("RUSTUP_HOME"), os.Getenv("CARGO_HOME"))
 }

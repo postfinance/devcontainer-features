@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"github.com/roemer/goext"
-	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gover"
 )
 
@@ -195,14 +194,14 @@ func getAllVersions(libraryName string) ([]*gover.Version, error) {
 	var once sync.Once
 	var updateErr error
 	once.Do(func() {
-		updateErr = execr.Run(false, "apt-get", "update")
+		updateErr = installer.Tools.Apt.Update()
 	})
 	if updateErr != nil {
 		return nil, updateErr
 	}
 
 	// Get the package versions
-	stdout, _, err := execr.RunGetOutput(false, "apt", "list", "-a", libraryName+"-*")
+	stdout, _, err := goext.CmdRunners.Default.RunGetOutput("apt", "list", "-a", libraryName+"-*")
 	if err != nil {
 		return nil, err
 	}

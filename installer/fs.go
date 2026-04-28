@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/roemer/gotaskr/execr"
+	"github.com/roemer/goext"
 )
 
 type fileSystem struct{}
@@ -27,7 +27,7 @@ func (f *fileSystem) EnsureLoginShellPath() error {
 	originalPath := os.Getenv("PATH")
 
 	// Get the path for a login shell
-	loginPath, _, err := execr.RunGetOutput(false, "sh", "-lc", "echo $PATH")
+	loginPath, _, err := goext.CmdRunners.Default.RunGetOutput("sh", "-lc", "echo $PATH")
 	if err != nil {
 		return err
 	}

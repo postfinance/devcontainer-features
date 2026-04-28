@@ -109,13 +109,8 @@ func (c *opencodeComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 
-	// Move the binary to /usr/local/bin/opencode
-	if err := installer.Tools.FileSystem.MoveFile(filepath.Join(tempDir, "opencode"), "/usr/local/bin/opencode"); err != nil {
-		return err
-	}
-
-	// Apply executable permissions
-	if err := os.Chmod("/usr/local/bin/opencode", 0755); err != nil {
+	// Install the binary
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin(filepath.Join(tempDir, "opencode"), "opencode"); err != nil {
 		return err
 	}
 

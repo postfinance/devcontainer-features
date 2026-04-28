@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/roemer/gotaskr/execr"
+	"github.com/roemer/goext"
 	"github.com/roemer/gover"
 )
 
@@ -155,7 +155,7 @@ func (c *nodeComponent) InstallVersion(version *gover.Version) error {
 	}
 	// Configure NPM
 	if c.GlobalNpmRegistry != "" {
-		if err := execr.Run(true, "npm", "set", "--global", "registry", c.GlobalNpmRegistry); err != nil {
+		if err := goext.CmdRunners.Console.Run("npm", "set", "--global", "registry", c.GlobalNpmRegistry); err != nil {
 			return err
 		}
 	}
@@ -203,5 +203,5 @@ func (c *npmComponent) GetLatestVersion() (*gover.Version, error) {
 }
 
 func (c *npmComponent) InstallVersion(version *gover.Version) error {
-	return execr.Run(true, "npm", "install", "--global", c.PackageName+"@"+version.Raw)
+	return installer.Tools.Npm.InstallGlobalPackageWithVersion(c.PackageName, version.Raw)
 }

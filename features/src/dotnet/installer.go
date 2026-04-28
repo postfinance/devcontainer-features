@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/roemer/gotaskr/execr"
+	"github.com/roemer/goext"
 	"github.com/roemer/gover"
 )
 
@@ -337,7 +337,7 @@ type workloadComponent struct {
 
 func (c *workloadComponent) InstallVersion(version *gover.Version) error {
 	arguments := append([]string{"workload", "install", "--temp-dir", "/tmp/dotnet-workload-temp-dir"}, c.workloads...)
-	if err := execr.Run(true, "dotnet", arguments...); err != nil {
+	if err := goext.CmdRunners.Console.Run("dotnet", arguments...); err != nil {
 		return err
 	}
 	// # Clean up
@@ -363,7 +363,7 @@ func (c *nugetConfigComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	// ensure nuget.org source is disabled and we only access sources defined in the provided config file
-	if err := execr.Run(true, "dotnet", "nuget", "disable", "source", "nuget.org"); err != nil {
+	if err := goext.CmdRunners.Console.Run("dotnet", "nuget", "disable", "source", "nuget.org"); err != nil {
 		return fmt.Errorf("failed to disable nuget.org NuGet source: %w", err)
 	}
 	if err := os.MkdirAll("/etc/opt/NuGet", 0755); err != nil {

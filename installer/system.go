@@ -19,8 +19,35 @@ const (
 type system struct{}
 
 // Installs the given binary to /usr/local/bin with the given name.
-func (s *system) InstallBinaryToUsrLocalBin(binaryPath string, binaryName string) error {
-	return goext.CmdRunners.Console.Run("install", "-m", "0755", binaryPath, filepath.Join("/usr/local/bin", binaryName))
+func (s *system) InstallBinaryToUsrLocalBin(binaryPath string, targetBinaryName string) error {
+	return s.InstallBinaryToDir(binaryPath, "/usr/local/bin", targetBinaryName)
+}
+
+// Installs the binary to the given directory with the given name.
+func (s *system) InstallBinaryToDir(binaryPath string, targetDir string, targetBinaryName string) error {
+	if err := os.MkdirAll(targetDir, 0755); err != nil {
+		return fmt.Errorf("failed to create target directory %q: %w", targetDir, err)
+	}
+	return goext.CmdRunners.Console.Run("install", "-m", "0755", binaryPath, filepath.Join(targetDir, targetBinaryName))
+}
+
+// Downloads a binary from the given url and installs it to /usr/local/bin with the given name.
+func (s *system) DownloadBinaryToUsrLocalBin(url string, progressName string, targetBinaryName string) error {
+	return s.DownloadBinaryToDir(url, progressName, "/usr/local/bin", targetBinaryName)
+}
+
+// Downloads a binary from the given url and installs it to the given directory with the given name.
+func (s *system) DownloadBinaryToDir(url string, progressName string, targetDir string, targetBinaryName string) error {
+	tempDir, err := os.MkdirTemp("", "binary-download-*")
+	if err != nil {
+		return fmt.Errorf("failed to create temp directory: %w", err)
+	}
+	defer os.RemoveAll(tempDir)
+	tempPath := filepath.Join(tempDir, targetBinaryName)
+	if err := Tools.Download.ToFile(url, tempPath, progressName); err != nil {
+		return err
+	}
+	return s.InstallBinaryToDir(tempPath, targetDir, targetBinaryName)
 }
 
 func (s *system) InstallPackages(packages ...string) error {

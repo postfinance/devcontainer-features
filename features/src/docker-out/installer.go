@@ -12,7 +12,6 @@ import (
 	"strconv"
 	"text/template"
 
-	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gover"
 )
 
@@ -234,11 +233,7 @@ func (c *dockerComposeComponent) InstallVersion(version *gover.Version) error {
 	if err != nil {
 		return err
 	}
-	if err := installer.Tools.Download.ToFile(downloadUrl, "/usr/local/lib/docker/cli-plugins/docker-compose", "Docker Compose"); err != nil {
-		return err
-	}
-	// Apply executable permissions
-	if err := execr.Run(true, "chmod", "+x", "/usr/local/lib/docker/cli-plugins/docker-compose"); err != nil {
+	if err := installer.Tools.System.DownloadBinaryToDir(downloadUrl, "Docker Compose", "/usr/local/lib/docker/cli-plugins", "docker-compose"); err != nil {
 		return err
 	}
 	return nil
@@ -274,11 +269,7 @@ func (c *dockerBuildxComponent) InstallVersion(version *gover.Version) error {
 	if err != nil {
 		return err
 	}
-	if err := installer.Tools.Download.ToFile(downloadUrl, "/usr/local/lib/docker/cli-plugins/docker-buildx", "Docker buildx"); err != nil {
-		return err
-	}
-	// Apply executable permissions
-	if err := execr.Run(true, "chmod", "+x", "/usr/local/lib/docker/cli-plugins/docker-buildx"); err != nil {
+	if err := installer.Tools.System.DownloadBinaryToDir(downloadUrl, "Docker buildx", "/usr/local/lib/docker/cli-plugins", "docker-buildx"); err != nil {
 		return err
 	}
 	return nil

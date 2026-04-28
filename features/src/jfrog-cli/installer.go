@@ -82,13 +82,9 @@ func (c *jfrogCliComponent) InstallVersion(version *gover.Version) error {
 	if err != nil {
 		return err
 	}
-	// Download the file (filename pattern is the same, just arch changes)
+	// Download and install the binary
 	downloadUrl := fmt.Sprintf("%s/v2-jf/%s/jfrog-cli-linux-%s/jf", c.downloadUrl, version.Raw, archPart)
-	if err := installer.Tools.Download.ToFile(downloadUrl, "/usr/local/bin/jf", "JF"); err != nil {
-		return err
-	}
-	// Set execute rights
-	if err := os.Chmod("/usr/local/bin/jf", 0x755); err != nil {
+	if err := installer.Tools.System.DownloadBinaryToUsrLocalBin(downloadUrl, "JF", "jf"); err != nil {
 		return err
 	}
 	// Add alias to jfrog
