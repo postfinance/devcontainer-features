@@ -106,3 +106,32 @@ func TestGitHubOverride(t *testing.T) {
 		assert.Equal("https://mycompany.com/artifactory/github-generic-remote/docker/compose/releases/download", *composeDownloadUrl)
 	}()
 }
+
+func TestGitLabOverride(t *testing.T) {
+	assert := assert.New(t)
+
+	// Test default
+	func() {
+		glabDownloadUrl := &[]string{""}[0]
+		HandleGitLabOverride(glabDownloadUrl, "gitlab-org/cli", "test-download-url")
+		assert.Equal("https://gitlab.com/gitlab-org/cli/-/releases", *glabDownloadUrl)
+	}()
+
+	// Test specific key override
+	func() {
+		glabDownloadUrl := &[]string{""}[0]
+		os.Setenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL", "https://mycompany.com/artifactory/gitlab-generic-remote/gitlab-org/cli/-/releases")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_DOWNLOAD_URL")
+		HandleGitLabOverride(glabDownloadUrl, "gitlab-org/cli", "test-download-url")
+		assert.Equal("https://mycompany.com/artifactory/gitlab-generic-remote/gitlab-org/cli/-/releases", *glabDownloadUrl)
+	}()
+
+	// Test global GitLab override
+	func() {
+		glabDownloadUrl := &[]string{""}[0]
+		os.Setenv("DEV_FEATURE_OVERRIDE_GITLAB_DOWNLOAD_URL", "https://mycompany.com/artifactory/gitlab-generic-remote")
+		defer os.Unsetenv("DEV_FEATURE_OVERRIDE_GITLAB_DOWNLOAD_URL")
+		HandleGitLabOverride(glabDownloadUrl, "gitlab-org/cli", "test-download-url")
+		assert.Equal("https://mycompany.com/artifactory/gitlab-generic-remote/gitlab-org/cli/-/releases", *glabDownloadUrl)
+	}()
+}

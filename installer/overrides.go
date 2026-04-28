@@ -86,6 +86,18 @@ func HandleGitHubOverride(downloadUrl *string, gitHubPath string, key string) {
 	}
 }
 
+func HandleGitLabOverride(downloadUrl *string, gitLabPath string, key string) {
+	if *downloadUrl == "" {
+		if envValue := os.Getenv(keyToEnv(key)); envValue != "" {
+			*downloadUrl = envValue
+		} else if envValue := os.Getenv(keyToEnv("GITLAB_DOWNLOAD_URL")); envValue != "" {
+			*downloadUrl, _ = Tools.Http.BuildUrl(envValue, gitLabPath, "-/releases")
+		} else {
+			*downloadUrl, _ = Tools.Http.BuildUrl("https://gitlab.com", gitLabPath, "-/releases")
+		}
+	}
+}
+
 func keyToEnv(key string) string {
 	return "DEV_FEATURE_OVERRIDE_" + strings.ToUpper(strings.ReplaceAll(key, "-", "_"))
 }

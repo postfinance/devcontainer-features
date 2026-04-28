@@ -98,6 +98,7 @@ There are a few sources which are used in multiple installations. For those sour
 
 ```
 DEV_FEATURE_OVERRIDE_GITHUB_DOWNLOAD_URL=...
+DEV_FEATURE_OVERRIDE_GITLAB_DOWNLOAD_URL=...
 ```
 #### Unset an Override via Parameter
 
