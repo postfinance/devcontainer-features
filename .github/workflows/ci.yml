@@ -7,7 +7,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
     inputs:
-      force:
+      force-tests:
         description: 'Force build/test even if version is already published'
         required: false
         default: 'false'
@@ -70,7 +70,7 @@ jobs:
       - name: Check if version already published
         id: check-version
         run: |
-          if [[ "${{ inputs.force }}" == "true" ]]; then
+          if [[ "${{ inputs.force-tests }}" == "true" ]]; then
             echo "already_published=false" >> $GITHUB_OUTPUT
           else
             VERSION=$(jq -r '.version' features/src/${{ matrix.feature }}/devcontainer-feature.json)
