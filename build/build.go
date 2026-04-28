@@ -5,13 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path"
 	"path/filepath"
 	"strings"
 
+	"github.com/roemer/goext"
 	"github.com/roemer/gotaskr"
-	"github.com/roemer/gotaskr/execr"
 	"github.com/roemer/gotaskr/gttools"
 	"github.com/roemer/gotaskr/log"
 )
@@ -233,15 +232,15 @@ func buildGo(workingDirectory string, binaryName string) ([]string, error) {
 		// Force static linking
 		os.Setenv("CGO_ENABLED", "0")
 		// Compile the go installer
+		cmdRunner := goext.CmdRunners.Console.WithWorkingDirectory(workingDirectory).
+			WithEnvs(map[string]string{
+				"GOOS":   "linux",
+				"GOARCH": arch,
+			})
 		// Optimizations:
 		//   ldflags -w (disable DWARF generation), -s (disable symbol table and debug information)
 		//   gcflags -l (disable inlining), -B (disable bounds checking)
-		cmd := exec.Command("go", "build", "-o", archBinaryName, "-ldflags", "-w -s", "-gcflags", "all=-l -B", ".")
-		cmd.Env = os.Environ()
-		cmd.Env = append(cmd.Env, "GOOS=linux")
-		cmd.Env = append(cmd.Env, fmt.Sprintf("GOARCH=%s", arch))
-		cmd.Dir = workingDirectory
-		if err := execr.RunCommand(true, cmd); err != nil {
+		if err := cmdRunner.Run("go", "build", "-o", archBinaryName, "-ldflags", "-w -s", "-gcflags", "all=-l -B", "."); err != nil {
 			return buildBinaries, err
 		}
 		buildBinaries = append(buildBinaries, archBinaryName)
@@ -392,11 +391,11 @@ func testFeature(featureName string) error {
 				return err
 			}
 			if !keepImage {
-				defer execr.Run(false, "docker", "image", "rm", imageName)
+				defer goext.CmdRunners.Default.Run("docker", "image", "rm", imageName)
 			}
 
 			// Run the check in the container
-			checkError := execr.Run(true, "docker", "run", "-t", "--rm", "-v", "/var/run/docker.sock:/var/run/docker.sock", imageName, "sh", "-c", "/tmp/check.sh")
+			checkError := goext.CmdRunners.Console.Run("docker", "run", "-t", "--rm", "-v", "/var/run/docker.sock:/var/run/docker.sock", imageName, "sh", "-c", "/tmp/check.sh")
 			if checkError != nil {
 				return fmt.Errorf("check failed: %w", checkError)
 			}

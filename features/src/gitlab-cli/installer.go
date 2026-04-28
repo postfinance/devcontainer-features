@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 
 	"github.com/roemer/gover"
@@ -83,13 +84,18 @@ func (c *glabComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "GitLab CLI"); err != nil {
 		return err
 	}
-	// Extract the tar.gz file
-	if err := installer.Tools.Compression.ExtractTarGz(fileName, "/usr/local/bin/", true); err != nil {
+	defer os.Remove(fileName)
+	// Extract to temp directory
+	tempDir, err := os.MkdirTemp("", "gitlab-cli-extract")
+	if err != nil {
 		return err
 	}
-
-	// Set execute rights
-	if err := os.Chmod("/usr/local/bin/glab", 0x755); err != nil {
+	defer os.RemoveAll(tempDir)
+	if err := installer.Tools.Compression.ExtractTarGz(fileName, tempDir, true); err != nil {
+		return err
+	}
+	// Install binary
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin(filepath.Join(tempDir, "glab"), "glab"); err != nil {
 		return err
 	}
 	return nil

@@ -6,7 +6,7 @@ Installs the GitLab CLI.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/gitlab-cli:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/gitlab-cli:1.0.1": {
         "version": "latest",
         "downloadUrl": ""
     }

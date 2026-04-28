@@ -1,6 +1,6 @@
 {
     "id": "git-lfs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Git LFS",
     "description": "Installs Git LFS.",
     "options": {

@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/roemer/gotaskr/execr"
+	"github.com/roemer/goext"
 	"github.com/roemer/gover"
 )
 
@@ -54,11 +54,11 @@ type buildEssentialComponent struct {
 }
 
 func (c *buildEssentialComponent) GetAllVersions() ([]*gover.Version, error) {
-	if err := execr.Run(true, "apt-get", "update"); err != nil {
+	if err := goext.CmdRunners.Console.Run("apt-get", "update"); err != nil {
 		return []*gover.Version{}, err
 	}
 
-	str1, _, err := execr.RunGetOutput(true, "apt-cache", "madison", packageName)
+	str1, _, err := goext.CmdRunners.Console.RunGetOutput("apt-cache", "madison", packageName)
 	if err != nil {
 		return []*gover.Version{}, err
 	}

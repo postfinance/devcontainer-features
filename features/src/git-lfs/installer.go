@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/roemer/gotaskr/execr"
+	"github.com/roemer/goext"
 	"github.com/roemer/gover"
 )
 
@@ -89,6 +89,7 @@ func (c *gitLfsComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Git LFS"); err != nil {
 		return err
 	}
+	defer os.Remove(fileName)
 	// Extract it
 	tempDir, err := os.MkdirTemp("", "git-lfs-extract")
 	if err != nil {
@@ -98,16 +99,12 @@ func (c *gitLfsComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Compression.ExtractTarGz(fileName, tempDir, true); err != nil {
 		return err
 	}
-	// Move the desired files
-	if err := installer.Tools.FileSystem.MoveFile(filepath.Join(tempDir, "git-lfs"), "/usr/local/bin/git-lfs"); err != nil {
-		return err
-	}
-	// Apply executable permissions
-	if err := execr.Run(true, "chmod", "+x", "/usr/local/bin/git-lfs"); err != nil {
+	// Install the binary
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin(filepath.Join(tempDir, "git-lfs"), "git-lfs"); err != nil {
 		return err
 	}
 	// Install
-	if err := execr.Run(true, "git", "lfs", "install"); err != nil {
+	if err := goext.CmdRunners.Console.Run("git", "lfs", "install"); err != nil {
 		return err
 	}
 	return nil
