@@ -1,0 +1,11 @@
+## Notes
+
+### System Compatibility
+
+Debian, Ubuntu, Alpine
+
+### Accessed Urls
+
+Needs access to the following URL for downloading and resolving:
+* https://github.com
+* https://api.github.com
