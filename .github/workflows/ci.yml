@@ -25,6 +25,7 @@ jobs:
         feature: [
           "browsers",
           "build-essential",
+          "claude-code",
           "cypress-deps",
           "docker-out",
           "dotnet",
