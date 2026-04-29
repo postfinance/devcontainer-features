@@ -110,6 +110,10 @@ func init() {
 	gotaskr.Task("Feature:git-lfs:Package", func() error { return packageFeature("git-lfs") })
 	gotaskr.Task("Feature:git-lfs:Test", func() error { return testFeature("git-lfs") })
 
+	////////// github-copilot-cli
+	gotaskr.Task("Feature:github-copilot-cli:Package", func() error { return packageFeature("github-copilot-cli") })
+	gotaskr.Task("Feature:github-copilot-cli:Test", func() error { return testFeature("github-copilot-cli") })
+
 	////////// gitlab-cli
 	gotaskr.Task("Feature:gitlab-cli:Package", func() error { return packageFeature("gitlab-cli") })
 	gotaskr.Task("Feature:gitlab-cli:Test", func() error { return testFeature("gitlab-cli") })

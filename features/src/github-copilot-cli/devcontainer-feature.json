@@ -1,0 +1,25 @@
+{
+    "id": "github-copilot-cli",
+    "version": "1.0.0",
+    "name": "GitHub Copilot CLI",
+    "description": "Installs GitHub Copilot CLI (copilot), the AI-powered coding assistant for the terminal.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "1.0.39"
+            ],
+            "default": "latest",
+            "description": "The version of GitHub Copilot CLI to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for GitHub Copilot CLI binaries."
+        }
+    }
+}

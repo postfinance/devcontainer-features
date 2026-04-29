@@ -22,6 +22,7 @@ Below is a list with included features, click on the link for more details.
 | [dotnet](./features/src/dotnet/README.md) | A package which installs .NET SDKs, runtimes and workloads. |
 | [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all dependencies required to run the Eclipse IDE. |
 | [git-lfs](./features/src/git-lfs/README.md) | Installs Git LFS. |
+| [github-copilot-cli](./features/src/github-copilot-cli/README.md) | Installs GitHub Copilot CLI (copilot), the AI-powered coding assistant for the terminal. |
 | [gitlab-cli](./features/src/gitlab-cli/README.md) | Installs the GitLab CLI. |
 | [go](./features/src/go/README.md) | Installs Go. |
 | [gonovate](./features/src/gonovate/README.md) | Installs Gonovate. |
