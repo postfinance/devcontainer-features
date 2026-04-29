@@ -1,0 +1,25 @@
+{
+    "id": "claude-code",
+    "version": "1.0.0",
+    "name": "claude-code",
+    "description": "Installs Claude Code, Anthropic's AI coding assistant CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "2.1.123"
+            ],
+            "default": "latest",
+            "description": "The version of Claude Code to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for Claude Code binaries."
+        }
+    }
+}

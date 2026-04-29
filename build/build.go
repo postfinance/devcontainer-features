@@ -86,6 +86,10 @@ func init() {
 	gotaskr.Task("Feature:browsers:Package", func() error { return packageFeature("browsers") })
 	gotaskr.Task("Feature:browsers:Test", func() error { return testFeature("browsers") })
 
+	////////// claude-code
+	gotaskr.Task("Feature:claude-code:Package", func() error { return packageFeature("claude-code") })
+	gotaskr.Task("Feature:claude-code:Test", func() error { return testFeature("claude-code") })
+
 	////////// build-essential
 	gotaskr.Task("Feature:build-essential:Package", func() error { return packageFeature("build-essential") })
 	gotaskr.Task("Feature:build-essential:Test", func() error { return testFeature("build-essential") })

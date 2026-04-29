@@ -17,6 +17,7 @@ Below is a list with included features, click on the link for more details.
 | --- | --- |
 | [browsers](./features/src/browsers/README.md) | Installs various browsers and their dependencies. |
 | [build-essential](./features/src/build-essential/README.md) | Installs build essentials like gcc. |
+| [claude-code](./features/src/claude-code/README.md) | Installs Claude Code, Anthropic's AI coding assistant CLI. |
 | [cypress-deps](./features/src/cypress-deps/README.md) | Installs all dependencies required to run Cypress. |
 | [docker-out](./features/src/docker-out/README.md) | Installs a Docker client which re-uses the host Docker socket. |
 | [dotnet](./features/src/dotnet/README.md) | A package which installs .NET SDKs, runtimes and workloads. |
@@ -141,4 +142,11 @@ docker run --rm -it -v $PWD:/data debian /bin/bash
 and then run the installer:
 ```bash
 /data/kubectl.bin --version=1.35.0
+```
+
+Alternatively, you can just pack a feature (use the tasks from `build/build.go`) and simply extract it into a `.devcontainer` folder and then use it from there as a local feature (`.my-feature {}`).
+
+Here is a one-liner that prepares the defined feature in this project:
+```bash
+FEATURE="go"; go run "./build" --target "Feature:$FEATURE:Package"; mkdir -p ".devcontainer/$FEATURE"; tar -xvf "output/devcontainer-feature-$FEATURE.tgz" -C ".devcontainer/$FEATURE"
 ```
