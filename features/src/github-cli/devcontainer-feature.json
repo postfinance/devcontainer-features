@@ -1,0 +1,25 @@
+{
+    "id": "github-cli",
+    "version": "1.0.0",
+    "name": "GitHub CLI",
+    "description": "Installs the GitHub CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "2.67.0"
+            ],
+            "default": "latest",
+            "description": "The version of GitHub CLI to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for GitHub CLI binaries."
+        }
+    }
+}
