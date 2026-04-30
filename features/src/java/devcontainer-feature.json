@@ -1,0 +1,124 @@
+{
+    "id": "java",
+    "version": "1.0.0",
+    "name": "Java",
+    "description": "Installs Java (Temurin/OpenJDK), Maven, Gradle, and Ant.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "21",
+                "17",
+                "11",
+                "21.0.5"
+            ],
+            "default": "latest",
+            "description": "The version of Java (Temurin/OpenJDK) to install. Use a major version (e.g. '21') to get the latest patch release."
+        },
+        "mavenVersion": {
+            "type": "string",
+            "proposals": [
+                "none",
+                "latest",
+                "3.9",
+                "3.9.9"
+            ],
+            "default": "none",
+            "description": "The version of Maven to install. Use 'none' to skip."
+        },
+        "gradleVersion": {
+            "type": "string",
+            "proposals": [
+                "none",
+                "latest",
+                "8",
+                "8.14"
+            ],
+            "default": "none",
+            "description": "The version of Gradle to install. Use 'none' to skip."
+        },
+        "antVersion": {
+            "type": "string",
+            "proposals": [
+                "none",
+                "latest",
+                "1.10",
+                "1.10.15"
+            ],
+            "default": "none",
+            "description": "The version of Ant to install. Use 'none' to skip."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/adoptium-remote/v3/binary"
+            ],
+            "description": "The download URL to use for Java (Temurin) binaries."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the available Java (Temurin) versions from."
+        },
+        "latestUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the latest Java (Temurin) release information from."
+        },
+        "mavenDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/apache-maven-remote"
+            ],
+            "description": "The download URL to use for Maven binaries."
+        },
+        "mavenVersionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the available Maven versions from."
+        },
+        "gradleDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/gradle-distributions-remote"
+            ],
+            "description": "The download URL to use for Gradle binaries."
+        },
+        "gradleVersionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the available Gradle versions from."
+        },
+        "antDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/apache-ant-remote"
+            ],
+            "description": "The download URL to use for Ant binaries."
+        },
+        "antVersionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to fetch the available Ant versions from."
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack"
+            ]
+        }
+    },
+    "containerEnv": {
+        "JAVA_HOME": "/usr/local/java",
+        "MAVEN_HOME": "/usr/local/maven",
+        "GRADLE_HOME": "/usr/local/gradle",
+        "ANT_HOME": "/usr/local/ant",
+        "PATH": "/usr/local/java/bin:/usr/local/maven/bin:/usr/local/gradle/bin:/usr/local/ant/bin:${PATH}"
+    }
+}

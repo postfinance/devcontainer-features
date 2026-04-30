@@ -134,6 +134,10 @@ func init() {
 	gotaskr.Task("Feature:gonovate:Package", func() error { return packageFeature("gonovate") })
 	gotaskr.Task("Feature:gonovate:Test", func() error { return testFeature("gonovate") })
 
+	////////// java
+	gotaskr.Task("Feature:java:Package", func() error { return packageFeature("java") })
+	gotaskr.Task("Feature:java:Test", func() error { return testFeature("java") })
+
 	////////// goreleaser
 	gotaskr.Task("Feature:goreleaser:Package", func() error { return packageFeature("goreleaser") })
 	gotaskr.Task("Feature:goreleaser:Test", func() error { return testFeature("goreleaser") })

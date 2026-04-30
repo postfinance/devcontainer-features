@@ -30,6 +30,7 @@ Below is a list with included features, click on the link for more details.
 | [gonovate](./features/src/gonovate/README.md) | Installs Gonovate. |
 | [goreleaser](./features/src/goreleaser/README.md) | Installs GoReleaser. |
 | [instant-client](./features/src/instant-client/README.md) | Installs the Oracle Instant Client Basic package. |
+| [java](./features/src/java/README.md) | Installs Java (Temurin/OpenJDK), Maven, Gradle, and Ant. |
 | [jfrog-cli](./features/src/jfrog-cli/README.md) | Installs the JFrog CLI. |
 | [kubectl](./features/src/kubectl/README.md) | Installs kubectl and other tools for managing kubernetes. |
 | [locale](./features/src/locale/README.md) | Allows setting the locale. |
