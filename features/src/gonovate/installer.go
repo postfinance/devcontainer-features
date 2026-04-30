@@ -14,7 +14,7 @@ import (
 // Configuration
 //////////
 
-var versionRegex *regexp.Regexp = regexp.MustCompile(`(?m:)^v(?P<raw>(\d+).(\d+)\.(\d+))$`)
+var versionRegex *regexp.Regexp = regexp.MustCompile(`(?m:)^v(?P<raw>(\d+)\.(\d+)\.(\d+))$`)
 
 //////////
 // Main
@@ -84,12 +84,9 @@ func (c *gonovateComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "gonovate"); err != nil {
 		return err
 	}
+	defer os.Remove(fileName)
 	// Extract it
 	if err := installer.Tools.Compression.ExtractZip(fileName, "/usr/local/bin/", false); err != nil {
-		return err
-	}
-	// Cleanup
-	if err := os.Remove(fileName); err != nil {
 		return err
 	}
 	return nil

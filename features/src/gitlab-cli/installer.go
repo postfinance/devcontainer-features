@@ -15,7 +15,7 @@ import (
 // Configuration
 //////////
 
-var versionRegexp *regexp.Regexp = regexp.MustCompile(`(\d+)\.(\d+)\.(\d+)`)
+var versionRegex *regexp.Regexp = regexp.MustCompile(`(\d+)\.(\d+)\.(\d+)`)
 
 //////////
 // Main
@@ -64,7 +64,7 @@ func (c *glabComponent) GetAllVersions() ([]*gover.Version, error) {
 	if err != nil {
 		return nil, err
 	}
-	return installer.Tools.Versioning.ParseVersionsFromList(versionStrings, versionRegexp, true)
+	return installer.Tools.Versioning.ParseVersionsFromList(versionStrings, versionRegex, true)
 }
 
 func (c *glabComponent) InstallVersion(version *gover.Version) error {

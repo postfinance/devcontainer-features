@@ -97,6 +97,7 @@ func (c *opencodeComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "opencode"); err != nil {
 		return err
 	}
+	defer os.Remove(fileName)
 
 	// Extract to a temp directory
 	tempDir, err := os.MkdirTemp("", "opencode-extract")
@@ -110,14 +111,5 @@ func (c *opencodeComponent) InstallVersion(version *gover.Version) error {
 	}
 
 	// Install the binary
-	if err := installer.Tools.System.InstallBinaryToUsrLocalBin(filepath.Join(tempDir, "opencode"), "opencode"); err != nil {
-		return err
-	}
-
-	// Cleanup
-	if err := os.Remove(fileName); err != nil {
-		return err
-	}
-
-	return nil
+	return installer.Tools.System.InstallBinaryToUsrLocalBin(filepath.Join(tempDir, "opencode"), "opencode")
 }

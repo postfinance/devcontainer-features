@@ -84,12 +84,9 @@ func (c *goreleaserComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "goreleaser"); err != nil {
 		return err
 	}
+	defer os.Remove(fileName)
 	// Extract it
 	if err := installer.Tools.Compression.ExtractTarGz(fileName, "/usr/local/goreleaser", false); err != nil {
-		return err
-	}
-	// Cleanup
-	if err := os.Remove(fileName); err != nil {
 		return err
 	}
 	return nil
