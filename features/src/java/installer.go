@@ -279,6 +279,11 @@ func (c *mavenComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 
+	// Create a symlink in /usr/local/bin so mvn is available without changing PATH
+	if err := installer.Tools.FileSystem.CreateSymLink("/usr/local/maven/bin/mvn", "/usr/local/bin/mvn", false); err != nil {
+		return err
+	}
+
 	// Cleanup
 	if err := os.Remove(fileName); err != nil {
 		return err
@@ -352,6 +357,11 @@ func (c *gradleComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 
+	// Create a symlink in /usr/local/bin so gradle is available without changing PATH
+	if err := installer.Tools.FileSystem.CreateSymLink("/usr/local/gradle/bin/gradle", "/usr/local/bin/gradle", false); err != nil {
+		return err
+	}
+
 	// Cleanup
 	if err := os.Remove(fileName); err != nil {
 		return err
@@ -386,6 +396,11 @@ func (c *antComponent) InstallVersion(version *gover.Version) error {
 	// Remove old installation and extract to /usr/local/ant (strip the root folder)
 	os.RemoveAll("/usr/local/ant")
 	if err := installer.Tools.Compression.ExtractTarGz(fileName, "/usr/local/ant", true); err != nil {
+		return err
+	}
+
+	// Create a symlink in /usr/local/bin so ant is available without changing PATH
+	if err := installer.Tools.FileSystem.CreateSymLink("/usr/local/ant/bin/ant", "/usr/local/bin/ant", false); err != nil {
 		return err
 	}
 

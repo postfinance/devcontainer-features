@@ -116,9 +116,6 @@
     },
     "containerEnv": {
         "JAVA_HOME": "/usr/local/java",
-        "MAVEN_HOME": "/usr/local/maven",
-        "GRADLE_HOME": "/usr/local/gradle",
-        "ANT_HOME": "/usr/local/ant",
-        "PATH": "/usr/local/java/bin:/usr/local/maven/bin:/usr/local/gradle/bin:/usr/local/ant/bin:${PATH}"
+        "PATH": "/usr/local/java/bin:${PATH}"
     }
 }
