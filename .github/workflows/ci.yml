@@ -31,6 +31,7 @@ jobs:
           "dotnet",
           "eclipse-deps",
           "git-lfs",
+          "github-copilot-cli",
           "gitlab-cli",
           "go",
           "gonovate",
