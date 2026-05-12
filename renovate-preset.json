@@ -1,0 +1,626 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "enabledManagers": [
+        "custom.regex"
+    ],
+    ////////////////////
+    // Custom Datasources
+    ////////////////////
+    "customDatasources": {
+        "browsers-google-chrome": {
+            "defaultRegistryUrlTemplate": "https://versionhistory.googleapis.com/v1/chrome/platforms/linux/channels/stable/versions",
+            "format": "json",
+            "transformTemplates": [
+                "{ \"releases\": $map($.versions, function($v) { { \"version\": $v.version } }), \"sourceUrl\": \"https://chromium.googlesource.com/chromium/src\" }"
+            ]
+        },
+        "browsers-firefox": {
+            "defaultRegistryUrlTemplate": "https://product-details.mozilla.org/1.0/firefox_history_stability_releases.json",
+            "format": "json",
+            "transformTemplates": [
+                "{ \"releases\": $map($keys($), function($k) { { \"version\": $k, \"releaseTimestamp\": $lookup($, $k) & \"T00:00:00.000Z\" } }), \"sourceUrl\": \"https://github.com/mozilla/gecko-dev\" }"
+            ]
+        }
+    },
+    ////////////////////
+    // Custom Managers
+    ////////////////////
+    "customManagers": [
+        ////////////////////////////////////////////////////////////////////////////////
+        // browsers
+        ////////////////////////////////////////////////////////////////////////////////
+        // chrome
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/browsers:[^\"]+\":\\s*\\{[^}]*\"chromeVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "custom.browsers-google-chrome",
+            "depNameTemplate": "google-chrome",
+            "versioningTemplate": "loose"
+        },
+        // firefox
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/browsers:[^\"]+\":\\s*\\{[^}]*\"firefoxVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "custom.browsers-firefox",
+            "depNameTemplate": "firefox",
+            "versioningTemplate": "loose"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // build-essential
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/build-essential:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "deb",
+            "depNameTemplate": "build-essential",
+            "registryUrlTemplate": "https://deb.debian.org/debian?suite=stable&components=main&binaryArch=amd64"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // claude-code
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/claude-code:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "anthropics/claude-code"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // docker-out
+        ////////////////////////////////////////////////////////////////////////////////
+        // docker
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/docker-out:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "docker/cli"
+        },
+        // compose
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/docker-out:[^\"]+\":\\s*\\{[^}]*\"composeVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "docker/compose"
+        },
+        // buildx
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/docker-out:[^\"]+\":\\s*\\{[^}]*\"buildxVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "docker/buildx"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // dotnet
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/dotnet:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "dotnet-version",
+            "depNameTemplate": "dotnet-sdk"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // git-lfs
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/git-lfs:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "git-lfs/git-lfs"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // github-cli
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/github-cli:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "cli/cli"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // github-copilot-cli
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/github-copilot-cli:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "github/copilot-cli"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // gitlab-cli
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/gitlab-cli:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "gitlab-tags",
+            "depNameTemplate": "gitlab-org/cli"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // go
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/go:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "golang-version",
+            "depNameTemplate": "go"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // gonovate
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/gonovate:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "roemer/gonovate"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // goreleaser
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/goreleaser:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "goreleaser/goreleaser"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // instant-client
+        ////////////////////////////////////////////////////////////////////////////////
+        // TODO
+        ////////////////////////////////////////////////////////////////////////////////
+        // jfrog-cli
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/jfrog-cli:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "jfrog/jfrog-cli"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // kubectl
+        ////////////////////////////////////////////////////////////////////////////////
+        // kubectl
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "kubernetes/kubectl"
+        },
+        // kubectx
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"kubectxVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "ahmetb/kubectx"
+        },
+        // kubens
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"kubensVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "ahmetb/kubectx"
+        },
+        // k9s
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"k9sVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "derailed/k9s"
+        },
+        // helm
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"helmVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "helm/helm"
+        },
+        // kustomize
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"kustomizeVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "kubernetes-sigs/kustomize"
+        },
+        // kubeconform
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"kubeconformVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "yannh/kubeconform"
+        },
+        // kubescore
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/kubectl:[^\"]+\":\\s*\\{[^}]*\"kubescoreVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "zegl/kube-score"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // nginx
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/nginx:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "nginx/nginx",
+            "extractVersionTemplate": "^release-(?<version>.+)$"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // Node
+        ////////////////////////////////////////////////////////////////////////////////
+        // node
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/node:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "node-version",
+            "depNameTemplate": "node"
+        },
+        // npm
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/node:[^\"]+\":\\s*\\{[^}]*\"npmVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "npm",
+            "depNameTemplate": "npm"
+        },
+        // yarn
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/node:[^\"]+\":\\s*\\{[^}]*\"yarnVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "npm",
+            "depNameTemplate": "yarn"
+        },
+        // pnpm
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/node:[^\"]+\":\\s*\\{[^}]*\"pnpmVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "npm",
+            "depNameTemplate": "pnpm"
+        },
+        // corepack
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/node:[^\"]+\":\\s*\\{[^}]*\"corepackVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "npm",
+            "depNameTemplate": "corepack"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // nvidia-cuda
+        ////////////////////////////////////////////////////////////////////////////////
+        // TODO
+        ////////////////////////////////////////////////////////////////////////////////
+        // opencode
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/opencode:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "anomalyco/opencode"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // python
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/python:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "python/cpython"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // rust
+        ////////////////////////////////////////////////////////////////////////////////
+        // rust
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/rust:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "rust-lang/rust"
+        },
+        // rustup
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/rust:[^\"]+\":\\s*\\{[^}]*\"rustupVersion\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "rust-lang/rustup"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // sonar-scanner-cli
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/sonar-scanner-cli:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "SonarSource/sonar-scanner-cli",
+            "versioningTemplate": "loose"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // terraform
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/terraform:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "hashicorp/terraform"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // vault-cli
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/vault-cli:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "hashicorp/vault"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        // zig
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^\\.devcontainer/devcontainer\\.json$/",
+                "/^\\.devcontainer\\.json$/",
+                "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+            ],
+            "matchStrings": [
+                "\"[^\"]+/postfinance/devcontainer-features/zig:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "ziglang/zig"
+        }
+    ]
+}

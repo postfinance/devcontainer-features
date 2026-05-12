@@ -1,0 +1,146 @@
+rules:
+  # Special rules for some dependencies
+  - matches:
+      dependencyNames:
+        - nginx/nginx
+    dependencyConfig:
+      extractVersion: (?:release-)?(.*)
+  # Rule for the dependencies inside the features
+  - matches:
+      managerTypes:
+        - devcontainer
+    managerConfig:
+      devcontainerConfig:
+        ghcr.io/postfinance/devcontainer-features/browsers:
+          - property: chromeVersion
+            datasource: browser-version
+            dependencyName: chrome
+          - property: firefoxVersion
+            datasource: browser-version
+            dependencyName: firefox
+        # TODO: build-essential
+        ghcr.io/postfinance/devcontainer-features/claude-code:
+          - property: version
+            datasource: github-tags
+            dependencyName: anthropics/claude-code
+        ghcr.io/postfinance/devcontainer-features/docker-out:
+          - property: version
+            datasource: github-tags
+            dependencyName: docker/cli
+          - property: composeVersion
+            datasource: github-tags
+            dependencyName: docker/compose
+          - property: buildxVersion
+            datasource: github-tags
+            dependencyName: docker/buildx
+        # TODO: dotnet
+        ghcr.io/postfinance/devcontainer-features/git-lfs:
+          - property: version
+            datasource: github-tags
+            dependencyName: git-lfs/git-lfs
+        ghcr.io/postfinance/devcontainer-features/github-cli:
+          - property: version
+            datasource: github-tags
+            dependencyName: cli/cli
+        ghcr.io/postfinance/devcontainer-features/github-copilot-cli:
+          - property: version
+            datasource: github-tags
+            dependencyName: github/copilot-cli
+        ghcr.io/postfinance/devcontainer-features/gitlab-cli:
+          - property: version
+            datasource: gitlab-packages
+            dependencyName: gitlab-org/cli:glab
+        ghcr.io/postfinance/devcontainer-features/go:
+          - property: version
+            datasource: go-version
+            dependencyName: go-stable
+        ghcr.io/postfinance/devcontainer-features/gonovate:
+          - property: version
+            datasource: github-tags
+            dependencyName: Roemer/gonovate
+        ghcr.io/postfinance/devcontainer-features/goreleaser:
+          - property: version
+            datasource: github-tags
+            dependencyName: goreleaser/goreleaser
+        # TODO: instant-client
+        ghcr.io/postfinance/devcontainer-features/jfrog-cli:
+          - property: version
+            datasource: github-tags
+            dependencyName: jfrog/jfrog-cli
+        ghcr.io/postfinance/devcontainer-features/kubectl:
+          - property: version
+            datasource: github-tags
+            dependencyName: kubernetes/kubectl
+          - property: kubectxVersion
+            datasource: github-tags
+            dependencyName: ahmetb/kubectx
+          - property: kubensVersion
+            datasource: github-tags
+            dependencyName: ahmetb/kubectx
+          - property: k9sVersion
+            datasource: github-tags
+            dependencyName: derailed/k9s
+          - property: helmVersion
+            datasource: github-tags
+            dependencyName: helm/helm
+          - property: kustomizeVersion
+            datasource: github-tags
+            dependencyName: kubernetes-sigs/kustomize
+          - property: kubeconformVersion
+            datasource: github-tags
+            dependencyName: yannh/kubeconform
+          - property: kubescoreVersion
+            datasource: github-tags
+            dependencyName: zegl/kube-score
+        ghcr.io/postfinance/devcontainer-features/nginx:
+          - property: version
+            datasource: github-tags
+            dependencyName: nginx/nginx
+        ghcr.io/postfinance/devcontainer-features/node:
+          - property: version
+            datasource: nodejs
+            dependencyName: nodejs-stable
+          - property: npmVersion
+            datasource: npm
+            dependencyName: npm
+          - property: yarnVersion
+            datasource: npm
+            dependencyName: yarn
+          - property: pnpmVersion
+            datasource: npm
+            dependencyName: pnpm
+          - property: corepackVersion
+            datasource: npm
+            dependencyName: corepack
+        # TODO: nvidia-cuda
+        ghcr.io/postfinance/devcontainer-features/opencode:
+          - property: version
+            datasource: github-tags
+            dependencyName: anomalyco/opencode
+        ghcr.io/postfinance/devcontainer-features/python:
+          - property: version
+            datasource: github-tags
+            dependencyName: python/cpython
+        ghcr.io/postfinance/devcontainer-features/rust:
+          - property: version
+            datasource: github-tags
+            dependencyName: rust-lang/rust
+          - property: rustupVersion
+            datasource: github-tags
+            dependencyName: rust-lang/rustup
+        ghcr.io/postfinance/devcontainer-features/sonar-scanner-cli:
+          - property: version
+            datasource: github-tags
+            dependencyName: SonarSource/sonar-scanner-cli
+        ghcr.io/postfinance/devcontainer-features/terraform:
+          - property: version
+            datasource: github-tags
+            dependencyName: hashicorp/terraform
+        ghcr.io/postfinance/devcontainer-features/vault-cli:
+          - property: version
+            datasource: github-tags
+            dependencyName: hashicorp/vault
+        ghcr.io/postfinance/devcontainer-features/zig:
+          - property: version
+            datasource: github-tags
+            dependencyName: ziglang/zig
