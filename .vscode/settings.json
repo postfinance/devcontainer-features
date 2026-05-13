@@ -1,0 +1,5 @@
+{
+    "json.schemaDownload.trustedDomains": {
+        "https://docs.renovatebot.com/renovate-schema.json": true
+    }
+}
