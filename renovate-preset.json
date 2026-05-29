@@ -521,7 +521,8 @@
                 "\"[^\"]+/postfinance/devcontainer-features/python:[^\"]+\":\\s*\\{[^}]*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
             ],
             "datasourceTemplate": "github-tags",
-            "depNameTemplate": "python/cpython"
+            "depNameTemplate": "python/cpython",
+            "extractVersionTemplate": "^v?(?<version>.*)$"
         },
         ////////////////////////////////////////////////////////////////////////////////
         // rust
