@@ -123,6 +123,15 @@ Then set this in your feature to explicitly unset it:
 }
 ```
 
+### Updating Versions Inside Features
+
+To update tool versions within a feature (for example, updating the Node.js version in the Node feature), we provide presets for automation tools like Renovate. These presets handle version updates automatically and consistently.
+
+**Presets & documentation:**  
+https://github.com/postfinance/devcontainer-features-update-presets
+
+This repository contains the presets along with usage instructions and additional details.
+
 ### Extend an existing feature
 
 TBD
