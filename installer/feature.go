@@ -122,7 +122,7 @@ func (f *Feature) Process() error {
 	return nil
 }
 
-// This is the inferface that needs to be implemented by a component.
+// This is the interface that needs to be implemented by a component.
 type IComponent interface {
 	// Returns the name of the component.
 	GetName() string

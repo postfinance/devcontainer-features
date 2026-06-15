@@ -50,7 +50,7 @@ Needs access to the following URL for downloading and resolving:
 
 :warning: Internet access is necessary for corepack to install your preferred package manager.
 
-If you prefere to use internal sources, additional configuration is required. Add this to your `devcontainer.json`.
+If you prefer to use internal sources, additional configuration is required. Add this to your `devcontainer.json`.
 
 ```json
   {
@@ -73,4 +73,4 @@ For **pnpm** to work with Artifactory, you have to additionally add this to the 
   }
 ```
 
-The reason for this are missing singatures in the Artifactory NPM API. See [nodejs/corepack#725](https://github.com/nodejs/corepack/issues/725)
+The reason for this are missing signatures in the Artifactory NPM API. See [nodejs/corepack#725](https://github.com/nodejs/corepack/issues/725)

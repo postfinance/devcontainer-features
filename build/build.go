@@ -411,7 +411,7 @@ func testFeature(featureName string) error {
 			if checkError != nil {
 				return fmt.Errorf("check failed: %w", checkError)
 			}
-			fmt.Println("Check was successfull")
+			fmt.Println("Check was successful")
 		}
 	}
 

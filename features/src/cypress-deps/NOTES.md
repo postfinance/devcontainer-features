@@ -17,7 +17,7 @@ Also don't forget to add `.cypress_cache` to your `.gitignore` file.
 
 ### x11 Socket
 
-The Cypress UI in the dev-container is displayed via x11. If the corresponding socket is not correcly forwarded into the container, this can lead to heavy performance loss due to higher CPU usage.
+The Cypress UI in the dev-container is displayed via x11. If the corresponding socket is not correctly forwarded into the container, this can lead to heavy performance loss due to higher CPU usage.
 
 To correctly forward the x11 socket into the container, make sure to add the following variables to the `runArgs`:
 ```
