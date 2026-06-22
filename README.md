@@ -99,7 +99,7 @@ The precedence for the overrides is:
 
 #### Special overrides
 
-There are a few sources which are used in multiple installations. For those sources, there is an override that globaly overrides all installations from this sources. Here is the list of those sources and their keys.
+There are a few sources which are used in multiple installations. For those sources, there is an override that globally overrides all installations from this sources. Here is the list of those sources and their keys.
 
 ```
 DEV_FEATURE_OVERRIDE_GITHUB_DOWNLOAD_URL=...
