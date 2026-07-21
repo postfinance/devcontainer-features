@@ -1,10 +1,7 @@
 {
     "de_ch": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./locale": {
@@ -19,10 +16,7 @@
     },
     "en_us": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./locale": {

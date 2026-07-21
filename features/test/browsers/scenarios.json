@@ -1,10 +1,7 @@
 {
     "chrome": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./browsers": {
@@ -16,10 +13,7 @@
     },
     "chrome-testing": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./browsers": {
@@ -31,10 +25,7 @@
     },
     "firefox": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./browsers": {
@@ -46,10 +37,7 @@
     },
     "firefox-after-135": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./browsers": {

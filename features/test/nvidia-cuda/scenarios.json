@@ -6,10 +6,7 @@
                 "http_proxy": "${localEnv:http_proxy}",
                 "https_proxy": "${localEnv:https_proxy}",
                 "no_proxy": "${localEnv:no_proxy}"
-            },
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            }
         },
         "features": {
             "./nvidia-cuda": {
@@ -28,10 +25,7 @@
                 "http_proxy": "${localEnv:http_proxy}",
                 "https_proxy": "${localEnv:https_proxy}",
                 "no_proxy": "${localEnv:no_proxy}"
-            },
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            }
         },
         "features": {
             "./nvidia-cuda": {

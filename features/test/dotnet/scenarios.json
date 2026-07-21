@@ -1,10 +1,7 @@
 {
     "sdk-only": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./dotnet": {
@@ -15,10 +12,7 @@
     },
     "multiple-sdk": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./dotnet": {

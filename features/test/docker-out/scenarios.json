@@ -1,10 +1,7 @@
 {
     "install": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./docker-out": {
@@ -16,10 +13,7 @@
     },
     "install-exact": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./docker-out": {
@@ -31,10 +25,7 @@
     },
     "install-config": {
         "build": {
-            "dockerfile": "Dockerfile",
-            "options": [
-                "--add-host=host.docker.internal:host-gateway"
-            ]
+            "dockerfile": "Dockerfile"
         },
         "features": {
             "./docker-out": {
