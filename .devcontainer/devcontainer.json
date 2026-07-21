@@ -8,7 +8,7 @@
 	},
 	"features": {
 		"ghcr.io/postfinance/devcontainer-features/go:1.0.0": {
-			"version": "1.25.9"
+			"version": "1.26.5"
 		},
 		"ghcr.io/postfinance/devcontainer-features/docker-out:1.0.0": {
 			"version": "29.6.2",
