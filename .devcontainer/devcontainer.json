@@ -1,14 +1,8 @@
 {
 	"name": "PF dev-feat DEV",
 	"build": {
-		"dockerfile": "Dockerfile",
-		"options": [
-			"--add-host=host.docker.internal:host-gateway"
-		]
+		"dockerfile": "Dockerfile"
 	},
-	"runArgs": [
-		"--add-host=host.docker.internal:host-gateway"
-	],
 	"containerEnv": {
 		"GOMODCACHE": "${containerWorkspaceFolder}/.go_cache"
 	},
@@ -16,7 +10,11 @@
 		"ghcr.io/postfinance/devcontainer-features/go:1.0.0": {
 			"version": "1.25.9"
 		},
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/postfinance/devcontainer-features/docker-out:1.0.0": {
+			"version": "29.6.2",
+			"composeVersion": "5.3.1",
+			"buildxVersion": "0.35.0"
+		},
 		"ghcr.io/devcontainers-extra/features/devcontainers-cli:1": {}
 	},
 	"customizations": {
