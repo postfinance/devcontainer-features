@@ -1,6 +1,6 @@
 {
     "id": "playwright-deps",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "name": "Playwright Dependencies",
     "description": "Installs all dependencies required to run Playwright.",
     "options": {

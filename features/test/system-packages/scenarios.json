@@ -1,15 +1,12 @@
 {
-  "ci-utility": {
-    "build": {
-      "dockerfile": "Dockerfile",
-      "options": [
-        "--add-host=host.docker.internal:host-gateway"
-      ]
-    },
-    "features": {
-      "./system-packages": {
-        "packages": "yq,yamllint,sshpass"
-      }
+    "ci-utility": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./system-packages": {
+                "packages": "yq,yamllint,sshpass"
+            }
+        }
     }
-  }
 }

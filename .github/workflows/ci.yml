@@ -5,22 +5,61 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron: '0 20 * * 2'
+      timezone: Europe/Zurich
   workflow_dispatch:
     inputs:
       force-tests:
         description: 'Force build/test even if version is already published'
         required: false
-        default: 'false'
+        default: false
+        type: boolean
+      strategy-fail-fast:
+        description: 'Keep matrix fail-fast enabled (set false to continue running remaining matrix jobs after a failure)'
+        required: false
+        default: true
         type: boolean
 
 env:
-  GO_VERSION: 1.25.9
+  GO_VERSION: 1.26.5
   NODE_VERSION: 22
 
 jobs:
+  # README Consistency Job
+  verify-readme-files:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-env
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Update README files
+        run: go run ./build --target "Update-Readme-Files"
+
+      - name: Verify README files are up to date
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "README files are out of date. Run 'go run ./build --target Update-Readme-Files' and commit the changes."
+            git --no-pager status --short
+            exit 1
+          fi
+
   # Build Job
   build:
+    needs: verify-readme-files
     strategy:
+      # we want to fail-fast unless:
+      # - workflow inputs specifies not to fail-fast
+      # - scheduled build
+      fail-fast: ${{ github.event_name != 'schedule' && (github.event_name != 'workflow_dispatch' || inputs.strategy-fail-fast) }}
       matrix:
         feature: [
           "browsers",
@@ -76,36 +115,36 @@ jobs:
       - name: Check if version already published
         id: check-version
         run: |
-          if [[ "${{ inputs.force-tests }}" == "true" ]]; then
-            echo "already_published=false" >> $GITHUB_OUTPUT
+          if [[ "${{ github.event_name }}" == "schedule" || ( "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.force-tests }}" == "true" ) ]]; then
+            echo "run_tests=true" >> $GITHUB_OUTPUT
           else
             VERSION=$(jq -r '.version' features/src/${{ matrix.feature }}/devcontainer-feature.json)
             if docker manifest inspect "ghcr.io/postfinance/devcontainer-features/${{ matrix.feature }}:$VERSION" > /dev/null 2>&1; then
-              echo "already_published=true" >> $GITHUB_OUTPUT
+              echo "run_tests=false" >> $GITHUB_OUTPUT
             else
-              echo "already_published=false" >> $GITHUB_OUTPUT
+              echo "run_tests=true" >> $GITHUB_OUTPUT
             fi
           fi
 
       - name: Setup environment
-        if: steps.check-version.outputs.already_published == 'false'
+        if: ${{ steps.check-version.outputs.run_tests == 'true' }}
         uses: ./.github/actions/setup-env
         with:
           go-version: ${{ env.GO_VERSION }}
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Build
-        if: steps.check-version.outputs.already_published == 'false'
+        if: ${{ steps.check-version.outputs.run_tests == 'true' }}
         run: go run ./build --target "Feature:${{ matrix.feature }}:Package"
 
       - name: Test
-        if: steps.check-version.outputs.already_published == 'false'
+        if: ${{ steps.check-version.outputs.run_tests == 'true' }}
         run: go run ./build --target "Feature:${{ matrix.feature }}:Test"
 
   # Publish Job
   publish:
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'schedule' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
