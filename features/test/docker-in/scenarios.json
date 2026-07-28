@@ -1,0 +1,26 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./docker-in": {
+                "version": "27.2.1",
+                "composeVersion": "none",
+                "buildxVersion": "none"
+            }
+        }
+    },
+    "install-exact": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./docker-in": {
+                "version": "28.3.3",
+                "composeVersion": "2.39.1",
+                "buildxVersion": "0.21.2"
+            }
+        }
+    }
+}

@@ -1,0 +1,91 @@
+{
+    "id": "docker-in",
+    "version": "1.0.0",
+    "name": "Docker inside Docker",
+    "description": "Installs and runs a full Docker daemon.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "28.3.3",
+                "20.10"
+            ],
+            "default": "latest",
+            "description": "The version of the Docker Engine and CLI to install."
+        },
+        "composeVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "2.39.1",
+                "2.29"
+            ],
+            "default": "latest",
+            "description": "The version of the Compose plugin to install."
+        },
+        "buildxVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "0.26.1",
+                "0.10"
+            ],
+            "default": "latest",
+            "description": "The version of the buildx plugin to install."
+        },
+        "configPath": {
+            "type": "string",
+            "default": "",
+            "description": "Path or URL to a custom Docker client config.json file to copy into the container.",
+            "proposals": [
+                "/home/user/.docker/config.json",
+                "https://raw.githubusercontent.com/devcontainers/features/main/src/docker-in/config.json",
+                "none"
+            ]
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for Docker binaries (engine, CLI, containerd)."
+        },
+        "versionsUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to use for checking available versions."
+        },
+        "composeDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for Docker Compose binaries."
+        },
+        "buildxDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for Docker Buildx binaries."
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-containers"
+            ]
+        }
+    },
+    "mounts": [
+        {
+            "source": "dind-var-lib-docker-${devcontainerId}",
+            "target": "/var/lib/docker",
+            "type": "volume"
+        },
+        {
+            "source": "dind-var-lib-containerd-${devcontainerId}",
+            "target": "/var/lib/containerd",
+            "type": "volume"
+        }
+    ],
+    "entrypoint": "/usr/local/share/dind-init.sh",
+    "privileged": true
+}
