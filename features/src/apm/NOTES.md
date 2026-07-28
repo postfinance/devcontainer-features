@@ -2,7 +2,7 @@
 
 ### System Compatibility
 
-Debian, Ubuntu, Alpine
+Debian, Ubuntu
 
 ### Accessed Urls
 

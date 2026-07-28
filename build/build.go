@@ -383,11 +383,11 @@ func testFeature(featureName string) error {
 			}
 
 			// Write the Dockerfile
-			if err := os.WriteFile(path.Join(devcontainerPath, "Dockerfile"), []byte(fmt.Sprintf(`
+			if err := os.WriteFile(path.Join(devcontainerPath, "Dockerfile"), fmt.Appendf(nil, `
 				FROM %s
 				ADD check.sh /tmp/check.sh
 				ADD functions.sh /tmp/functions.sh
-			`, testImage)), os.ModePerm); err != nil {
+			`, testImage), os.ModePerm); err != nil {
 				return err
 			}
 
