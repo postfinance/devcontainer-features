@@ -86,6 +86,7 @@ jobs:
           "build-essential",
           "claude-code",
           "cypress-deps",
+          "docker-in",
           "docker-out",
           "dotnet",
           "eclipse-deps",

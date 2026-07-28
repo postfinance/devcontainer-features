@@ -18,7 +18,7 @@ import (
 // Configuration
 //////////
 
-var dockerCliVersionRegexp *regexp.Regexp = regexp.MustCompile(`(?m)^(\d+)\.(\d+)\.(\d+)$`)
+var dockerVersionRegexp *regexp.Regexp = regexp.MustCompile(`(?m)^(\d+)\.(\d+)\.(\d+)$`)
 
 //////////
 // Main
@@ -48,16 +48,16 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(downloadUrl, "https://download.docker.com/linux/static/stable", "docker-out-download-url")
-	installer.HandleOverride(versionsUrl, "https://download.docker.com/linux/static/stable", "docker-out-versions-url")
-	installer.HandleGitHubOverride(composeDownloadUrl, "docker/compose", "docker-out-compose-download-url")
-	installer.HandleGitHubOverride(buildxDownloadUrl, "docker/buildx", "docker-out-buildx-download-url")
-	installer.HandleOverride(configPath, "", "docker-out-config-path")
+	installer.HandleOverride(downloadUrl, "https://download.docker.com/linux/static/stable", "docker-in-download-url")
+	installer.HandleOverride(versionsUrl, "https://download.docker.com/linux/static/stable", "docker-in-versions-url")
+	installer.HandleGitHubOverride(composeDownloadUrl, "docker/compose", "docker-in-compose-download-url")
+	installer.HandleGitHubOverride(buildxDownloadUrl, "docker/buildx", "docker-in-buildx-download-url")
+	installer.HandleOverride(configPath, "", "docker-in-config-path")
 
 	// Create and process the feature
-	feature := installer.NewFeature("Docker-Out", false,
-		&dockerCliComponent{
-			ComponentBase: installer.NewComponentBase("Docker CLI", *version),
+	feature := installer.NewFeature("Docker-In", false,
+		&dockerComponent{
+			ComponentBase: installer.NewComponentBase("Docker", *version),
 			DownloadUrl:   *downloadUrl,
 			VersionsUrl:   *versionsUrl,
 			ConfigPath:    *configPath,
@@ -78,16 +78,14 @@ func runMain() error {
 // Implementation
 //////////
 
-// Docker CLI
-
-type dockerCliComponent struct {
+type dockerComponent struct {
 	*installer.ComponentBase
 	DownloadUrl string
 	VersionsUrl string
 	ConfigPath  string
 }
 
-func (c *dockerCliComponent) GetAllVersions() ([]*gover.Version, error) {
+func (c *dockerComponent) GetAllVersions() ([]*gover.Version, error) {
 	// Download the file
 	architecturePathPart, err := c.getArchitecturePathPart()
 	if err != nil {
@@ -100,14 +98,19 @@ func (c *dockerCliComponent) GetAllVersions() ([]*gover.Version, error) {
 	allVersions, err := installer.Tools.Http.GetVersionsFromHtmlIndex(
 		url,
 		regexp.MustCompile(`^.*<a href="docker-([0-9\.]+).tgz">.*$`),
-		dockerCliVersionRegexp)
+		dockerVersionRegexp)
 	if err != nil {
 		return nil, err
 	}
 	return allVersions, nil
 }
 
-func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
+func (c *dockerComponent) InstallVersion(version *gover.Version) error {
+	// Install the system dependencies
+	// XZ for alpine might be just xz
+	if err := installer.Tools.System.InstallPackages("git", "procps", "iptables", "xz-utils"); err != nil {
+		return err
+	}
 	// Download the file
 	architecturePathPart, err := c.getArchitecturePathPart()
 	if err != nil {
@@ -118,7 +121,7 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 	if err != nil {
 		return err
 	}
-	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Docker CLI"); err != nil {
+	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Docker"); err != nil {
 		return err
 	}
 	defer os.Remove(fileName)
@@ -131,13 +134,22 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Compression.ExtractTarGz(fileName, tempDir, false); err != nil {
 		return err
 	}
-	// Move the desired files
-	if err := installer.Tools.FileSystem.MoveFile(filepath.Join(tempDir, "docker/docker"), "/usr/local/bin/docker"); err != nil {
+	// Install the binaries
+	dockerFiles, err := os.ReadDir(filepath.Join(tempDir, "docker"))
+	if err != nil {
 		return err
 	}
-
+	for _, file := range dockerFiles {
+		if file.IsDir() {
+			continue
+		}
+		srcPath := filepath.Join(tempDir, "docker", file.Name())
+		if err := installer.Tools.System.InstallBinaryToUsrLocalBin(srcPath, file.Name()); err != nil {
+			return err
+		}
+	}
 	// Generate the startup script
-	t1, err := template.New("docker-init.sh.tmpl").ParseFiles("./docker-init.sh.tmpl")
+	t1, err := template.New("dind-init.sh.tmpl").ParseFiles("./dind-init.sh.tmpl")
 	if err != nil {
 		return err
 	}
@@ -151,7 +163,7 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	content := buf.String()
-	if err := os.WriteFile("/usr/local/share/docker-init.sh", []byte(content), os.ModePerm); err != nil {
+	if err := os.WriteFile("/usr/local/share/dind-init.sh", []byte(content), os.ModePerm); err != nil {
 		return err
 	}
 	// Copy the default config.json
@@ -162,7 +174,7 @@ func (c *dockerCliComponent) InstallVersion(version *gover.Version) error {
 	return nil
 }
 
-func (c *dockerCliComponent) getArchitecturePathPart() (string, error) {
+func (c *dockerComponent) getArchitecturePathPart() (string, error) {
 	return installer.Tools.System.MapArchitecture(map[string]string{
 		installer.AMD64: "x86_64",
 		installer.ARM64: "aarch64",

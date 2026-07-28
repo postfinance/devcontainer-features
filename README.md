@@ -20,6 +20,7 @@ Below is a list with included features, click on the link for more details.
 | [build-essential](./features/src/build-essential/README.md) | Installs build essentials like gcc. |
 | [claude-code](./features/src/claude-code/README.md) | Installs Claude Code, Anthropic's AI coding assistant CLI. |
 | [cypress-deps](./features/src/cypress-deps/README.md) | Installs all dependencies required to run Cypress. |
+| [docker-in](./features/src/docker-in/README.md) | Installs and runs a full Docker daemon. |
 | [docker-out](./features/src/docker-out/README.md) | Installs a Docker client which re-uses the host Docker socket. |
 | [dotnet](./features/src/dotnet/README.md) | A package which installs .NET SDKs, runtimes and workloads. |
 | [eclipse-deps](./features/src/eclipse-deps/README.md) | Installs all dependencies required to run the Eclipse IDE. |

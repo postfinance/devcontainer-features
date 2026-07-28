@@ -102,6 +102,10 @@ func init() {
 	gotaskr.Task("Feature:cypress-deps:Package", func() error { return packageFeature("cypress-deps") })
 	gotaskr.Task("Feature:cypress-deps:Test", func() error { return testFeature("cypress-deps") })
 
+	////////// docker-in
+	gotaskr.Task("Feature:docker-in:Package", func() error { return packageFeature("docker-in") })
+	gotaskr.Task("Feature:docker-in:Test", func() error { return testFeature("docker-in") })
+
 	////////// docker-out
 	gotaskr.Task("Feature:docker-out:Package", func() error { return packageFeature("docker-out") })
 	gotaskr.Task("Feature:docker-out:Test", func() error { return testFeature("docker-out") })
