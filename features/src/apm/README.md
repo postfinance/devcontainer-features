@@ -1,6 +1,6 @@
 # APM (Agent Package Manager) (apm)
 
-Installs APM (Agent Package Manager) from https://github.com/microsoft/apm/releases.
+Installs APM (Agent Package Manager).
 
 ## Example Usage
 

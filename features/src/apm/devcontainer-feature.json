@@ -2,7 +2,7 @@
     "id": "apm",
     "version": "1.0.0",
     "name": "APM (Agent Package Manager)",
-    "description": "Installs APM (Agent Package Manager) from https://github.com/microsoft/apm/releases.",
+    "description": "Installs APM (Agent Package Manager).",
     "options": {
         "version": {
             "type": "string",

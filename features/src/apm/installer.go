@@ -100,6 +100,21 @@ func (c *apmComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 
-	// Install the binary (located in apm-linux-{arch}/apm inside the archive)
-	return installer.Tools.System.InstallBinaryToUsrLocalBin(filepath.Join(tempDir, archiveName, "apm"), "apm")
+	// Move the extracted archive directory to /opt/apm to preserve the depencencies
+	// Can be simplified if the release is changed to a single binary
+	installDir := "/opt/apm"
+	if err := os.RemoveAll(installDir); err != nil && !os.IsNotExist(err) {
+		return err
+	}
+	if err := os.MkdirAll(installDir, 0755); err != nil {
+		return err
+	}
+	extractedDir := filepath.Join(tempDir, archiveName)
+	if err := installer.Tools.FileSystem.MoveFolder(extractedDir, installDir, false); err != nil {
+		return err
+	}
+
+	// Create a symlink from /usr/local/bin/apm to the installed binary
+	binaryPath := filepath.Join(installDir, "apm")
+	return installer.Tools.FileSystem.CreateSymLink(binaryPath, "/usr/local/bin/apm", false)
 }

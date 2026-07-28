@@ -82,6 +82,10 @@ func init() {
 	////////// publish features
 	gotaskr.Task("Features:Publish", func() error { return publishFeatures() })
 
+	////////// apm
+	gotaskr.Task("Feature:apm:Package", func() error { return packageFeature("apm") })
+	gotaskr.Task("Feature:apm:Test", func() error { return testFeature("apm") })
+
 	////////// browsers
 	gotaskr.Task("Feature:browsers:Package", func() error { return packageFeature("browsers") })
 	gotaskr.Task("Feature:browsers:Test", func() error { return testFeature("browsers") })
