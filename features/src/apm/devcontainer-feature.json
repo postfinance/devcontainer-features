@@ -1,0 +1,26 @@
+{
+    "id": "apm",
+    "version": "1.0.0",
+    "name": "APM (Agent Package Manager)",
+    "description": "Installs APM (Agent Package Manager).",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "0.26.0",
+                "0.25.0"
+            ],
+            "default": "latest",
+            "description": "The version of APM to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for APM binaries."
+        }
+    }
+}

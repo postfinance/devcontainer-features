@@ -1,0 +1,12 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./apm": {
+                "version": "0.26.0"
+            }
+        }
+    }
+}

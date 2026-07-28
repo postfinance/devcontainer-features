@@ -82,6 +82,10 @@ func init() {
 	////////// publish features
 	gotaskr.Task("Features:Publish", func() error { return publishFeatures() })
 
+	////////// apm
+	gotaskr.Task("Feature:apm:Package", func() error { return packageFeature("apm") })
+	gotaskr.Task("Feature:apm:Test", func() error { return testFeature("apm") })
+
 	////////// browsers
 	gotaskr.Task("Feature:browsers:Package", func() error { return packageFeature("browsers") })
 	gotaskr.Task("Feature:browsers:Test", func() error { return testFeature("browsers") })
@@ -379,11 +383,11 @@ func testFeature(featureName string) error {
 			}
 
 			// Write the Dockerfile
-			if err := os.WriteFile(path.Join(devcontainerPath, "Dockerfile"), []byte(fmt.Sprintf(`
+			if err := os.WriteFile(path.Join(devcontainerPath, "Dockerfile"), fmt.Appendf(nil, `
 				FROM %s
 				ADD check.sh /tmp/check.sh
 				ADD functions.sh /tmp/functions.sh
-			`, testImage)), os.ModePerm); err != nil {
+			`, testImage), os.ModePerm); err != nil {
 				return err
 			}
 
