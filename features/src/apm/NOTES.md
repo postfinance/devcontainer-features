@@ -2,7 +2,7 @@
 
 ### System Compatibility
 
-Debian, Ubuntu
+Debian
 
 ### Accessed Urls
 

@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 
 	"github.com/roemer/gover"
 )
@@ -29,6 +30,21 @@ func main() {
 }
 
 func runMain() error {
+	// Check Preconditions
+	osInfo, err := installer.Tools.System.GetOsInfo()
+	if err != nil {
+		return fmt.Errorf("failed getting os info: %v", err)
+	}
+	if osInfo.Vendor == "debian" {
+		versionId, err := strconv.Atoi(osInfo.VersionId)
+		if err != nil {
+			return fmt.Errorf("failed parsing the version number from %s: %v", osInfo.Vendor, err)
+		}
+		if versionId < 13 {
+			return fmt.Errorf("unsupported debian version: %d", versionId)
+		}
+	}
+
 	// Handle the flags
 	version := flag.String("version", "latest", "")
 	downloadUrl := flag.String("downloadUrl", "", "")

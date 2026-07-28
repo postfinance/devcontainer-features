@@ -24,7 +24,7 @@ Installs APM (Agent Package Manager).
 
 ### System Compatibility
 
-Debian, Ubuntu
+Debian
 
 ### Accessed Urls
 
