@@ -125,7 +125,7 @@ func TestFetchTagsViaGithubAPIWithoutTokenFailed(t *testing.T) {
 	assert.Contains(t, err.Error(), "DEV_FEATURE_TOKEN_GITHUB_API")
 }
 
-func TestFetchTagsViaGithubAPIWithTokenFaild(t *testing.T) {
+func TestFetchTagsViaGithubAPIWithTokenFailed(t *testing.T) {
 	t.Chdir(t.TempDir())
 	t.Setenv("DEV_FEATURE_TOKEN_GITHUB_API", "ghp_dummy_token")
 
