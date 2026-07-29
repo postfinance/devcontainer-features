@@ -156,6 +156,26 @@ and then run the installer:
 /data/kubectl.bin --version=1.35.0
 ```
 
+If you are running this command inside a devcontainer (for example via docker-out), note that bind mount source paths are resolved by the Docker daemon host, not by the devcontainer filesystem. If the mounted folder looks empty in the second container, use a host-valid absolute path or use `docker cp` as a fallback.
+
+Quick troubleshooting check (replace `<host-path>` with the path you want to mount):
+```bash
+docker run --rm -v <host-path>:/data debian ls -la /data
+```
+
+Fallback example using `docker cp`:
+```bash
+cid=$(docker create -it debian /bin/bash)
+docker cp ./kubectl.bin $cid:/data/kubectl.bin
+docker start -ai $cid
+```
+
+Inside the container:
+```bash
+ls -l /data
+/data/kubectl.bin --version=1.35.0
+```
+
 Alternatively, you can just pack a feature (use the tasks from `build/build.go`) and simply extract it into a `.devcontainer` folder and then use it from there as a local feature (`.my-feature {}`).
 
 Here is a one-liner that prepares the defined feature in this project:

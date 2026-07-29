@@ -22,6 +22,7 @@ func TestOverrideUseEnv(t *testing.T) {
 
 	var testValue string
 	os.Setenv("DEV_FEATURE_OVERRIDE_TEST_KEY", "override")
+	defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_KEY")
 	HandleOverride(&testValue, "default", "test-key")
 	assert.Equal("override", testValue)
 }
@@ -40,9 +41,11 @@ func TestOverrideUseFile(t *testing.T) {
 
 	// Manually set an env value beforehand
 	os.Setenv("DEV_FEATURE_OVERRIDE_TEST_KEY_SET", "no-override")
+	defer os.Unsetenv("DEV_FEATURE_OVERRIDE_TEST_KEY_SET")
 
 	// Load the overrides of the file
 	os.Setenv("DEV_FEATURE_OVERRIDE_LOCATION", server.URL+"/file")
+	defer os.Unsetenv("DEV_FEATURE_OVERRIDE_LOCATION")
 	loadErr := LoadOverrides()
 	assert.NoError(loadErr, "LoadOverrides should not return an error")
 
