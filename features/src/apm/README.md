@@ -6,7 +6,7 @@ Installs APM (Agent Package Manager).
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/apm:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/apm:1.1.0": {
         "version": "latest",
         "downloadUrl": ""
     }

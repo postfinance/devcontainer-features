@@ -6,7 +6,7 @@ Installs Python.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/python:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/python:1.1.0": {
         "version": "latest",
         "downloadUrl": "",
         "pipIndex": "",

@@ -1,6 +1,6 @@
 {
     "id": "github-copilot-cli",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "name": "GitHub Copilot CLI",
     "description": "Installs GitHub Copilot CLI (copilot), the AI-powered coding assistant for the terminal.",
     "options": {

@@ -6,7 +6,7 @@ Installs Claude Code, Anthropic's AI coding assistant CLI.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/claude-code:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/claude-code:1.1.0": {
         "version": "latest",
         "downloadUrl": ""
     }
