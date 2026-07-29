@@ -21,7 +21,6 @@ type gitHub struct{}
 func (g *gitHub) GetTags(owner string, repo string) ([]string, error) {
 	// fetching tags via GitHub API...
 	tags, err := g.fetchTagsViaGithubAPI(owner, repo)
-	// tags, err := g.fetchTagsViaGitLsRemote(owner, repo)
 	if err == nil {
 		// ...was successful -> return the tags
 		return tags, nil
