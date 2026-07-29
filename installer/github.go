@@ -137,40 +137,28 @@ func (g *gitHub) fetchTagsViaGitLsRemote(owner, repo string) ([]string, error) {
 }
 
 func (g *gitHub) handleRateLimitError(resp *http.Response, url, apiToken string) ([]string, error) {
-	if g.isRateLimitWithoutGithubToken(resp, apiToken) {
-		// this is the case, if the user has not set a github token and hit the rate limit
-		// now we will hit a message and we will not use a fallback, because the user has not set a github token
+	if !g.isRateLimit(resp) {
+		return nil, fmt.Errorf("failed to download file '%s'. Status code: %d", url, resp.StatusCode)
+	}
+
+	hasToken := apiToken != ""
+	if !hasToken {
 		return nil, &GitHubRateLimitError{
-			Message:     fmt.Sprintf("failed to download file '%s'. Status code: %d. You may have reached the GitHub API rate limit. Consider setting the DEV_FEATURE_TOKEN_GITHUB_API environment variable with a personal access token to increase the limit.", url, resp.StatusCode),
+			Message: fmt.Sprintf(
+				"failed to download file '%s'. Status code: %d. You may have reached the GitHub API rate limit. Consider setting the DEV_FEATURE_TOKEN_GITHUB_API environment variable with a personal access token to increase the limit.",
+				url, resp.StatusCode,
+			),
 			UseFallback: false,
 		}
 	}
 
-	if g.isRateLimitWithGithubToken(resp, apiToken) {
-		// this is the case, if the user has set a github token but still hit the rate limit
-		// now we will hit a message and we will use git ls-remote to fetch the tags
-		return nil, &GitHubRateLimitError{
-			Message:     fmt.Sprintf("failed to download file '%s'. Status code: %d. You may have reached the GitHub API rate limit even with a personal access token. A fallback via git ls-remote is attempted...", url, resp.StatusCode),
-			UseFallback: true,
-		}
+	return nil, &GitHubRateLimitError{
+		Message: fmt.Sprintf(
+			"failed to download file '%s'. Status code: %d. You may have reached the GitHub API rate limit even with a personal access token. A fallback via git ls-remote is attempted...",
+			url, resp.StatusCode,
+		),
+		UseFallback: true,
 	}
-
-	// it is an error, but not a rate limit error, so we will return the error
-	return nil, fmt.Errorf("failed to download file '%s'. Status code: %d", url, resp.StatusCode)
-}
-
-func (g *gitHub) isRateLimitWithoutGithubToken(resp *http.Response, token string) bool {
-	if g.isRateLimit(resp) && token == "" {
-		return true
-	}
-	return false
-}
-
-func (g *gitHub) isRateLimitWithGithubToken(resp *http.Response, token string) bool {
-	if g.isRateLimit(resp) && token != "" {
-		return true
-	}
-	return false
 }
 
 func (g *gitHub) isRateLimit(resp *http.Response) bool {
