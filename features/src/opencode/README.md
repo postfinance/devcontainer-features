@@ -6,7 +6,7 @@ Installs opencode, the open source AI coding agent.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/opencode:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/opencode:1.1.0": {
         "version": "latest",
         "downloadUrl": ""
     }

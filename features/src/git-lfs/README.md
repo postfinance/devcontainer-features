@@ -6,7 +6,7 @@ Installs Git LFS.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/git-lfs:1.0.1": {
+    "ghcr.io/postfinance/devcontainer-features/git-lfs:1.1.0": {
         "version": "latest",
         "downloadUrl": ""
     }

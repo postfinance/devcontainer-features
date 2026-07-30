@@ -1,0 +1,94 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug kubectl installer (all defaults)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/features/src/kubectl",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "-version=latest",
+        "-kubectxVersion=latest",
+        "-kubensVersion=latest",
+        "-k9sVersion=none",
+        "-helmVersion=none",
+        "-kustomizeVersion=none",
+        "-kubeconformVersion=none",
+        "-kubescoreVersion=none",
+        "-downloadUrl=",
+        "-kubectxDownloadUrl=",
+        "-kubensDownloadUrl=",
+        "-k9sDownloadUrl=",
+        "-helmDownloadUrl=",
+        "-kustomizeDownloadUrl=",
+        "-kubeconformDownloadUrl=",
+        "-kubescoreDownloadUrl="
+      ]
+    },
+    {
+      "name": "Debug kubectl installer (all defaults and token)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/features/src/kubectl",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "-version=latest",
+        "-kubectxVersion=latest",
+        "-kubensVersion=latest",
+        "-k9sVersion=none",
+        "-helmVersion=none",
+        "-kustomizeVersion=none",
+        "-kubeconformVersion=none",
+        "-kubescoreVersion=none",
+        "-downloadUrl=",
+        "-kubectxDownloadUrl=",
+        "-kubensDownloadUrl=",
+        "-k9sDownloadUrl=",
+        "-helmDownloadUrl=",
+        "-kustomizeDownloadUrl=",
+        "-kubeconformDownloadUrl=",
+        "-kubescoreDownloadUrl="
+      ],
+      "env": {
+        "DEV_FEATURE_TOKEN_GITHUB_API": "<github_api_token>"
+      }
+    },
+    {
+      "name": "Debug kubectl installer (pinned versions)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/features/src/kubectl",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "-version=1.31.2",
+        "-kubectxVersion=0.9.5",
+        "-kubensVersion=0.9.5",
+        "-k9sVersion=0.32.5",
+        "-helmVersion=3.16.2",
+        "-kustomizeVersion=5.4.2",
+        "-kubeconformVersion=0.6.6",
+        "-kubescoreVersion=1.18.0",
+        "-downloadUrl=",
+        "-kubectxDownloadUrl=",
+        "-kubensDownloadUrl=",
+        "-k9sDownloadUrl=",
+        "-helmDownloadUrl=",
+        "-kustomizeDownloadUrl=",
+        "-kubeconformDownloadUrl=",
+        "-kubescoreDownloadUrl="
+      ]
+    },
+    {
+      "name": "Debug current Go file",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

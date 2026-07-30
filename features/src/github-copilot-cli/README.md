@@ -6,7 +6,7 @@ Installs GitHub Copilot CLI (copilot), the AI-powered coding assistant for the t
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/github-copilot-cli:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/github-copilot-cli:1.1.0": {
         "version": "latest",
         "downloadUrl": ""
     }

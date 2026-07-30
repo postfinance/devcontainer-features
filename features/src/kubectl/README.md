@@ -6,7 +6,7 @@ Installs kubectl and other tools for managing kubernetes.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/kubectl:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/kubectl:1.1.0": {
         "version": "latest",
         "kubectxVersion": "latest",
         "kubensVersion": "latest",
