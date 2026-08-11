@@ -59,10 +59,6 @@ func runMain() error {
 	installer.HandleOverride(firefoxVersionsUrl, "https://product-details.mozilla.org/1.0/firefox.json", "firefox-versions-url")
 
 	// Fetch the os info
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return fmt.Errorf("failed getting OS info: %w", err)
-	}
 
 	// Choose the correct chrome component
 	var chromeComponentToInstall installer.IComponent
@@ -71,14 +67,12 @@ func runMain() error {
 			ComponentBase:         installer.NewComponentBase("Chrome Test", *chromeVersion),
 			TestingVersionsUrl:    *chromeTestingVersionsUrl,
 			ChromeDownloadBaseUrl: *chromeDownloadUrl,
-			OsInfo:                osInfo,
 		}
 	} else {
 		chromeComponentToInstall = &chromeComponent{
 			ComponentBase:         installer.NewComponentBase("Chrome", *chromeVersion),
 			VersionsUrl:           *chromeVersionsUrl,
 			ChromeDownloadBaseUrl: *chromeDownloadUrl,
-			OsInfo:                osInfo,
 		}
 	}
 
@@ -90,7 +84,6 @@ func runMain() error {
 			VersionsUrl:            *firefoxVersionsUrl,
 			FirefoxDownloadBaseUrl: *firefoxDownloadUrl,
 			ShouldResolveVersion:   *firefoxVersionResolve,
-			OsInfo:                 osInfo,
 		})
 	return feature.Process()
 }
@@ -103,7 +96,6 @@ type chromeComponent struct {
 	*installer.ComponentBase
 	VersionsUrl           string
 	ChromeDownloadBaseUrl string
-	OsInfo                *installer.OsInfo
 }
 
 func (c *chromeComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -171,7 +163,6 @@ type chromeForTestingComponent struct {
 	*installer.ComponentBase
 	TestingVersionsUrl    string
 	ChromeDownloadBaseUrl string
-	OsInfo                *installer.OsInfo
 }
 
 func (c *chromeForTestingComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -258,7 +249,7 @@ func (c *chromeForTestingComponent) InstallVersion(version *gover.Version) error
 		return err
 	}
 
-	libasoundPackageName := chooseLibasoundPackageName(c.OsInfo)
+	libasoundPackageName := chooseLibasoundPackageName()
 
 	// Install dependencies
 	// Taken from https://source.chromium.org/chromium/chromium/src/+/main:chrome/installer/linux/debian/dist_package_versions.json
@@ -319,7 +310,6 @@ type firefoxComponent struct {
 	VersionsUrl            string
 	FirefoxDownloadBaseUrl string
 	ShouldResolveVersion   bool
-	OsInfo                 *installer.OsInfo
 }
 
 func (c *firefoxComponent) GetAllVersions() ([]*gover.Version, error) {
@@ -370,7 +360,7 @@ func (c *firefoxComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 
-	libasoundPackageName := chooseLibasoundPackageName(c.OsInfo)
+	libasoundPackageName := chooseLibasoundPackageName()
 
 	// Install dependencies
 	if err := installer.Tools.Apt.InstallDependencies(
@@ -399,7 +389,8 @@ func (c *firefoxComponent) IsFullVersion(referenceVersion *gover.Version) bool {
 	return c.ShouldResolveVersion
 }
 
-func chooseLibasoundPackageName(osInfo *installer.OsInfo) string {
+func chooseLibasoundPackageName() string {
+	osInfo := installer.Tools.System.OsInfo()
 	if osInfo.IsDebian() && osInfo.MajorVersion() >= 13 {
 		return "libasound2t64"
 	}

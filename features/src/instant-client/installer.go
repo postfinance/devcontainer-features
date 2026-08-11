@@ -160,10 +160,7 @@ func (c *instantClientComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return fmt.Errorf("failed to get OS info: %w", err)
-	}
+	osInfo := installer.Tools.System.OsInfo()
 
 	debianTrixieOrNewer := osInfo.IsDebian() && osInfo.MajorVersion() >= 13
 	ubuntuNobleOrNewer := osInfo.IsUbuntu() && osInfo.MajorVersion() >= 24

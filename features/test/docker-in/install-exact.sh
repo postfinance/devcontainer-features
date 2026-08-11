@@ -7,3 +7,9 @@ set -e
 check_version "$(docker version -f '{{.Client.Version}}')" "28.3.3"
 check_version "$(docker compose version)" "Docker Compose version v2.39.1"
 check_version "$(docker buildx version)" "github.com/docker/buildx v0.21.2 1360a9e8d25a2c3d03c2776d53ae62e6ff0a843d"
+
+# Ensure the daemon is reachable and returns server metadata.
+if ! docker info -f '{{.ServerVersion}}' >/dev/null 2>&1; then
+	echo "dockerd is not running or not responding"
+	exit 1
+fi

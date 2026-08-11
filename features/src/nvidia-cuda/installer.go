@@ -103,10 +103,6 @@ type cudaKeyringComponent struct {
 }
 
 func (c *cudaKeyringComponent) getCudaRepo(baseUrl string) (string, error) {
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return "", err
-	}
 	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
 		installer.AMD64: "x86_64",
 		installer.ARM64: "sbsa",
@@ -116,6 +112,7 @@ func (c *cudaKeyringComponent) getCudaRepo(baseUrl string) (string, error) {
 	}
 
 	// Note: For some reason, the website started to show errors when accessing the index without a trailing slash
+	osInfo := installer.Tools.System.OsInfo()
 	if osInfo.IsDebian() {
 		return fmt.Sprintf("%s/compute/cuda/repos/%s%d/%s/", baseUrl, osInfo.Vendor, osInfo.MajorVersion(), archPart), nil
 	}

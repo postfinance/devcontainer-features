@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 
 	"github.com/roemer/goext"
 )
@@ -16,7 +17,10 @@ const (
 	ARM64 = "arm64"
 )
 
-type system struct{}
+type system struct {
+	osInfoOnce sync.Once
+	osInfo     *OsInfo
+}
 
 // Installs the given binary to /usr/local/bin with the given name.
 func (s *system) InstallBinaryToUsrLocalBin(binaryPath string, targetBinaryName string) error {
@@ -51,11 +55,7 @@ func (s *system) DownloadBinaryToDir(url string, progressName string, targetDir 
 }
 
 func (s *system) InstallPackages(packages ...string) error {
-	osInfo, err := s.GetOsInfo()
-	if err != nil {
-		return err
-	}
-	return s.InstallPackagesForOs(osInfo, packages...)
+	return s.InstallPackagesForOs(s.OsInfo(), packages...)
 }
 
 func (s *system) InstallPackagesForOs(osInfo *OsInfo, packages ...string) error {
@@ -70,10 +70,7 @@ func (s *system) InstallPackagesForOs(osInfo *OsInfo, packages ...string) error 
 }
 
 func (s *system) InstallPackagesByOs(f func(osInfo *OsInfo) ([]string, error)) error {
-	osInfo, err := s.GetOsInfo()
-	if err != nil {
-		return err
-	}
+	osInfo := s.OsInfo()
 	packages, err := f(osInfo)
 	if err != nil {
 		return err
@@ -92,25 +89,47 @@ func (s *system) MapArchitecture(mapping map[string]string) (string, error) {
 	return mappedValue, nil
 }
 
-func (s *system) GetOsInfo() (*OsInfo, error) {
-	f, err := os.Open("/etc/os-release")
-	if err != nil {
-		return nil, err
+func (s *system) OsInfo() *OsInfo {
+	s.osInfoOnce.Do(func() {
+		f, err := os.Open("/etc/os-release")
+		if err != nil {
+			return
+		}
+		defer f.Close()
+		scanner := bufio.NewScanner(f)
+		infoMap := map[string]string{}
+		for scanner.Scan() {
+			parts := strings.SplitN(scanner.Text(), "=", 2)
+			// Remove surrounding quotes if present
+			val := strings.Trim(parts[1], `"`)
+			infoMap[parts[0]] = val
+		}
+		if err := scanner.Err(); err != nil {
+			return
+		}
+		vendor, ok := infoMap["ID"]
+		if !ok {
+			return
+		}
+		codename, ok := infoMap["VERSION_CODENAME"]
+		if !ok {
+			return
+		}
+		versionId, ok := infoMap["VERSION_ID"]
+		if !ok {
+			return
+		}
+		s.osInfo = &OsInfo{
+			Vendor:    vendor,
+			Codename:  codename,
+			VersionId: versionId,
+		}
+	})
+	if s.osInfo == nil {
+		// Fill with unknown if we couldn't read the OS info
+		s.osInfo = &OsInfo{Vendor: "unknown", Codename: "unknown", VersionId: "unknown"}
 	}
-	defer f.Close()
-	scanner := bufio.NewScanner(f)
-	infoMap := map[string]string{}
-	for scanner.Scan() {
-		parts := strings.SplitN(scanner.Text(), "=", 2)
-		// Remove surrounding quotes if present
-		val := strings.Trim(parts[1], `"`)
-		infoMap[parts[0]] = val
-	}
-	return &OsInfo{
-		Vendor:    infoMap["ID"],
-		Codename:  infoMap["VERSION_CODENAME"],
-		VersionId: infoMap["VERSION_ID"],
-	}, nil
+	return s.osInfo
 }
 
 type OsInfo struct {

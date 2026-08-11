@@ -254,11 +254,6 @@ func installAspNetRuntime(downloadUrl string, version *gover.Version) error {
 }
 
 func installDotnetBinary(downloadUrl string, product Product, fileName string, progressName string, version *gover.Version) error {
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return err
-	}
-
 	// Determine the architecture part of the url
 	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
 		installer.AMD64: "x64",
@@ -268,6 +263,7 @@ func installDotnetBinary(downloadUrl string, product Product, fileName string, p
 		return err
 	}
 	arch := ""
+	osInfo := installer.Tools.System.OsInfo()
 	if osInfo.IsAlpine() {
 		arch = fmt.Sprintf("linux-musl-%s", archPart)
 		if err := installer.Tools.System.InstallPackages("ca-certificates", "libgcc", "libssl3", "libstdc++", "zlib", "icu-libs", "icu-data-full", "tzdata", "krb5"); err != nil {

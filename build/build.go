@@ -415,7 +415,12 @@ func testFeature(featureName string) error {
 			}
 
 			// Run the check in the container
-			checkError := goext.CmdRunners.Console.Run("docker", "run", "-t", "--rm", "-v", "/var/run/docker.sock:/var/run/docker.sock", imageName, "sh", "-c", "/tmp/check.sh")
+			runArgs := []string{"run", "-t", "--rm"}
+			if featureName == "docker-out" {
+				runArgs = append(runArgs, "-v", "/var/run/docker.sock:/var/run/docker.sock")
+			}
+			runArgs = append(runArgs, imageName, "sh", "-c", "/tmp/check.sh")
+			checkError := goext.CmdRunners.Console.Run("docker", runArgs...)
 			if checkError != nil {
 				return fmt.Errorf("check failed: %w", checkError)
 			}

@@ -42,18 +42,11 @@ func runMain() error {
 	// Handle overrides and defaults
 	installer.HandleOverride(downloadUrl, "https://nginx.org", "nginx-download-url")
 
-	// Fetch the os info
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return fmt.Errorf("failed getting OS info: %w", err)
-	}
-
 	// Create and process the feature
 	feature := installer.NewFeature("Nginx", false,
 		&nginxComponent{
 			ComponentBase: installer.NewComponentBase("Nginx", *version),
 			stableOnly:    *stableOnly,
-			osInfo:        osInfo,
 			downloadUrl:   *downloadUrl,
 		},
 	)
@@ -67,7 +60,6 @@ func runMain() error {
 type nginxComponent struct {
 	*installer.ComponentBase
 	stableOnly  bool
-	osInfo      *installer.OsInfo
 	downloadUrl string
 }
 
@@ -104,7 +96,7 @@ func (c *nginxComponent) InstallVersion(version *gover.Version) error {
 	if err != nil {
 		return err
 	}
-	debName := fmt.Sprintf("nginx_%s~%s_%s.deb", version.Raw, c.osInfo.Codename, archPart)
+	debName := fmt.Sprintf("nginx_%s~%s_%s.deb", version.Raw, installer.Tools.System.OsInfo().Codename, archPart)
 	urls = append(urls, c.getStableUrl()+debName)
 	if !c.stableOnly {
 		urls = append(urls, c.getMainlineUrl()+debName)
@@ -134,18 +126,18 @@ func (c *nginxComponent) InstallVersion(version *gover.Version) error {
 }
 
 func (c *nginxComponent) getStableUrl() string {
-	return fmt.Sprintf("%s/packages/%s/pool/nginx/n/nginx/", c.downloadUrl, c.osInfo.Vendor)
+	return fmt.Sprintf("%s/packages/%s/pool/nginx/n/nginx/", c.downloadUrl, installer.Tools.System.OsInfo().Vendor)
 }
 
 func (c *nginxComponent) getMainlineUrl() string {
-	return fmt.Sprintf("%s/packages/mainline/%s/pool/nginx/n/nginx/", c.downloadUrl, c.osInfo.Vendor)
+	return fmt.Sprintf("%s/packages/mainline/%s/pool/nginx/n/nginx/", c.downloadUrl, installer.Tools.System.OsInfo().Vendor)
 }
 
 func (c *nginxComponent) lineExtractFunc(url, line string) (*gover.Version, error) {
 	if match := indexLineRegexp.FindStringSubmatch(line); match != nil {
 		versionString := match[2]
 		codename := match[3]
-		if codename == c.osInfo.Codename {
+		if codename == installer.Tools.System.OsInfo().Codename {
 			version := gover.MustParseVersionFromRegex(versionString, versionRegexp)
 			return version, nil
 		}

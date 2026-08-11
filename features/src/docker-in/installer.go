@@ -107,8 +107,13 @@ func (c *dockerComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *dockerComponent) InstallVersion(version *gover.Version) error {
 	// Install the system dependencies
-	// XZ for alpine might be just xz
-	if err := installer.Tools.System.InstallPackages("git", "procps", "iptables", "xz-utils"); err != nil {
+	packages := []string{"git", "procps", "iptables"}
+	if installer.Tools.System.OsInfo().IsAlpine() {
+		packages = append(packages, "xz")
+	} else {
+		packages = append(packages, "xz-utils")
+	}
+	if err := installer.Tools.System.InstallPackages(packages...); err != nil {
 		return err
 	}
 	// Download the file
