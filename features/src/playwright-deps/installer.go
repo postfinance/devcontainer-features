@@ -24,13 +24,13 @@ func runMain() error {
 	fmt.Println("Installing Playwright Dependencies")
 
 	// Get the os info
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return fmt.Errorf("failed to get OS info: %w", err)
-	}
-
+	osInfo := installer.Tools.System.OsInfo()
 	fmt.Printf("Installing for %s version %d:\n", osInfo.Vendor, osInfo.MajorVersion())
 	versionKey := fmt.Sprintf("%s%d", osInfo.Vendor, osInfo.MajorVersion())
+	// Verify that the OS version is supported
+	if _, ok := dependencies[versionKey]; !ok {
+		return fmt.Errorf("unsupported OS version: %s", versionKey)
+	}
 
 	// Collect the dependencies to install
 	neededDependencies := []string{}

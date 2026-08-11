@@ -1,4 +1,8 @@
 {
+    "files.associations": {
+        "**/features/src/docker-in/dind-init.sh.tmpl": "shellscript",
+        "**/features/src/docker-out/docker-init.sh.tmpl": "shellscript"
+    },
     "json.schemaDownload.trustedDomains": {
         "https://docs.renovatebot.com/renovate-schema.json": true
     }

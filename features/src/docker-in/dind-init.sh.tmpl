@@ -30,47 +30,69 @@ fi
 
 echo "[entrypoint] Running for user: ${USERNAME}"
 
+# Ensure the docker group exists and the user is a member before starting the
+# daemon, so dockerd creates the socket with the correct group ownership
+getent group docker >/dev/null 2>&1 || sudoIf groupadd docker
+sudoIf usermod -aG docker "${USERNAME}" || true
+
 # Ensure runtime directories exist
 sudoIf mkdir -p /run/docker /var/lib/docker /var/lib/containerd
-sudoIf rm -f /run/docker.pid
+sudoIf rm -f /var/run/docker.pid
 
 # Start the Docker daemon
-echo "[entrypoint] Starting dockerd..."
+LOG_LEVEL="${DOCKERD_LOG_LEVEL:-info}"
+echo "[entrypoint] Starting dockerd (log-level=${LOG_LEVEL})..."
 sudoIf dockerd \
   --host=unix:///var/run/docker.sock \
+  --group=docker \
   --storage-driver=overlay2 \
-  --log-level=debug &
+  --log-level="${LOG_LEVEL}" &
 
 DOCKERD_PID=$!
 echo "[entrypoint] dockerd pid $DOCKERD_PID"
 
+# Forward termination signals so dockerd gets a chance to shut down cleanly
+shutdown() {
+  echo "[entrypoint] Received signal, stopping dockerd (pid $DOCKERD_PID)..."
+  sudoIf kill -TERM "$DOCKERD_PID" 2>/dev/null || true
+  wait "$DOCKERD_PID" 2>/dev/null || true
+  exit 0
+}
+trap shutdown TERM INT
+
 # Wait for daemon to become ready
 TRIES=0
-until sudoIf docker info >/dev/null 2>&1 || [ $TRIES -ge 60 ]; do
+until sudoIf docker version >/dev/null 2>&1; do
+  if ! sudoIf kill -0 "$DOCKERD_PID" 2>/dev/null; then
+    echo "[entrypoint] ERROR: dockerd exited during startup!"
+    sudoIf tail -n 50 "$LOG_FILE" || true
+    exit 1
+  fi
+  if [ $TRIES -ge 60 ]; then
+    echo "[entrypoint] ERROR: Docker daemon did not become ready in time!"
+    sudoIf tail -n 50 "$LOG_FILE" || true
+    exit 1
+  fi
   sleep 1
   TRIES=$((TRIES+1))
   echo "[entrypoint] waiting for dockerd... ($TRIES)"
 done
 
-# Verify the daemon is running
-if sudoIf docker info >/dev/null 2>&1; then
-  echo "[entrypoint] Docker daemon is ready"
-else
-  echo "[entrypoint] ERROR: Docker daemon never started!"
-  echo "[entrypoint] Check $LOG_FILE for details"
-  exit 1
-fi
+echo "[entrypoint] Docker daemon is ready"
 
-# Ensure group exists
-getent group docker || sudoIf groupadd docker
-
-# Ensure user is in group
-sudoIf usermod -aG docker dev || true
+# Ensure the socket is group-accessible even if it predated the group.
+sudoIf chown root:docker /var/run/docker.sock 2>/dev/null || true
+sudoIf chmod 660 /var/run/docker.sock 2>/dev/null || true
 
 # Finish up
 echo "=== Entrypoint Complete $(date -Is) ==="
 
-# Execute whatever commands were passed in (if any). This allows us
-# to set this script to ENTRYPOINT while still executing the default CMD.
+# Execute whatever commands were passed in. This allows us to set this script as
+# ENTRYPOINT while still executing the default CMD. When no CMD is given, keep
+# the container (and daemon) alive and wait on dockerd so the signal trap works.
 set +e
-exec "$@"
+if [ "$#" -gt 0 ]; then
+  exec "$@"
+else
+  wait "$DOCKERD_PID"
+fi

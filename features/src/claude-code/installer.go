@@ -78,12 +78,8 @@ func (c *claudeCodeComponent) InstallVersion(version *gover.Version) error {
 	}
 
 	// Use musl variant for Alpine (musl libc)
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return err
-	}
 	var fileName string
-	if osInfo.IsAlpine() {
+	if installer.Tools.System.OsInfo().IsAlpine() {
 		fileName = fmt.Sprintf("claude-linux-%s-musl.tar.gz", archPart)
 	} else {
 		fileName = fmt.Sprintf("claude-linux-%s.tar.gz", archPart)

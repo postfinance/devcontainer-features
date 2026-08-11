@@ -78,12 +78,8 @@ func (c *opencodeComponent) InstallVersion(version *gover.Version) error {
 	}
 
 	// Use musl variant for Alpine (musl libc)
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return err
-	}
 	var fileName string
-	if osInfo.IsAlpine() {
+	if installer.Tools.System.OsInfo().IsAlpine() {
 		fileName = fmt.Sprintf("opencode-linux-%s-musl.tar.gz", archPart)
 	} else {
 		fileName = fmt.Sprintf("opencode-linux-%s.tar.gz", archPart)

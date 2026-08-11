@@ -15,10 +15,7 @@ func main() {
 
 func runMain() error {
 	fmt.Println("Installing Cypress Dependencies")
-	osInfo, err := installer.Tools.System.GetOsInfo()
-	if err != nil {
-		return fmt.Errorf("failed to get OS info: %w", err)
-	}
+	osInfo := installer.Tools.System.OsInfo()
 
 	// Common dependencies for all supported distros
 	commonDeps := []string{
