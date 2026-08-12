@@ -6,7 +6,7 @@ Installs Nginx.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/nginx:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/nginx:1.0.1": {
         "version": "latest",
         "stableOnly": false,
         "downloadUrl": ""
@@ -18,7 +18,7 @@ Installs Nginx.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | The version of Nginx to install. | string | latest | latest, 1.27.2, 1.27.2-1, 1.26 |
+| version | The version of Nginx to install. | string | latest | latest, 1.31.3, 1.31.3-1, 1.30 |
 | stableOnly | A flag to indicate if only stable versions should be used. | boolean | false | true, false |
 | downloadUrl | The download URL to use for Nginx binaries. | string | &lt;empty&gt; | https://mycompany.com/artifactory/nginx-generic-remote |
 
