@@ -1,6 +1,6 @@
 {
     "id": "nginx",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Nginx",
     "description": "Installs Nginx.",
     "options": {
@@ -8,9 +8,9 @@
             "type": "string",
             "proposals": [
                 "latest",
-                "1.27.2",
-                "1.27.2-1",
-                "1.26"
+                "1.31.3",
+                "1.31.3-1",
+                "1.30"
             ],
             "default": "latest",
             "description": "The version of Nginx to install."

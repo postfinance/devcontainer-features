@@ -5,7 +5,7 @@
         },
         "features": {
             "./nginx": {
-                "version": "1.27.2",
+                "version": "1.31.3",
                 "stableOnly": "false"
             }
         }
