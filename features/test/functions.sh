@@ -60,3 +60,11 @@ function check_env_var_exists {
         exit 1
     fi
 }
+
+function resolve_non_root_user {
+    if [[ -z "$USER" || "$USER" == "root" ]]; then
+        getent passwd 1000 | cut -d: -f1
+    else
+        echo "$USER"
+    fi
+}
