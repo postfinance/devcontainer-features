@@ -3,9 +3,12 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
+	"time"
 )
 
 // Reads and parses the "devcontainer-feature.json" file.
@@ -28,6 +31,15 @@ type FeatureSpec struct {
 	Description    string                `json:"description"`
 	Options        OrderedOptionsMap     `json:"options"`
 	Customizations FeatureCustomizations `json:"customizations"`
+	Privileged     bool                  `json:"privileged"`
+	Mounts         []FeatureMount        `json:"mounts"`
+	EntryPoint     string                `json:"entrypoint"`
+}
+
+type FeatureMount struct {
+	Source string `json:"source"`
+	Target string `json:"target"`
+	Type   string `json:"type"`
 }
 
 type FeatureOption struct {
@@ -63,4 +75,18 @@ func (om *OrderedOptionsMap) UnmarshalJSON(b []byte) error {
 
 	sort.Slice(om.Order, func(i, j int) bool { return index[om.Order[i]] < index[om.Order[j]] })
 	return nil
+}
+
+func ExpandDevContainerFeatureVars(value string) string {
+	randomId := randomStringWithCharset(16, "abcdefghijklmnopqrstuvwxyz0123456789")
+	return strings.ReplaceAll(value, "${devcontainerId}", randomId)
+}
+
+func randomStringWithCharset(length int, charset string) string {
+	var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[seededRand.Intn(len(charset))]
+	}
+	return string(b)
 }

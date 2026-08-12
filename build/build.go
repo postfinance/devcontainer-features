@@ -401,7 +401,14 @@ func testFeature(featureName string) error {
 				return err
 			}
 
+			// Read the feature json to see if some settings are relevant for build/run
+			featureSpec, err := ParseFeatureJson(copiedFeaturePath)
+			if err != nil {
+				return err
+			}
+
 			// Build the devcontainer
+			log.Information("Building the devcontainer for testing...")
 			imageName := fmt.Sprintf("dev-container-feature-%s-scenario-%s-test", featureName, scenarioName)
 			if err := gotaskr.Tools.DevContainerCli.Build(&gttools.DevContainerCliBuildSettings{
 				ToolSettingsBase: gttools.ToolSettingsBase{OutputToConsole: true},
@@ -415,9 +422,18 @@ func testFeature(featureName string) error {
 			}
 
 			// Run the check in the container
+			log.Information("Running the check in the container...")
 			runArgs := []string{"run", "-t", "--rm"}
-			if featureName == "docker-out" {
-				runArgs = append(runArgs, "-v", "/var/run/docker.sock:/var/run/docker.sock")
+			if featureSpec.Privileged {
+				runArgs = append(runArgs, "--privileged")
+			}
+			if len(featureSpec.Mounts) > 0 {
+				for _, mount := range featureSpec.Mounts {
+					runArgs = append(runArgs, "-v", fmt.Sprintf("%s:%s", ExpandDevContainerFeatureVars(mount.Source), mount.Target))
+				}
+			}
+			if featureSpec.EntryPoint != "" {
+				runArgs = append(runArgs, "--entrypoint", featureSpec.EntryPoint)
 			}
 			runArgs = append(runArgs, imageName, "sh", "-c", "/tmp/check.sh")
 			checkError := goext.CmdRunners.Console.Run("docker", runArgs...)
