@@ -21,5 +21,8 @@
             ],
             "description": "The download URL to use for Waza binaries."
         }
+    },
+    "containerEnv": {
+        "WAZA_NO_UPDATE_CHECK": "1"
     }
 }

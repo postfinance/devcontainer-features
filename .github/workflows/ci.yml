@@ -112,6 +112,7 @@ jobs:
           "terraform",
           "timezone",
           "vault-cli",
+          "waza",
           "zig"
         ]
     runs-on: ubuntu-latest
