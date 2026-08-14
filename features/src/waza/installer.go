@@ -81,10 +81,11 @@ func (c *wazaComponent) InstallVersion(version *gover.Version) error {
 	if err != nil {
 		return err
 	}
-	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "waza"); err != nil {
-		return err
-	}
+	downloadErr := installer.Tools.Download.ToFile(downloadUrl, fileName, "waza")
 	defer os.Remove(fileName)
+	if downloadErr != nil {
+		return downloadErr
+	}
 	// Install the binary
 	return installer.Tools.System.InstallBinaryToUsrLocalBin(fileName, "waza")
 }
