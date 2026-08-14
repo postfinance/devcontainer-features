@@ -7,14 +7,14 @@ set -e
 # Detect distro and codename
 . /etc/os-release
 
-if { [[ "$ID" = "debian" && "$VERSION_CODENAME" = "trixie" ]] || [[ "$ID" = "ubuntu" && "$VERSION_CODENAME" = "noble" ]]; }; then
-    check_package_installed "libgtk2.0-0t64"
-    check_package_installed "libgtk-3-0t64"
-    check_package_installed "libasound2t64"
-else
+if { [[ "$ID" = "debian" && "$VERSION_CODENAME" = "bookworm" ]] }; then
     check_package_installed "libgtk2.0-0"
     check_package_installed "libgtk-3-0"
     check_package_installed "libasound2"
+else
+    check_package_installed "libgtk2.0-0t64"
+    check_package_installed "libgtk-3-0t64"
+    check_package_installed "libasound2t64"
 fi
 
 check_package_installed "libgbm-dev"
