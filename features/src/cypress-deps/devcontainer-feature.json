@@ -1,6 +1,6 @@
 {
     "id": "cypress-deps",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Cypress Dependencies",
     "description": "Installs all dependencies required to run Cypress."
 }
