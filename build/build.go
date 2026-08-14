@@ -218,6 +218,10 @@ func init() {
 	gotaskr.Task("Feature:vault-cli:Package", func() error { return packageFeature("vault-cli") })
 	gotaskr.Task("Feature:vault-cli:Test", func() error { return testFeature("vault-cli") })
 
+	////////// waza
+	gotaskr.Task("Feature:waza:Package", func() error { return packageFeature("waza") })
+	gotaskr.Task("Feature:waza:Test", func() error { return testFeature("waza") })
+
 	////////// zig
 	gotaskr.Task("Feature:zig:Package", func() error { return packageFeature("zig") })
 	gotaskr.Task("Feature:zig:Test", func() error { return testFeature("zig") })
