@@ -1,11 +1,21 @@
 {
-    "install": {
+    "install-23.26": {
         "build": {
             "dockerfile": "Dockerfile"
         },
         "features": {
             "./instant-client": {
-                "version": "23.9.0.25.07"
+                "version": "23.26.3.0.0"
+            }
+        }
+    },
+    "install-19.32": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./instant-client": {
+                "version": "19.32.0.0.0"
             }
         }
     }

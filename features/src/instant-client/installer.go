@@ -71,12 +71,12 @@ func (c *instantClientComponent) IsFullVersion(referenceVersion *gover.Version) 
 }
 
 func (c *instantClientComponent) createDownloadURLForVersion(version *gover.Version) (string, error) {
+	subFolder := strings.ReplaceAll(version.Raw, ".", "")
 	zipVersion := version.Raw
 	// Versions below 23 have a dbru suffix
 	if version.Major() < 23 {
 		zipVersion = fmt.Sprintf("%sdbru", version.Raw)
 	}
-	majorMinor := fmt.Sprintf("%d%d", version.Major(), version.Minor())
 	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
 		installer.AMD64: "x64",
 		installer.ARM64: "arm64",
@@ -84,10 +84,11 @@ func (c *instantClientComponent) createDownloadURLForVersion(version *gover.Vers
 	if err != nil {
 		return "", err
 	}
+
 	return fmt.Sprintf(
 		"%s/otn_software/linux/instantclient/%s/instantclient-basic-linux.%s-%s.zip",
 		c.downloadUrl,
-		fmt.Sprintf("%s%s", majorMinor, strings.Repeat("0", 7-len(majorMinor))),
+		subFolder,
 		archPart,
 		zipVersion,
 	), nil
@@ -121,9 +122,23 @@ func (c *instantClientComponent) InstallVersion(version *gover.Version) error {
 	if err := installer.Tools.Compression.ExtractZip(fileName, "/opt/oracle", false); err != nil {
 		return err
 	}
-	if err := installer.Tools.Apt.InstallDependencies("libaio1"); err != nil {
+
+	osInfo, err := installer.Tools.System.GetOsInfo()
+	if err != nil {
+		return fmt.Errorf("failed to get OS info: %w", err)
+	}
+
+	debianTrixieOrNewer := osInfo.IsDebian() && osInfo.MajorVersion() >= 13
+	ubuntuNobleOrNewer := osInfo.IsUbuntu() && osInfo.MajorVersion() >= 24
+
+	libaio1PackageName := "libaio1"
+	if debianTrixieOrNewer || ubuntuNobleOrNewer {
+		libaio1PackageName = "libaio1t64"
+	}
+	if err := installer.Tools.Apt.InstallDependencies(libaio1PackageName); err != nil {
 		return err
 	}
+
 	if err := os.WriteFile("/etc/ld.so.conf.d/oracle-instantclient.conf", []byte(path.Join("/opt/oracle", rootFolder)), 0644); err != nil {
 		return err
 	}
