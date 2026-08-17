@@ -6,7 +6,7 @@ A package which installs NVIDIA CUDA.
 
 ```json
 "features": {
-    "ghcr.io/postfinance/devcontainer-features/nvidia-cuda:1.0.0": {
+    "ghcr.io/postfinance/devcontainer-features/nvidia-cuda:1.1.0": {
         "version": "latest",
         "keyringVersion": "1.1-1",
         "installLibraries": true,
@@ -23,7 +23,7 @@ A package which installs NVIDIA CUDA.
 
 | Option | Description | Type | Default Value | Proposals |
 |-----|-----|-----|-----|-----|
-| version | The version of NVIDIA CUDA to install. | string | latest | latest, 12.9, 13.1 |
+| version | The version of NVIDIA CUDA to install. | string | latest | latest, 13.3, 13.1, 12.9 |
 | keyringVersion | The version of the NVIDIA CUDA keyring to install. | string | 1.1-1 | latest, 1.1-1 |
 | installLibraries | Installs all runtime CUDA Library packages. | boolean | true | true, false |
 | installDevLibraries | Installs all development CUDA Library packages. | boolean | true | true, false |

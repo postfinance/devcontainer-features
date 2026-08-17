@@ -109,7 +109,7 @@ func (c *cudaKeyringComponent) getCudaRepo(baseUrl string) (string, error) {
 	}
 	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
 		installer.AMD64: "x86_64",
-		installer.ARM64: "arm64",
+		installer.ARM64: "sbsa",
 	})
 	if err != nil {
 		return "", err
@@ -117,9 +117,6 @@ func (c *cudaKeyringComponent) getCudaRepo(baseUrl string) (string, error) {
 
 	// Note: For some reason, the website started to show errors when accessing the index without a trailing slash
 	if osInfo.IsDebian() {
-		if archPart == "arm64" {
-			return "", fmt.Errorf("No CUDA binaries are available for ARM64")
-		}
 		return fmt.Sprintf("%s/compute/cuda/repos/%s%d/%s/", baseUrl, osInfo.Vendor, osInfo.MajorVersion(), archPart), nil
 	}
 	if osInfo.IsUbuntu() {
