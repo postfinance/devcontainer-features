@@ -10,7 +10,7 @@
         },
         "features": {
             "./nvidia-cuda": {
-                "version": "13.1",
+                "version": "13.3",
                 "installLibraries": true,
                 "installDevLibraries": false,
                 "installCompiler": false,
@@ -29,7 +29,7 @@
         },
         "features": {
             "./nvidia-cuda": {
-                "version": "13.1",
+                "version": "13.3",
                 "installLibraries": false,
                 "installDevLibraries": false,
                 "installCompiler": false,
