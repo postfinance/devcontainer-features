@@ -16,6 +16,7 @@ Below is a list with included features, click on the link for more details.
 | Name | Description |
 | --- | --- |
 | [apm](./features/src/apm/README.md) | Installs APM (Agent Package Manager). |
+| [aws-cli](./features/src/aws-cli/README.md) | Installs the AWS CLI. |
 | [browsers](./features/src/browsers/README.md) | Installs various browsers and their dependencies. |
 | [build-essential](./features/src/build-essential/README.md) | Installs build essentials like gcc. |
 | [claude-code](./features/src/claude-code/README.md) | Installs Claude Code, Anthropic's AI coding assistant CLI. |

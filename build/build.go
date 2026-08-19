@@ -86,6 +86,10 @@ func init() {
 	gotaskr.Task("Feature:apm:Package", func() error { return packageFeature("apm") })
 	gotaskr.Task("Feature:apm:Test", func() error { return testFeature("apm") })
 
+	////////// aws-cli
+	gotaskr.Task("Feature:aws-cli:Package", func() error { return packageFeature("aws-cli") })
+	gotaskr.Task("Feature:aws-cli:Test", func() error { return testFeature("aws-cli") })
+
 	////////// browsers
 	gotaskr.Task("Feature:browsers:Package", func() error { return packageFeature("browsers") })
 	gotaskr.Task("Feature:browsers:Test", func() error { return testFeature("browsers") })
