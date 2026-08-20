@@ -17,6 +17,12 @@ import (
 // Configuration
 //////////
 
+const (
+	defaultDownloadUrl      = "https://download.oracle.com"
+	defaultVersionsUrlAMD64 = "https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html"
+	defaultVersionsUrlArm64 = "https://www.oracle.com/database/technologies/instant-client/linux-arm-aarch64-downloads.html"
+)
+
 var versionRegexp *regexp.Regexp = regexp.MustCompile(`^(\d+).(\d+).(\d+).(\d+).(\d+)$`)
 var indexLineRegexp *regexp.Regexp = regexp.MustCompile(`<a[^>]*href=['"]([^'"]*download\.oracle\.com[^'"]*instantclient-basic-[^'"]*-(\d+(?:\.\d+){4})\w*\.zip)['"]`)
 
@@ -44,15 +50,15 @@ func runMain() error {
 	}
 
 	defaultVersionsUrl, err := installer.Tools.System.MapArchitecture(map[string]string{
-		installer.AMD64: "https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html",
-		installer.ARM64: "https://www.oracle.com/database/technologies/instant-client/linux-arm-aarch64-downloads.html",
+		installer.AMD64: defaultVersionsUrlAMD64,
+		installer.ARM64: defaultVersionsUrlArm64,
 	})
 	if err != nil {
 		return err
 	}
 
 	installer.HandleOverride(versionsUrl, defaultVersionsUrl, "instant-client-versions-url")
-	installer.HandleOverride(downloadUrl, "https://download.oracle.com", "instant-client-download-url")
+	installer.HandleOverride(downloadUrl, defaultDownloadUrl, "instant-client-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Oracle Instant Client", false,
