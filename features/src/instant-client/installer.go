@@ -18,7 +18,7 @@ import (
 //////////
 
 var versionRegexp *regexp.Regexp = regexp.MustCompile(`^(\d+).(\d+).(\d+).(\d+).(\d+)$`)
-var indexLineRegexp *regexp.Regexp = regexp.MustCompile(`^.*<a.*href='.*download\.oracle\.com(.*instantclient-basic-.*-(\d+(?:\.\d+){4})\w*\.zip)'.*$`)
+var indexLineRegexp *regexp.Regexp = regexp.MustCompile(`<a[^>]*href=['"]([^'"]*download\.oracle\.com[^'"]*instantclient-basic-[^'"]*-(\d+(?:\.\d+){4})\w*\.zip)['"]`)
 
 //////////
 // Main
@@ -43,7 +43,15 @@ func runMain() error {
 		return err
 	}
 
-	installer.HandleOverride(versionsUrl, "https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html", "instant-client-versions-url")
+	defaultVersionsUrl, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html",
+		installer.ARM64: "https://www.oracle.com/database/technologies/instant-client/linux-arm-aarch64-downloads.html",
+	})
+	if err != nil {
+		return err
+	}
+
+	installer.HandleOverride(versionsUrl, defaultVersionsUrl, "instant-client-versions-url")
 	installer.HandleOverride(downloadUrl, "https://download.oracle.com", "instant-client-download-url")
 
 	// Create and process the feature
@@ -71,12 +79,32 @@ func (c *instantClientComponent) IsFullVersion(referenceVersion *gover.Version) 
 }
 
 func (c *instantClientComponent) createDownloadURLForVersion(version *gover.Version) (string, error) {
-	subFolder := strings.ReplaceAll(version.Raw, ".", "")
+	// Download URLs for Instant Client versions are structured as follows:
+	// <baseurl>/otn_software/linux/instantclient/<subfolder>/instantclient-basic-linux.<arch>-<version><suffix>.zip
+	// Examples:
+	// * https://download.oracle.com/otn_software/linux/instantclient/2326300/instantclient-basic-linux.x64-23.26.3.0.0.zip
+	// * https://download.oracle.com/otn_software/linux/instantclient/2380000/instantclient-basic-linux.x64-23.8.0.25.04.zip
+	// * https://download.oracle.com/otn_software/linux/instantclient/199000/instantclient-basic-linux.x64-19.9.0.0.0dbru.zip
+	urlPattern := "%s/otn_software/linux/instantclient/%s/instantclient-basic-linux.%s-%s.zip"
+
+	subFolder := ""
+	if version.Major() == 23 && version.Minor() < 26 {
+		// For versions 23.x.x.x.x before 23.26.x.x.x the subfolder is exactly 7 digits long, with
+		// the last digits being 0s and skipping all numbers after the minor version.
+		const subFolderLength = 7
+		majorMinor := fmt.Sprintf("%d%d", version.Major(), version.Minor())
+		subFolder = fmt.Sprintf("%s%s", majorMinor, strings.Repeat("0", subFolderLength-len(majorMinor)))
+	} else {
+		// For all other versions, the subfolder is the version number without dots.
+		subFolder = strings.ReplaceAll(version.Raw, ".", "")
+	}
+
 	zipVersion := version.Raw
 	// Versions below 23 have a dbru suffix
 	if version.Major() < 23 {
 		zipVersion = fmt.Sprintf("%sdbru", version.Raw)
 	}
+
 	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
 		installer.AMD64: "x64",
 		installer.ARM64: "arm64",
@@ -86,7 +114,7 @@ func (c *instantClientComponent) createDownloadURLForVersion(version *gover.Vers
 	}
 
 	return fmt.Sprintf(
-		"%s/otn_software/linux/instantclient/%s/instantclient-basic-linux.%s-%s.zip",
+		urlPattern,
 		c.downloadUrl,
 		subFolder,
 		archPart,
@@ -95,13 +123,16 @@ func (c *instantClientComponent) createDownloadURLForVersion(version *gover.Vers
 }
 
 func (c *instantClientComponent) GetAllVersions() ([]*gover.Version, error) {
-	// Parse the latest versions from download page
-	versions := []*gover.Version{}
-	stableVersions, err := installer.Tools.Http.GetVersionsFromHtmlIndexFunc(c.versionsUrl, c.lineExtractFunc)
+	// Parse the latest versions from download page. The page may contain several links on a single
+	// very long line, so matches are extracted from the whole content instead of on a per-line basis.
+	content, err := installer.Tools.Download.AsBytes(c.versionsUrl)
 	if err != nil {
 		return nil, err
 	}
-	versions = append(versions, stableVersions...)
+	versions := []*gover.Version{}
+	for _, match := range indexLineRegexp.FindAllStringSubmatch(string(content), -1) {
+		versions = append(versions, gover.MustParseVersionFromRegex(match[2], versionRegexp))
+	}
 	return versions, nil
 }
 
@@ -146,14 +177,4 @@ func (c *instantClientComponent) InstallVersion(version *gover.Version) error {
 		return err
 	}
 	return nil
-}
-
-func (c *instantClientComponent) lineExtractFunc(url, line string) (*gover.Version, error) {
-	if match := indexLineRegexp.FindStringSubmatch(line); match != nil {
-		fullName := match[2]
-
-		version := gover.MustParseVersionFromRegex(fullName, versionRegexp)
-		return version, nil
-	}
-	return nil, nil
 }
