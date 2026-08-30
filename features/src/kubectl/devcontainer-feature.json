@@ -129,6 +129,21 @@
             "type": "string",
             "default": "",
             "description": "The download URL to use for kube-score binaries."
+        },
+        "fzfVersion": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none",
+                "0.60.0"
+            ],
+            "default": "latest",
+            "description": "The version of fzf to install."
+        },
+        "fzfDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "description": "The download URL to use for fzf binaries."
         }
     }
 }
