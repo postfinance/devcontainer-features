@@ -1,0 +1,12 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./waza": {
+                "version": "0.38.5"
+            }
+        }
+    }
+}

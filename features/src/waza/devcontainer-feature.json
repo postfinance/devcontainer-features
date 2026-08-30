@@ -1,0 +1,28 @@
+{
+    "id": "waza",
+    "version": "1.0.0",
+    "name": "Waza",
+    "description": "Installs Waza, the AI-powered development agent from Microsoft.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "0.38.5"
+            ],
+            "default": "latest",
+            "description": "The version of Waza to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/github-releases-remote"
+            ],
+            "description": "The download URL to use for Waza binaries."
+        }
+    },
+    "containerEnv": {
+        "WAZA_NO_UPDATE_CHECK": "1"
+    }
+}
