@@ -1,0 +1,25 @@
+{
+    "id": "aws-cli",
+    "version": "1.0.0",
+    "name": "AWS CLI",
+    "description": "Installs the AWS CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "2.22.35"
+            ],
+            "default": "latest",
+            "description": "The version of AWS CLI to install."
+        },
+        "downloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/awscli-remote"
+            ],
+            "description": "The download URL to use for AWS CLI binaries."
+        }
+    }
+}
