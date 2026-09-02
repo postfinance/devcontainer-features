@@ -83,7 +83,18 @@ func (c *pythonComponent) GetAllVersions() ([]*gover.Version, error) {
 }
 
 func (c *pythonComponent) InstallVersion(version *gover.Version) error {
-	// Download the file
+	if version == gover.EmptyVersion {
+		return installer.Tools.System.InstallPackagesByOs(func(osInfo *installer.OsInfo) ([]string, error) {
+			if osInfo.IsDebian() || osInfo.IsUbuntu() {
+				return []string{"python3", "python3-pip", "python-is-python3"}, nil
+			} else if osInfo.IsAlpine() {
+				return []string{"python3", "py3-pip"}, nil
+			}
+			return nil, fmt.Errorf("unsupported OS vendor: %s", osInfo.Vendor)
+		})
+	}
+
+	// Download and compile a specific version of Python
 	name := fmt.Sprintf("Python-%s", version.Raw)
 	fileName := fmt.Sprintf("%s.tgz", name)
 	// The folder only contains the major, minor and sometimes the patch version

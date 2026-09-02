@@ -18,5 +18,15 @@
                 "version": "3.15.0a1"
             }
         }
+    },
+    "install-system-provided": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./python": {
+                "version": "system-default"
+            }
+        }
     }
 }
