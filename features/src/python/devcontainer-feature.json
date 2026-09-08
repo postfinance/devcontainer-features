@@ -51,6 +51,40 @@
                 "nexus.mycompany.com"
             ],
             "description": "The pip trusted host to use."
+        },
+        "uvVersion": {
+            "type": "string",
+            "proposals": [
+                "none",
+                "latest",
+                "0.8.14"
+            ],
+            "default": "none",
+            "description": "The version of uv to install."
+        },
+        "uvDownloadUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/uv-generic-remote"
+            ],
+            "description": "The download URL to use for uv."
+        },
+        "uvIndexUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/api/pypi/python/simple"
+            ],
+            "description": "The uv index URL to use."
+        },
+        "uvExtraIndexUrl": {
+            "type": "string",
+            "default": "",
+            "proposals": [
+                "https://mycompany.com/artifactory/api/pypi/python-extra/simple"
+            ],
+            "description": "The additional uv index URL to use."
         }
     },
     "customizations": {
