@@ -43,7 +43,7 @@
             "./browsers": {
                 "chromeVersion": "none",
                 "useChromeForTesting": "false",
-                "firefoxVersion": "135.0"
+                "firefoxVersion": "136.0"
             }
         }
     }
