@@ -345,6 +345,9 @@ func (c *firefoxComponent) InstallVersion(version *gover.Version) error {
 		fileName = "firefox.tar.bz2"
 		downloadUrl = fmt.Sprintf("%s/%s/linux-%s/en-US/firefox-%s.tar.bz2", c.FirefoxDownloadBaseUrl, version.Raw, archPart, version.Raw)
 	}
+	if version.LessThan(gover.ParseSimple("136")) && archPart == "aarch64" {
+		return fmt.Errorf("firefox versions less than 136 are not available for ARM64")
+	}
 	// Download the file
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Firefox"); err != nil {
 		return err
