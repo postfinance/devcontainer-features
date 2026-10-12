@@ -123,18 +123,16 @@ func (c *chromeComponent) GetAllVersions() ([]*gover.Version, error) {
 
 func (c *chromeComponent) InstallVersion(version *gover.Version) error {
 	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
-		installer.AMD64: "x86_64",
-		installer.ARM64: "aarch64",
+		installer.AMD64: "amd64",
+		installer.ARM64: "arm64",
 	})
 	if err != nil {
 		return err
 	}
-	if archPart == "aarch64" {
-		return fmt.Errorf("chrome is not available for ARM64")
-	}
+
 	// Download the file
-	fileName := "google-chrome-stable_amd64.deb"
-	downloadUrl := fmt.Sprintf("%s/google-chrome-stable_%s-1_amd64.deb", c.ChromeDownloadBaseUrl, version.Raw)
+	fileName := fmt.Sprintf("google-chrome-stable_%s.deb", archPart)
+	downloadUrl := fmt.Sprintf("%s/google-chrome-stable_%s-1_%s.deb", c.ChromeDownloadBaseUrl, version.Raw, archPart)
 	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "Chrome"); err != nil {
 		return err
 	}
@@ -189,15 +187,12 @@ func (c *chromeForTestingComponent) GetAllVersions() ([]*gover.Version, error) {
 }
 
 func (c *chromeForTestingComponent) InstallVersion(version *gover.Version) error {
-	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
-		installer.AMD64: "x86_64",
-		installer.ARM64: "aarch64",
+	_, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "amd64",
+		installer.ARM64: "arm64",
 	})
 	if err != nil {
 		return err
-	}
-	if archPart == "aarch64" {
-		return fmt.Errorf("chrome for testing is not available for ARM64")
 	}
 	// Remove /known-good-versions.json from end if present using split
 	downloadBaseUrl := c.TestingVersionsUrl
