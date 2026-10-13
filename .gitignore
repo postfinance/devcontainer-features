@@ -12,3 +12,5 @@ features/src/**/installer_*
 
 # Cache for prepared and cleaned feature for packaging/publishing
 .prepared-feature/
+
+.devcontainer/devcontainer-lock.json
