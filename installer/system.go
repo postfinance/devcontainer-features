@@ -107,17 +107,19 @@ func (s *system) OsInfo() *OsInfo {
 		if err := scanner.Err(); err != nil {
 			return
 		}
+		// We do not know which values are provided by the OS, so we take what
+		// we can get and set undefined values to "unknown"
 		vendor, ok := infoMap["ID"]
 		if !ok {
-			return
+			vendor = "unknown"
 		}
 		codename, ok := infoMap["VERSION_CODENAME"]
 		if !ok {
-			return
+			codename = "unknown"
 		}
 		versionId, ok := infoMap["VERSION_ID"]
 		if !ok {
-			return
+			versionId = "unknown"
 		}
 		s.osInfo = &OsInfo{
 			Vendor:    vendor,
@@ -125,10 +127,6 @@ func (s *system) OsInfo() *OsInfo {
 			VersionId: versionId,
 		}
 	})
-	if s.osInfo == nil {
-		// Fill with unknown if we couldn't read the OS info
-		s.osInfo = &OsInfo{Vendor: "unknown", Codename: "unknown", VersionId: "unknown"}
-	}
 	return s.osInfo
 }
 
