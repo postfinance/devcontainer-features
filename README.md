@@ -50,6 +50,7 @@ Below is a list with included features, click on the link for more details.
 | [terraform](./features/src/terraform/README.md) | Installs the Terraform CLI. |
 | [timezone](./features/src/timezone/README.md) | Allows setting the timezone. |
 | [vault-cli](./features/src/vault-cli/README.md) | Installs the Vault CLI. |
+| [waza](./features/src/waza/README.md) | Installs Waza, the AI-powered development agent from Microsoft. |
 | [zig](./features/src/zig/README.md) | Installs Zig. |
 
 ## Usage
