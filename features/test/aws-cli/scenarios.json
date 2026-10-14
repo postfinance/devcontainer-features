@@ -1,0 +1,12 @@
+{
+    "install": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./aws-cli": {
+                "version": "2.22.35"
+            }
+        }
+    }
+}
