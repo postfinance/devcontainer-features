@@ -11,7 +11,11 @@ Installs Python.
         "downloadUrl": "",
         "pipIndex": "",
         "pipIndexUrl": "",
-        "pipTrustedHost": ""
+        "pipTrustedHost": "",
+        "uvVersion": "none",
+        "uvDownloadUrl": "",
+        "uvIndexUrl": "",
+        "uvExtraIndexUrl": ""
     }
 }
 ```
@@ -25,6 +29,10 @@ Installs Python.
 | pipIndex | The pip index to use (used by search). | string | &lt;empty&gt; | https://mycompany.com/artifactory/api/pypi/python/simple, https://mycompany.com/nexus/repository/pypi-group/pypi |
 | pipIndexUrl | The pip index URL to use (used by install). | string | &lt;empty&gt; | https://mycompany.com/artifactory/api/pypi/python/simple, https://mycompany.com/nexus/repository/pypi-group/simple |
 | pipTrustedHost | The pip trusted host to use. | string | &lt;empty&gt; | mycompany.com, artifactory.mycompany.com, nexus.mycompany.com |
+| uvVersion | The version of uv to install. | string | none | none, latest, 0.8.14 |
+| uvDownloadUrl | The download URL to use for uv. | string | &lt;empty&gt; | https://mycompany.com/artifactory/uv-generic-remote |
+| uvIndexUrl | The uv index URL to use. | string | &lt;empty&gt; | https://mycompany.com/artifactory/api/pypi/python/simple |
+| uvExtraIndexUrl | The additional uv index URL to use. | string | &lt;empty&gt; | https://mycompany.com/artifactory/api/pypi/python-extra/simple |
 
 ## Customizations
 
