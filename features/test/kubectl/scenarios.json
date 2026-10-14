@@ -12,7 +12,8 @@
                 "helmVersion": "none",
                 "kustomizeVersion": "none",
                 "kubeconformVersion": "none",
-                "kubescoreVersion": "none"
+                "kubescoreVersion": "none",
+                "fzfVersion": "none"
             }
         }
     },
@@ -29,7 +30,8 @@
                 "helmVersion": "3.16.2",
                 "kustomizeVersion": "5.4.2",
                 "kubeconformVersion": "0.6.6",
-                "kubescoreVersion": "1.18.0"
+                "kubescoreVersion": "1.18.0",
+                "fzfVersion": "0.60.0"
             }
         }
     }

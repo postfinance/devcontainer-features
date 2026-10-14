@@ -50,6 +50,8 @@ func runMain() error {
 	kustomizeDownloadUrl := flag.String("kustomizeDownloadUrl", "", "")
 	kubeconformDownloadUrl := flag.String("kubeconformDownloadUrl", "", "")
 	kubescoreDownloadUrl := flag.String("kubescoreDownloadUrl", "", "")
+	fzfVersion := flag.String("fzfVersion", "latest", "")
+	fzfDownloadUrl := flag.String("fzfDownloadUrl", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -66,6 +68,7 @@ func runMain() error {
 	installer.HandleGitHubOverride(kustomizeDownloadUrl, "kubernetes-sigs/kustomize", "kubectl-kustomize-download-url")
 	installer.HandleGitHubOverride(kubeconformDownloadUrl, "yannh/kubeconform", "kubectl-kubeconform-download-url")
 	installer.HandleGitHubOverride(kubescoreDownloadUrl, "zegl/kube-score", "kubectl-kubescore-download-url")
+	installer.HandleGitHubOverride(fzfDownloadUrl, "junegunn/fzf", "kubectl-fzf-download-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("kubectl", true,
@@ -102,7 +105,8 @@ func runMain() error {
 			DownloadUrl:   *kubescoreDownloadUrl,
 		},
 		&fzfComponent{
-			ComponentBase: installer.NewComponentBase("fzf", installer.VERSION_SYSTEM_DEFAULT),
+			ComponentBase: installer.NewComponentBase("fzf", *fzfVersion),
+			DownloadUrl:   *fzfDownloadUrl,
 		},
 	)
 	return feature.Process()
@@ -528,8 +532,48 @@ func (c *kubescoreComponent) InstallVersion(version *gover.Version) error {
 
 type fzfComponent struct {
 	*installer.ComponentBase
+	DownloadUrl string
+}
+
+func (c *fzfComponent) GetAllVersions() ([]*gover.Version, error) {
+	tags, err := installer.Tools.GitHub.GetTags("junegunn", "fzf")
+	if err != nil {
+		return nil, err
+	}
+	return installer.Tools.Versioning.ParseVersionsFromList(tags, threeDigitRegex, true)
 }
 
 func (c *fzfComponent) InstallVersion(version *gover.Version) error {
-	return installer.Tools.System.InstallPackages("fzf")
+	// Download
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "amd64",
+		installer.ARM64: "arm64",
+	})
+	if err != nil {
+		return err
+	}
+	fileName := fmt.Sprintf("fzf-%s-linux_%s.tar.gz", version.Raw, archPart)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, "v"+version.Raw, fileName)
+	if err != nil {
+		return err
+	}
+	if err := installer.Tools.Download.ToFile(downloadUrl, fileName, "fzf"); err != nil {
+		return err
+	}
+	// Extract
+	if err := installer.Tools.Compression.ExtractTarGz(fileName, "fzf", false); err != nil {
+		return err
+	}
+	// Install
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin("fzf/fzf", "fzf"); err != nil {
+		return err
+	}
+	// Cleanup
+	if err := os.Remove(fileName); err != nil {
+		return err
+	}
+	if err := os.RemoveAll("fzf"); err != nil {
+		return err
+	}
+	return nil
 }
