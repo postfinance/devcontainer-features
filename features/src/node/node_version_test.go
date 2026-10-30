@@ -1,13 +1,17 @@
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/roemer/gover"
+)
 
 func TestParseNodeVersion(t *testing.T) {
-	if _, err := parseNodeVersion("v27.0.0-alpha.0.0.0"); err == nil {
+	if _, err := gover.ParseVersionFromRegex("v27.0.0-alpha.0.0.0", nodeVersionRegex); err == nil {
 		t.Fatal("expected prerelease version not to match")
 	}
 
-	version, err := parseNodeVersion("v27.0.0")
+	version, err := gover.ParseVersionFromRegex("v27.0.0", nodeVersionRegex)
 	if err != nil {
 		t.Fatal("expected stable version to match")
 	}
