@@ -105,7 +105,10 @@ func (c *nodeComponent) GetAllVersions() ([]*gover.Version, error) {
 	}
 	allVersions := []*gover.Version{}
 	for _, entry := range jsonData {
-		version := gover.MustParseVersionFromRegex(entry.Version, nodeVersionRegex)
+		version, matches := parseNodeVersion(entry.Version)
+		if !matches {
+			continue
+		}
 		isLtsEntry := false
 		switch entry.Lts.(type) {
 		case bool:
@@ -119,6 +122,13 @@ func (c *nodeComponent) GetAllVersions() ([]*gover.Version, error) {
 		allVersions = append(allVersions, version)
 	}
 	return allVersions, nil
+}
+
+func parseNodeVersion(versionString string) (*gover.Version, bool) {
+	if !nodeVersionRegex.MatchString(versionString) {
+		return nil, false
+	}
+	return gover.MustParseVersionFromRegex(versionString, nodeVersionRegex), true
 }
 
 func (c *nodeComponent) InstallVersion(version *gover.Version) error {
