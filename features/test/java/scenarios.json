@@ -1,0 +1,83 @@
+{
+    "install-latest": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./java": {
+                "version": "latest"
+            }
+        }
+    },
+    "install-exact": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./java": {
+                "version": "21.0.5"
+            }
+        }
+    },
+    "install-with-maven": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./java": {
+                "version": "21",
+                "mavenVersion": "latest"
+            }
+        }
+    },
+    "install-with-gradle": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./java": {
+                "version": "21",
+                "gradleVersion": "latest"
+            }
+        }
+    },
+    "install-with-resolve": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./java": {
+                "version": "21"
+            }
+        }
+    },
+    "install-with-ant": {
+        "build": {
+            "dockerfile": "Dockerfile",
+            "options": [
+                "--add-host=host.docker.internal:host-gateway"
+            ]
+        },
+        "features": {
+            "./java": {
+                "version": "21",
+                "antVersion": "latest"
+            }
+        }
+    }
+}
