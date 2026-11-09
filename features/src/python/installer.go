@@ -18,6 +18,7 @@ import (
 //////////
 
 var pythonVersionRegexp *regexp.Regexp = regexp.MustCompile(`^v(?P<raw>(\d+)\.(\d+)(?:\.(\d+))?(?:([a-z]+)(\d+))?)$`)
+var uvVersionRegexp *regexp.Regexp = regexp.MustCompile(`^v(?P<raw>\d+\.\d+\.\d+)$`)
 
 //////////
 // Main
@@ -37,6 +38,10 @@ func runMain() error {
 	pipIndex := flag.String("pipIndex", "", "")
 	pipIndexUrl := flag.String("pipIndexUrl", "", "")
 	pipTrustedHost := flag.String("pipTrustedHost", "", "")
+	uvVersion := flag.String("uvVersion", "none", "")
+	uvDownloadUrl := flag.String("uvDownloadUrl", "", "")
+	uvIndexUrl := flag.String("uvIndexUrl", "", "")
+	uvExtraIndexUrl := flag.String("uvExtraIndexUrl", "", "")
 	flag.Parse()
 
 	// Load settings from an external file
@@ -48,6 +53,9 @@ func runMain() error {
 	installer.HandleOverride(pipIndex, "", "python-pip-index")
 	installer.HandleOverride(pipIndexUrl, "", "python-pip-index-url")
 	installer.HandleOverride(pipTrustedHost, "", "python-pip-trusted-host")
+	installer.HandleOverride(uvDownloadUrl, "https://github.com/astral-sh/uv/releases/download", "python-uv-download-url")
+	installer.HandleOverride(uvIndexUrl, "", "python-uv-index-url")
+	installer.HandleOverride(uvExtraIndexUrl, "", "python-uv-extra-index-url")
 
 	// Create and process the feature
 	feature := installer.NewFeature("Python", false,
@@ -58,8 +66,87 @@ func runMain() error {
 			PipIndexUrl:    *pipIndexUrl,
 			PipTrustedHost: *pipTrustedHost,
 		},
+		&uvComponent{
+			ComponentBase: installer.NewComponentBase("uv", *uvVersion),
+			DownloadUrl:   *uvDownloadUrl,
+			IndexUrl:      *uvIndexUrl,
+			ExtraIndexUrl: *uvExtraIndexUrl,
+		},
 	)
 	return feature.Process()
+}
+
+type uvComponent struct {
+	*installer.ComponentBase
+	DownloadUrl   string
+	IndexUrl      string
+	ExtraIndexUrl string
+}
+
+func (c *uvComponent) GetAllVersions() ([]*gover.Version, error) {
+	allTags, err := installer.Tools.GitHub.GetTags("astral-sh", "uv")
+	if err != nil {
+		return nil, err
+	}
+	return installer.Tools.Versioning.ParseVersionsFromList(allTags, uvVersionRegexp, true)
+}
+
+func (c *uvComponent) InstallVersion(version *gover.Version) error {
+	archPart, err := installer.Tools.System.MapArchitecture(map[string]string{
+		installer.AMD64: "x86_64",
+		installer.ARM64: "aarch64",
+	})
+	if err != nil {
+		return err
+	}
+	target := "unknown-linux-gnu"
+	if installer.Tools.System.OsInfo().IsAlpine() {
+		target = "unknown-linux-musl"
+	}
+	asset := fmt.Sprintf("uv-%s-%s.tar.gz", archPart, target)
+	versionPart := fmt.Sprintf("v%s", version.Raw)
+	downloadUrl, err := installer.Tools.Http.BuildUrl(c.DownloadUrl, versionPart, asset)
+	if err != nil {
+		return err
+	}
+	tempDir, err := os.MkdirTemp("", "uv-download-*")
+	if err != nil {
+		return err
+	}
+	defer os.RemoveAll(tempDir)
+	archivePath := filepath.Join(tempDir, asset)
+	if err := installer.Tools.Download.ToFile(downloadUrl, archivePath, "uv"); err != nil {
+		return err
+	}
+	extractDir := filepath.Join(tempDir, "extract")
+	if err := installer.Tools.Compression.ExtractTarGz(archivePath, extractDir, true); err != nil {
+		return err
+	}
+	uvPath := filepath.Join(extractDir, fmt.Sprintf("uv-%s-%s", archPart, target), "uv")
+	if _, err := os.Stat(uvPath); err != nil {
+		uvPath = filepath.Join(extractDir, "uv")
+	}
+	if err := installer.Tools.System.InstallBinaryToUsrLocalBin(uvPath, "uv"); err != nil {
+		return err
+	}
+	return c.configure()
+}
+
+func (c *uvComponent) configure() error {
+	if c.IndexUrl == "" && c.ExtraIndexUrl == "" {
+		return nil
+	}
+	if err := os.MkdirAll("/etc/uv", 0755); err != nil {
+		return err
+	}
+	config := ""
+	if c.IndexUrl != "" {
+		config += fmt.Sprintf("index-url = %q\n", c.IndexUrl)
+	}
+	if c.ExtraIndexUrl != "" {
+		config += fmt.Sprintf("extra-index-url = [%q]\n", c.ExtraIndexUrl)
+	}
+	return os.WriteFile("/etc/uv/uv.toml", []byte(config), 0644)
 }
 
 //////////

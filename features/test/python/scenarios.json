@@ -28,5 +28,18 @@
                 "version": "system-default"
             }
         }
+    },
+    "install-uv": {
+        "build": {
+            "dockerfile": "Dockerfile"
+        },
+        "features": {
+            "./python": {
+                "version": "system-default",
+                "uvVersion": "latest",
+                "uvIndexUrl": "https://pypi.org/simple",
+                "uvExtraIndexUrl": "https://example.com/simple"
+            }
+        }
     }
 }
