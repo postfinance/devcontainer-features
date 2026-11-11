@@ -81,6 +81,10 @@ else
     sudoIf socat UNIX-LISTEN:${TARGET_SOCKET},fork,user=${USERNAME},group=docker,mode=660 UNIX-CONNECT:${SOURCE_SOCKET} &
     # Wait for the listener so a command run right after start does not race it.
     for _ in $(seq 1 50); do [ -S "${TARGET_SOCKET}" ] && break; sleep 0.1; done
+    if [ ! -S "${TARGET_SOCKET}" ]; then
+      echo "Error: Docker socket bridge did not become ready at ${TARGET_SOCKET}." >&2
+      exit 1
+    fi
   fi
 fi
 
