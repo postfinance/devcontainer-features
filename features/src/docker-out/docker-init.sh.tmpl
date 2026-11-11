@@ -58,6 +58,12 @@ else
   else
     # Use socat
     echo "Using socat to bridge socket from GID $SOCKET_GID to docker GID $DOCKER_GID."
+    # A bridge onto its own source would delete it, then the listener would connect to itself.
+    # A string compare suffices: two spellings of one file already failed at the ln -s above.
+    if [ "${SOURCE_SOCKET}" = "${TARGET_SOCKET}" ]; then
+      echo "Error: SOURCE_SOCKET and TARGET_SOCKET are both ${SOURCE_SOCKET}, but its GID ${SOCKET_GID} belongs to group ${EXISTING_GROUP}, not docker. Mount the host socket at a different path than TARGET_SOCKET." >&2
+      exit 1
+    fi
     sudoIf rm -rf ${TARGET_SOCKET}
     # Check if socat is installed
     if command -v socat > /dev/null 2>&1; then
