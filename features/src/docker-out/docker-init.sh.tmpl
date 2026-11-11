@@ -79,10 +79,16 @@ else
     # address once, so with UNIX-CONNECT first every forked client shared one daemon connection.
     # Backgrounded so the script reaches `exec "$@"` below instead of blocking on socat.
     sudoIf socat UNIX-LISTEN:${TARGET_SOCKET},fork,user=${USERNAME},group=docker,mode=660 UNIX-CONNECT:${SOURCE_SOCKET} &
-    # Wait for the listener so a command run right after start does not race it.
-    for _ in $(seq 1 50); do [ -S "${TARGET_SOCKET}" ] && break; sleep 0.1; done
-    if [ ! -S "${TARGET_SOCKET}" ]; then
-      echo "Error: Docker socket bridge did not become ready at ${TARGET_SOCKET}." >&2
+    # Probe by connecting: the path exists from bind(), before listen(), so [ -S ] passes too early.
+    # sudoIf because this process predates the usermod above and lacks the docker group.
+    BRIDGE_READY=false
+    for _ in $(seq 1 50); do
+      if sudoIf socat -u /dev/null UNIX-CONNECT:"${TARGET_SOCKET}" 2>/dev/null; then BRIDGE_READY=true; break; fi
+      sleep 0.1
+    done
+    # set -e cannot see a backgrounded socat fail, so check the result explicitly.
+    if [ "${BRIDGE_READY}" != true ]; then
+      echo "Error: socat bridge at ${TARGET_SOCKET} accepted no connection within 5s." >&2
       exit 1
     fi
   fi
