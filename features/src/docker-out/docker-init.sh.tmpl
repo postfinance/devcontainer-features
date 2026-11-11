@@ -75,8 +75,12 @@ else
         exit 1
       fi
     fi
-    # Create the socat bridge
-    sudoIf socat UNIX-CONNECT:${SOURCE_SOCKET} UNIX-LISTEN:${TARGET_SOCKET},fork,user=${USERNAME},group=docker,mode=660
+    # Create the socat bridge. The listener must be the first address: socat opens the first
+    # address once, so with UNIX-CONNECT first every forked client shared one daemon connection.
+    # Backgrounded so the script reaches `exec "$@"` below instead of blocking on socat.
+    sudoIf socat UNIX-LISTEN:${TARGET_SOCKET},fork,user=${USERNAME},group=docker,mode=660 UNIX-CONNECT:${SOURCE_SOCKET} &
+    # Wait for the listener so a command run right after start does not race it.
+    for _ in $(seq 1 50); do [ -S "${TARGET_SOCKET}" ] && break; sleep 0.1; done
   fi
 fi
 
